@@ -1,33 +1,33 @@
 -- Insertions pour la table ARTISTE
-INSERT INTO ARTISTE (idArtiste, nomArtiste) VALUES (1, 'Artiste 1');
-INSERT INTO ARTISTE (idArtiste, nomArtiste) VALUES (2, 'Artiste 2');
-INSERT INTO ARTISTE (idArtiste, nomArtiste) VALUES (3, 'Artiste 3');
+INSERT INTO ARTISTE (idArtiste, nomArtiste) VALUES (1, 'DJ Snake');
+INSERT INTO ARTISTE (idArtiste, nomArtiste) VALUES (2, 'Louane');
+INSERT INTO ARTISTE (idArtiste, nomArtiste) VALUES (3, 'Liam Sottier');
 
 -- Insertions pour la table HEBERGEMENT
-INSERT INTO HEBERGEMENT (idHebergement, nomHebergement, addresseHebergement) VALUES (1, 'Hôtel 1', 'Adresse 1');
-INSERT INTO HEBERGEMENT (idHebergement, nomHebergement, addresseHebergement) VALUES (2, 'Hôtel 2', 'Adresse 2');
-INSERT INTO HEBERGEMENT (idHebergement, nomHebergement, addresseHebergement) VALUES (3, 'Auberge 1', 'Adresse 3');
-
+INSERT INTO HEBERGEMENT (idHebergement, nomHebergement, addresseHebergement) VALUES (1, 'Hôtel Luxe', '123 Rue Principale');
+INSERT INTO HEBERGEMENT (idHebergement, nomHebergement, addresseHebergement) VALUES (2, 'Auberge Charme', '456 Avenue Centrale');
+INSERT INTO HEBERGEMENT (idHebergement, nomHebergement, addresseHebergement) VALUES (3, 'Motel Repos', '789 Boulevard Tranquille');
 
 -- Insertions pour la table GROUPE
-INSERT INTO GROUPE (idGroupe, nomGroupe, idHebergement) VALUES (1, 'Groupe A', 1);
-INSERT INTO GROUPE (idGroupe, nomGroupe, idHebergement) VALUES (2, 'Groupe B', 2);
-INSERT INTO GROUPE (idGroupe, nomGroupe, idHebergement) VALUES (3, 'Groupe C', 1);
+INSERT INTO GROUPE (idGroupe, nomGroupe, idHebergement) VALUES (1, 'Les Artistes Brillants', 1);
+INSERT INTO GROUPE (idGroupe, nomGroupe, idHebergement) VALUES (2, 'Ensemble Harmonie', 2);
+INSERT INTO GROUPE (idGroupe, nomGroupe, idHebergement) VALUES (3, 'Les Mélodies Divines', 3);
 
 -- Insertions pour la table LIEU
-INSERT INTO LIEU (idLieu, nomLieu, jaugeLieu) VALUES (1, 'Salle de concert 1', 1000);
-INSERT INTO LIEU (idLieu, nomLieu, jaugeLieu) VALUES (2, 'Salle de concert 2', 1500);
-INSERT INTO LIEU (idLieu, nomLieu, jaugeLieu) VALUES (3, 'Théâtre 1', 800);
+INSERT INTO LIEU (idLieu, nomLieu, jaugeLieu) VALUES (1, 'Stade Olympique', 50000);
+INSERT INTO LIEU (idLieu, nomLieu, jaugeLieu) VALUES (2, 'Arena Music', 10000);
+INSERT INTO LIEU (idLieu, nomLieu, jaugeLieu) VALUES (3, 'Théâtre Royal', 1500);
 
 -- Insertions pour la table CONCERT
-INSERT INTO CONCERT (idConcert, nomConcert, tpsPrepaConcert, dateHeureConcert, dureeConcert, idLieu) VALUES (1, 'Concert 1', 30, '2023-10-25 19:00:00', 120, 1);
-INSERT INTO CONCERT (idConcert, nomConcert, tpsPrepaConcert, dateHeureConcert, dureeConcert, idLieu) VALUES (2, 'Concert 2', 40, '2023-11-05 20:00:00', 90, 2);
-INSERT INTO CONCERT (idConcert, nomConcert, tpsPrepaConcert, dateHeureConcert, dureeConcert, idLieu) VALUES (3, 'Concert 3', 25, '2023-11-15 18:30:00', 150, 3);
+INSERT INTO CONCERT (idConcert, nomConcert, tpsPrepaConcert, dateHeureConcert, dureeConcert, idLieu) VALUES (1, 'Concert d ouverture', 30, '2023-10-25 19:00:00', 120, 1);
+INSERT INTO CONCERT (idConcert, nomConcert, tpsPrepaConcert, dateHeureConcert, dureeConcert, idLieu) VALUES (2, 'Soirée Musicale', 40, '2023-11-05 20:00:00', 90, 2);
+INSERT INTO CONCERT (idConcert, nomConcert, tpsPrepaConcert, dateHeureConcert, dureeConcert, idLieu) VALUES (3, 'Symphonie en Soirée', 25, '2023-11-15 18:30:00', 150, 3);
 
 -- Insertions pour la table SPECTATEUR
-INSERT INTO SPECTATEUR (idSpectateur, nomSpectateur, prenomSpectateur, motPasseSpectateur, emailSpectateur, anniversaireSpectateur) VALUES (1, 'Spectateur 1', 'Prénom 1', 'motdepasse1', 'spectateur1@example.com', '1990-05-15');
-INSERT INTO SPECTATEUR (idSpectateur, nomSpectateur, prenomSpectateur, motPasseSpectateur, emailSpectateur, anniversaireSpectateur) VALUES (2, 'Spectateur 2', 'Prénom 2', 'motdepasse2', 'spectateur2@example.com', '1985-12-20');
-INSERT INTO SPECTATEUR (idSpectateur, nomSpectateur, prenomSpectateur, motPasseSpectateur, emailSpectateur, anniversaireSpectateur) VALUES (3, 'Spectateur 3', 'Prénom 3', 'motdepasse3', 'spectateur3@example.com', '2000-03-10');
+INSERT INTO SPECTATEUR (idSpectateur, nomSpectateur, prenomSpectateur, motPasseSpectateur, emailSpectateur, anniversaireSpectateur) VALUES (1, 'Valentin', 'Romanet', 'mdpRomanet', 'valentin@example.com', '2004-05-15');
+INSERT INTO SPECTATEUR (idSpectateur, nomSpectateur, prenomSpectateur, motPasseSpectateur, emailSpectateur, anniversaireSpectateur) VALUES (2, 'Hugo', 'Sainson', 'mdpSainson', 'hugo@example.com', '2004-12-20');
+INSERT INTO SPECTATEUR (idSpectateur, nomSpectateur, prenomSpectateur, motPasseSpectateur, emailSpectateur, anniversaireSpectateur) VALUES (3, 'Thibault', 'Saint-Leger', 'mdpSaint', 'thibault@example.com', '2004-17-06');
+INSERT INTO SPECTATEUR (idSpectateur, nomSpectateur, prenomSpectateur, motPasseSpectateur, emailSpectateur, anniversaireSpectateur) VALUES (3, 'Arthur', 'Villet', 'mdpVillet', 'arthur@example.com', '2004-03-10');
 
 -- Insertions pour la table STYLE
 INSERT INTO STYLE (idStyle, nomStyle) VALUES (1, 'Rock');
