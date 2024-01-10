@@ -6,6 +6,6 @@ from .models import (Appartenir, Artiste, Billet, Concert, EtreStyle,
                      Style, SousStyle, Spectateur, Type)
 
 @app.cli.command('initdb')
-def initdb_command():
+def initdb():
     db.create_all()
     print('Initialized the database.')

@@ -1,8 +1,8 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey, Float, LargeBinary
-from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declarative_base
+from app import db
 
-Base = declarative_base()
+Base = db.Model
+metadata = Base.metadata
 
 class Appartenir(Base):
     __tablename__ = 'APPARTENIR'
