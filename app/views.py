@@ -2,7 +2,6 @@ import os
 from app import app
 from flask import render_template, request, redirect, url_for, make_response, send_file, jsonify, Response
 from flask_login import login_required, login_user, logout_user, current_user
-from flask_bcrypt import generate_password_hash, check_password_hash
 from io import BytesIO
 from functools import wraps
 from werkzeug.utils import secure_filename
@@ -10,6 +9,10 @@ from app.requests import *
 from app.forms import *
 from app import login_manager
 import base64
+
+@login_manager.user_loader
+def load_user(user_id):
+    return 1
 
 # @app.route('/editUser', methods=['GET', 'POST'])
 # @activated_required
@@ -27,6 +30,10 @@ import base64
 #         return redirect(url_for('user'))
 #     return render_template('editUser.html', nom_page=page_name, user=user, form=form, notification_enabled=user_has_notifications(current_user.get_id()), is_admin =get_user_by_id(current_user.get_id()).idRole == 1)
 
-@app.route('/login')
+@app.route('/login',methods=['GET','POST'])
 def login():
-    return render_template('connexion.html')
+    form = LoginForm()
+    if form.validate_on_submit():
+        return
+    return render_template('connexion.html', form=form)
+

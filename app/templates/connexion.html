@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+    <html lang="fr">
+        <head>
+            <meta charset="utf-8">
+            <meta name="connexion">
+            <title>Connexion</title>
+        </head>
+        <body> 
+            <main>
+                <form method="POST" class="page_connexion" action="">
+                <div class="email">
+                    <p>Email</p>
+                    {{ form.mail(size=50) }}
+                </div>
+                <div class="password">
+                    <p>Mot de passe</p>
+                   {{ form.mdp(size=50) }}
+                </div>
+                <div class="connexion">
+                    {{ form.submit }}
+                </div>
+            </form>
+            </main>
+        </body>

@@ -15,3 +15,6 @@ login_manager.login_view = 'login'
 
 from app import models
 from app import database
+from app import views
+from app import forms
+from app import requests
