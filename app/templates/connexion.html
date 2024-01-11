@@ -3,11 +3,18 @@
         <head>
             <meta charset="utf-8">
             <meta name="connexion">
+            <link rel="stylesheet" href="{{ url_for('static',filename='css/connexion.css')}}">
+            <link rel="stylesheet" href="{{ url_for('static',filename='css/headerConnexion.css')}}">
+
             <title>Connexion</title>
         </head>
-        <body> 
+        <body>
+            <header>
+            {% include "components/headerConnexion.html" %}
+            </header>
             <main>
                 <form method="POST" class="page_connexion" action="">
+                    {{ form.hidden_tag() }}
                 <div class="email">
                     <p>Email</p>
                     {{ form.mail(size=50) }}
@@ -19,6 +26,7 @@
                 <div class="connexion">
                     {{ form.submit }}
                 </div>
+                <p>test</p>
             </form>
             </main>
         </body>
