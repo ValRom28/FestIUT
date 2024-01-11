@@ -44,9 +44,9 @@ def initdb():
         Groupe(id_groupe=1, nom_groupe='Les Artistes Brillants', id_hebergement=1,
                photo_groupe=None, description_groupe='Groupe de musique classique', 
                insta_groupe='@lesartistesbrillants', spotify_groupe='Les Artistes Brillants'),
-        Groupe(id_groupe=2, nom_groupe='Thibault et ses esclaves', id_hebergement=2,
+        Groupe(id_groupe=2, nom_groupe='Thibault et les autres', id_hebergement=2,
                photo_groupe=None, description_groupe='Groupe de musique rock', 
-               insta_groupe='@thibaultetsesesclaves', spotify_groupe='Thibault et ses esclaves'),
+               insta_groupe='@thibaultetlesautres', spotify_groupe='Thibault et les autres'),
         Groupe(id_groupe=3, nom_groupe='La Saint-Leger tout puissant', id_hebergement=3,
                photo_groupe=None, description_groupe='Groupe de musique pop', 
                insta_groupe='@lasaintlegertoutpuissant', spotify_groupe='La Saint-Leger tout puissant'),
@@ -67,9 +67,9 @@ def initdb():
 
     # Insertions pour la table LIEU
     lieux = [
-        Lieu(id_lieu=1, nom_lieu='Stade Olympique', jauge_lieu=50000, coordonneX = 47.84316612643946, coordonneY = 1.926633417606354),
-        Lieu(id_lieu=2, nom_lieu='Arena Music', jauge_lieu=10000, coordonneX = 47.94316612643946, coordonneY = 1.916633417606354),
-        Lieu(id_lieu=3, nom_lieu='Théâtre Royal', jauge_lieu=1500, coordonneX = 47.84316612643946, coordonneY = 1.026633417606354),
+        Lieu(id_lieu=1, nom_lieu='Stade Olympique', jauge_lieu=50000, coordonne_X = 47.84316612643946, coordonne_Y = 1.926633417606354),
+        Lieu(id_lieu=2, nom_lieu='Arena Music', jauge_lieu=10000, coordonne_X = 47.94316612643946, coordonne_Y = 1.916633417606354),
+        Lieu(id_lieu=3, nom_lieu='Théâtre Royal', jauge_lieu=1500, coordonne_X = 47.84316612643946, coordonne_Y = 1.026633417606354),
     ]
     session.add_all(lieux)
 
