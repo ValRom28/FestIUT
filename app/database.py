@@ -1,4 +1,5 @@
 from app import app, db
+from datetime import datetime
 from sqlalchemy.orm import sessionmaker
 from .models import (Appartenir, Artiste, Billet, Concert, EtreStyle,
                      EtreType, Favoris, Groupe, Hebergement, Instrument,
@@ -7,6 +8,7 @@ from .models import (Appartenir, Artiste, Billet, Concert, EtreStyle,
 
 @app.cli.command('initdb')
 def initdb():
+    db.drop_all()
     db.create_all()
     print('Base de données initialisée.')
 
@@ -31,21 +33,35 @@ def initdb():
 
     # Insertions pour la table HEBERGEMENT
     hebergements = [
-        Hebergement(id_hebergement=1, nom_hebergement='Hôtel Luxe', addresse_hebergement='123 Rue Principale'),
-        Hebergement(id_hebergement=2, nom_hebergement='Auberge Charme', addresse_hebergement='456 Avenue Centrale'),
-        Hebergement(id_hebergement=3, nom_hebergement='Motel Repos', addresse_hebergement='789 Boulevard Tranquille'),
+        Hebergement(id_hebergement=1, nom_hebergement='Hôtel Luxe', adresse_hebergement='123 Rue Principale'),
+        Hebergement(id_hebergement=2, nom_hebergement='Auberge Charme', adresse_hebergement='456 Avenue Centrale'),
+        Hebergement(id_hebergement=3, nom_hebergement='Motel Repos', adresse_hebergement='789 Boulevard Tranquille'),
     ]
     session.add_all(hebergements)
 
     # Insertions pour la table GROUPE
     groupes = [
-        Groupe(id_groupe=1, nom_groupe='Les Artistes Brillants', id_hebergement=1),
-        Groupe(id_groupe=2, nom_groupe='Thibault et ses esclaves', id_hebergement=2),
-        Groupe(id_groupe=3, nom_groupe='La Saint-Leger tout puissant', id_hebergement=3),
-        Groupe(id_groupe=4, nom_groupe='IUTO', id_hebergement=1),
-        Groupe(id_groupe=5, nom_groupe='SLR', id_hebergement=2),
-        Groupe(id_groupe=6, nom_groupe='La Z compagnie', id_hebergement=3),
-        Groupe(id_groupe=7, nom_groupe='Je fait toutou seul', id_hebergement=3),
+        Groupe(id_groupe=1, nom_groupe='Les Artistes Brillants', id_hebergement=1,
+               photo_groupe=None, description_groupe='Groupe de musique classique', 
+               insta_groupe='@lesartistesbrillants', spotify_groupe='Les Artistes Brillants'),
+        Groupe(id_groupe=2, nom_groupe='Thibault et ses esclaves', id_hebergement=2,
+               photo_groupe=None, description_groupe='Groupe de musique rock', 
+               insta_groupe='@thibaultetsesesclaves', spotify_groupe='Thibault et ses esclaves'),
+        Groupe(id_groupe=3, nom_groupe='La Saint-Leger tout puissant', id_hebergement=3,
+               photo_groupe=None, description_groupe='Groupe de musique pop', 
+               insta_groupe='@lasaintlegertoutpuissant', spotify_groupe='La Saint-Leger tout puissant'),
+        Groupe(id_groupe=4, nom_groupe='IUTO', id_hebergement=1,
+               photo_groupe=None, description_groupe='Groupe de musique rock', 
+               insta_groupe='@iuto', spotify_groupe='IUTO'),
+        Groupe(id_groupe=5, nom_groupe='SLR', id_hebergement=2,
+               photo_groupe=None, description_groupe='Groupe de musique pop',
+               insta_groupe='@slr', spotify_groupe='SLR'),
+        Groupe(id_groupe=6, nom_groupe='La Z compagnie', id_hebergement=3,
+               photo_groupe=None, description_groupe='Groupe de musique classique', 
+               insta_groupe='@lazcompagnie', spotify_groupe='La Z compagnie'),
+        Groupe(id_groupe=7, nom_groupe='Je fait toutou seul', id_hebergement=3,
+               photo_groupe=None, description_groupe='Groupe de musique rock', 
+               insta_groupe='@jefaittoutouseul', spotify_groupe='Je fait toutou seul')
     ]
     session.add_all(groupes)
 
@@ -59,18 +75,32 @@ def initdb():
 
     # Insertions pour la table CONCERT
     concerts = [
-        Concert(id_concert=1, nom_concert='Concert d ouverture', tps_prepa_concert=30, date_heure_concert='2023-10-25 19:00:00', duree_concert=120, id_lieu=1),
-        Concert(id_concert=2, nom_concert='Soirée Musicale', tps_prepa_concert=40, date_heure_concert='2023-11-05 20:00:00', duree_concert=90, id_lieu=2),
-        Concert(id_concert=3, nom_concert='Symphonie en Soirée', tps_prepa_concert=25, date_heure_concert='2023-11-15 18:30:00', duree_concert=150, id_lieu=3),
-    ]
+        Concert(id_concert=1, nom_concert='Concert d ouverture', tps_prepa_concert=30, 
+                date_heure_concert=datetime.strptime('2023-10-25 19:00:00', '%Y-%m-%d %H:%M:%S').date(), 
+                duree_concert=120, id_lieu=1),
+        Concert(id_concert=2, nom_concert='Soirée Musicale', tps_prepa_concert=40, 
+                date_heure_concert=datetime.strptime('2023-11-05 20:00:00', '%Y-%m-%d %H:%M:%S').date(), 
+                duree_concert=90, id_lieu=2),
+        Concert(id_concert=3, nom_concert='Symphonie en Soirée', tps_prepa_concert=25, 
+                date_heure_concert=datetime.strptime('2023-11-15 18:30:00', '%Y-%m-%d %H:%M:%S').date(), 
+                duree_concert=150, id_lieu=3),
+        ]
     session.add_all(concerts)
 
     # Insertions pour la table SPECTATEUR
     spectateurs = [
-        Spectateur(id_spectateur=1, nom_spectateur='Valentin', prenom_spectateur='Romanet', mot_passe_spectateur='mdpRomanet', email_spectateur='valentin@example.com', anniversaire_spectateur='2004-05-15'),
-        Spectateur(id_spectateur=2, nom_spectateur='Hugo', prenom_spectateur='Sainson', mot_passe_spectateur='mdpSainson', email_spectateur='hugo@example.com', anniversaire_spectateur='2004-12-20'),
-        Spectateur(id_spectateur=3, nom_spectateur='Thibault', prenom_spectateur='Saint-Leger', mot_passe_spectateur='mdpSaint', email_spectateur='thibault@example.com', anniversaire_spectateur='2004-17-06'),
-        Spectateur(id_spectateur=4, nom_spectateur='Arthur', prenom_spectateur='Villet', mot_passe_spectateur='mdpVillet', email_spectateur='arthur@example.com', anniversaire_spectateur='2004-03-10'),
+        Spectateur(id_spectateur=1, nom_spectateur='Valentin', prenom_spectateur='Romanet', 
+                   mdp_spectateur='mdpRomanet', email_spectateur='valentin@example.com', 
+                   anniv_spectateur=datetime.strptime('2004-05-15', '%Y-%m-%d').date(), photo_compte=None),
+        Spectateur(id_spectateur=2, nom_spectateur='Hugo', prenom_spectateur='Sainson', 
+                   mdp_spectateur='mdpSainson', email_spectateur='hugo@example.com', 
+                   anniv_spectateur=datetime.strptime('2004-12-20', '%Y-%m-%d').date(), photo_compte=None),
+        Spectateur(id_spectateur=3, nom_spectateur='Thibault', prenom_spectateur='Saint-Leger', 
+                   mdp_spectateur='mdpSaint', email_spectateur='thibault@example.com', 
+                   anniv_spectateur=datetime.strptime('2004-10-06', '%Y-%m-%d').date(), photo_compte=None),
+        Spectateur(id_spectateur=4, nom_spectateur='Arthur', prenom_spectateur='Villet', 
+                   mdp_spectateur='mdpVillet', email_spectateur='arthur@example.com',
+                     anniv_spectateur=datetime.strptime('2004-03-10', '%Y-%m-%d').date(), photo_compte=None),
     ]
     session.add_all(spectateurs)
 
@@ -150,9 +180,9 @@ def initdb():
 
     # Insertions pour la table BILLET
     billets = [
-        Billet(id_billet=1, date_billet='2023-10-15', id_type=1, id_spectateur=1),
-        Billet(id_billet=2, date_billet='2023-11-02', id_type=2, id_spectateur=2),
-        Billet(id_billet=3, date_billet='2023-11-20', id_type=3, id_spectateur=3),
+        Billet(id_billet=1, date_billet=datetime.strptime('2023-10-15', '%Y-%m-%d').date(), id_type=1, id_spectateur=1),
+        Billet(id_billet=2, date_billet=datetime.strptime('2023-11-02', '%Y-%m-%d').date(), id_type=2, id_spectateur=2),
+        Billet(id_billet=3, date_billet=datetime.strptime('2023-11-20', '%Y-%m-%d').date(), id_type=3, id_spectateur=3),
     ]
     session.add_all(billets)
 

@@ -16,10 +16,10 @@ class Appartenir(Base):
 class Artiste(Base):
     __tablename__ = 'ARTISTE'
     id_artiste = Column(Integer, primary_key=True)
-    nomArtiste = Column(String(42))
+    nom_artiste = Column(String(42))
     
-    def __init__(self, id_artiste, nomArtiste):
-        self.nomArtiste = nomArtiste
+    def __init__(self, id_artiste, nom_artiste):
+        self.nom_artiste = nom_artiste
         self.id_artiste = id_artiste
 
 class Billet(Base):

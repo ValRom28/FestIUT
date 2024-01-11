@@ -1,3 +1,4 @@
+"""
 import os
 from app import app
 from flask import render_template, request, redirect, url_for, make_response, send_file, jsonify, Response
@@ -26,3 +27,4 @@ def editUser():
         update_user(user.idPompier, form.prenom.data, form.nom.data, form.mail.data, form.telephone.data, password)
         return redirect(url_for('user'))
     return render_template('editUser.html', nom_page=page_name, user=user, form=form, notification_enabled=user_has_notifications(current_user.get_id()), is_admin =get_user_by_id(current_user.get_id()).idRole == 1)
+"""
