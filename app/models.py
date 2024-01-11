@@ -208,6 +208,9 @@ class Spectateur(Base):
         self.anniv_spectateur = anniv_spectateur
         self.photo_compte = photo_compte
 
+    def get_id(self):
+        return self.id_spectateur
+
 class Type(Base):
     __tablename__ = 'TYPE'
     id_type = Column(Integer, primary_key=True)

@@ -27,19 +27,3 @@ def get_user_by_email(email):
         dict: Un dictionnaire contenant les informations de l'utilisateur.
     """
     return Spectateur.query.filter_by(email_spectateur=email).first()
-
-def mot_de_passe_correct(username, password):
-    """
-    Vérifie si le mot de passe est correct.
-
-    Args:
-        username (str): Le nom d'utilisateur.
-        password (str): Le mot de passe à vérifier.
-
-    Returns:
-        bool: True si le mot de passe est correct, False sinon.
-    """
-    user = get_user_by_email(username)
-    if user:
-        return user.mdp_spectateur == password
-    return False
