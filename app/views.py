@@ -47,3 +47,11 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+
+@app.route('/registration',methods=['GET','POST'])
+def registration():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        return redirect(url_for('login'))
+    return render_template('inscription.html', form=form)
