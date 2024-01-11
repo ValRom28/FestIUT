@@ -16,10 +16,10 @@ class Appartenir(Base):
 class Artiste(Base):
     __tablename__ = 'ARTISTE'
     id_artiste = Column(Integer, primary_key=True)
-    nomArtiste = Column(String(42))
+    nom_artiste = Column(String(42))
     
-    def __init__(self, id_artiste, nomArtiste):
-        self.nomArtiste = nomArtiste
+    def __init__(self, id_artiste, nom_artiste):
+        self.nom_artiste = nom_artiste
         self.id_artiste = id_artiste
 
 class Billet(Base):
@@ -132,11 +132,15 @@ class Lieu(Base):
     id_lieu = Column(Integer, primary_key=True)
     nom_lieu = Column(String(42))
     jauge_lieu = Column(Integer)
+    coordonne_X = Column(Float)
+    coordonne_Y = Column(Float)
 
-    def __init__(self, id_lieu, nom_lieu, jauge_lieu):
+    def __init__(self, id_lieu, nom_lieu, jauge_lieu, coordonne_X, coordonne_Y):
         self.id_lieu = id_lieu
         self.nom_lieu = nom_lieu
         self.jauge_lieu = jauge_lieu
+        self.coordonne_X = coordonne_X
+        self.coordonne_Y = coordonne_Y
 
 class OrganiserConcert(Base):
     __tablename__ = 'ORGANISERCONCERT'
