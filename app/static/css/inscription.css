@@ -1,0 +1,73 @@
+main{
+    display:flex;
+    justify-content: center;
+    
+}
+body{
+    overflow: hidden;
+    background-image: url("../img/fondConnexion.gif");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+.bloc_iscription {
+    background: #281460;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 4.5rem;
+    flex-basis: calc(100%/3);
+    border-radius: 5rem;
+}
+.email>p, .password>p,.confirm_password>p,.username>p{
+    color: white;
+    font-size: 200%;
+    margin-bottom: 2%;
+
+}
+.email>input, .password>input,.confirm_password>input,.username>input {
+    border: none;
+    border-radius: 2rem;
+    padding: 0.5rem;
+    width: 50%;
+}
+.confirm>input {
+    margin-top: 0%;
+    font-size: 150%;
+    background: white;
+    border: none;
+    border-radius: 2rem;
+    padding-top: 0%;
+    color:  #281460;
+    cursor: pointer;
+    padding:1rem;
+
+}
+
+
+.confirm>input:hover {
+    color: rgb(253, 0, 0);
+    transition: 0.5s;
+}
+
+.email, .password,.confirm,.username,.confirm_password{
+    padding-right: 0rem;
+    flex-basis: 100%;
+    text-align: center;
+  
+}
+.confirm{
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+    margin-left: 1rem;
+}
+
+    
+   
+body{
+    margin: 0%;
+}
+
+
+
+

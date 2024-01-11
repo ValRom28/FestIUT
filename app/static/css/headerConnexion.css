@@ -1,0 +1,40 @@
+.top{
+    background-color:  #281460;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    
+}
+.top>p{
+    color: white;
+    font-size: 500%;
+    flex-basis: 50%;
+    text-align: center;
+    margin-top:2rem;
+    flex-grow: 1;
+    margin-left:4rem;
+    margin-bottom: 2rem;
+}
+.top>img{
+    width: 8%;
+    height: 8%;
+    margin-left: 1rem;
+    flex-basis: 8%;
+}
+.top>a{
+    color: white;
+    font-size: 200%;
+    flex-basis: 8%;
+    text-decoration: none;
+    background-color: gray;
+    text-align: center;
+    border-radius: 2rem;
+    marign:5rem;
+    margin-top:2rem;
+}
+
+.top>a:hover{
+    color: #281460;
+    transition: 0.5s;
+    background-color: white;
+}
