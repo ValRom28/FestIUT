@@ -37,3 +37,10 @@ def login():
         return
     return render_template('connexion.html', form=form)
 
+@app.route('/registration',methods=['GET','POST'])
+def registration():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        return redirect(url_for('login'))
+    return render_template('inscription.html', form=form)
+

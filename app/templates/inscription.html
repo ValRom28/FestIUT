@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+    <html lang="fr">
+        <head>
+            <meta charset="utf-8">
+            <meta name="connexion">
+            <link rel="stylesheet" href="{{ url_for('static',filename='css/inscription.css')}}">
+            <link rel="stylesheet" href="{{ url_for('static',filename='css/headerConnexion.css')}}">
+
+            <title>Connexion</title>
+        </head>
+        <body>
+            <header>
+            {% include "components/headerConnexion.html" %}
+            </header>
+            <main>
+              <form method="POST" class="bloc_iscription" action="">
+                  {{ form.hidden_tag() }}
+              <div class="username">
+                  <p>Nom d'utilisateur</p>
+                  {{ form.username(size=50) }}
+              </div>
+              <div class="email">
+                  <p>Email</p>
+                  {{ form.email(size=50) }}
+              </div>
+              <div class="password">
+                  <p>Mot de passe</p>
+                 {{ form.password(size=50) }}
+              </div>
+              <div class="confirm_password">
+                  <p>Confirmer le mot de passe</p>
+                 {{ form.confirm_password(size=50) }}
+              <div class="confirm">
+                  {{ form.submit }}
+              </div>
+          </form>
+          </main>
+      </body>
+        </body>
