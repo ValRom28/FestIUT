@@ -12,7 +12,7 @@ import base64
 
 @login_manager.user_loader
 def load_user(user_id):
-    return 1
+    return get_user_by_id(user_id)
 
 # @app.route('/editUser', methods=['GET', 'POST'])
 # @activated_required
@@ -30,10 +30,24 @@ def load_user(user_id):
 #         return redirect(url_for('user'))
 #     return render_template('editUser.html', nom_page=page_name, user=user, form=form, notification_enabled=user_has_notifications(current_user.get_id()), is_admin =get_user_by_id(current_user.get_id()).idRole == 1)
 
-@app.route('/login',methods=['GET','POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
+    user = get_user_by_email(form.mail.data)
     if form.validate_on_submit():
-        return
+        if user:
+            if mot_de_passe_correct(user.mdpPompier, form.mdp.data):
+                login_user(user, remember=True)
+                return redirect(url_for('home'))
     return render_template('connexion.html', form=form)
 
+@app.route('/home')
+@login_required
+def home():
+    return render_template('home.html', nom_page='Accueil')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
