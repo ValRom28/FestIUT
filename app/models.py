@@ -132,11 +132,15 @@ class Lieu(Base):
     id_lieu = Column(Integer, primary_key=True)
     nom_lieu = Column(String(42))
     jauge_lieu = Column(Integer)
+    coordonneX = Column(Float)
+    coordonneY = Column(Float)
 
-    def __init__(self, id_lieu, nom_lieu, jauge_lieu):
+    def __init__(self, id_lieu, nom_lieu, jauge_lieu, coordonneX, coordonneY):
         self.id_lieu = id_lieu
         self.nom_lieu = nom_lieu
         self.jauge_lieu = jauge_lieu
+        self.coordonneX = coordonneX
+        self.coordonneY = coordonneY
 
 class OrganiserConcert(Base):
     __tablename__ = 'ORGANISERCONCERT'

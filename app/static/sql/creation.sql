@@ -82,7 +82,9 @@ CREATE TABLE LIEU (
   PRIMARY KEY (idLieu),
   idLieu INT NOT NULL,
   nomLieu VARCHAR(42),
-  jaugeLieu INT
+  jaugeLieu INT,
+  coordonneX float,
+  coordonneY float
 );
 
 CREATE TABLE ORGANISERCONCERT (
