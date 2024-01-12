@@ -27,3 +27,6 @@ def get_user_by_email(email):
         dict: Un dictionnaire contenant les informations de l'utilisateur.
     """
     return Spectateur.query.filter_by(email_spectateur=email).first()
+
+def get_groupes():
+    return Groupe.query.all()

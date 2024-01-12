@@ -1,1 +1,55 @@
-<p>Connecté</p>
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="connexion">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/groupes.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/headerConnexion.css')}}">
+
+    <title>Groupes</title>
+</head>
+
+<body>
+    <header>
+        {% include "components/headerConnexion.html" %}
+    </header>
+    <main>
+        <div class="main-part">
+            <section class="left-part">
+                <!-- Votre formulaire de recherche ici -->
+                <form action="" onsubmit="search(); return false;">
+                    <div class="search-input-container">
+                        <input class="form-control me-2" type="search" name="query" placeholder="Rechercher un groupe"
+                            aria-label="Search">
+                            <img id="toggleSearch" class="search-toggle" src="{{ url_for('static', filename='img/chercher.png') }}" alt="Rechercher" onclick="search()" />
+                    </div>
+                </form>
+                <div class="sommaire-content">
+                    <h2 class="groupes-left">Les groupes</h2>
+                    <div class="liste-groupes">
+                        {% for groupe in liste_groupes %}
+                        <a href="#groupe-{{ groupe.nom_groupe }}" class="darkmode-ignore">{{ groupe.nom_groupe }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+            <section class="right-part">
+                <h2 class="title-h2">Détails des groupes</h2>
+                {% for groupe in liste_groupes %}
+                <div class="box-groupe">
+                    <div class="info-groupe">
+                        <h3 id="groupe-{{ groupe.nom_groupe }}" class="groupe-title darkmode-ignore">{{ groupe.nom_groupe }}</h3>
+                        <p class="groupe-description">{{ groupe.description_groupe }}</p>
+                        <p class="groupe-insta">Instagram: {{ groupe.insta_groupe }}</p>
+                        <p class="groupe-spotify">Spotify: {{ groupe.spotify_groupe }}</p>
+                        <!-- Ajoutez d'autres informations sur le groupe selon votre modèle -->
+                    </div>
+                </div>
+                {% endfor %}
+            </section>
+        </div>
+    </main>
+</body>
+
+</html>

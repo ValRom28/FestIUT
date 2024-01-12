@@ -58,3 +58,13 @@ def registration():
     if form.validate_on_submit():
         return redirect(url_for('login'))
     return render_template('inscription.html', form=form)
+
+
+@app.route("/groupes")
+def groupes():
+    """
+        Cette fonction nous permet de nous diriger vers la page qui
+        liste les parcours
+    """
+    liste_groupe = get_groupes()
+    return render_template('groupes.html', liste_groupes = liste_groupe)
