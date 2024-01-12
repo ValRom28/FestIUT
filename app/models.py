@@ -207,6 +207,8 @@ class Spectateur(Base):
         self.email_spectateur = email_spectateur
         self.anniv_spectateur = anniv_spectateur
         self.photo_compte = photo_compte
+    def is_authenticated(self):
+        return True
 
 class Type(Base):
     __tablename__ = 'TYPE'

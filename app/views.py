@@ -55,3 +55,8 @@ def registration():
     if form.validate_on_submit():
         return redirect(url_for('login'))
     return render_template('inscription.html', form=form)
+
+@app.route('/home', methods=['GET', 'POST'])
+def home():
+    print(current_user.is_authenticated)
+    return render_template('accueil.html',connecter=current_user.is_authenticated)
