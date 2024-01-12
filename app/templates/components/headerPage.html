@@ -1,0 +1,14 @@
+<div class="top">
+    <img src="{{ url_for('static',filename='img/logo.png')}}" alt="logo">
+    <p>Fest'iut</p>
+    <a href="#">billeterie</a>
+    <a href="#">programmation</a>
+    <a href="#">artistes</a>
+    {% if connecter %}
+    <a href="{{url_for('login')}}">déconnexion</a>
+    
+    {% else %}
+    <a href="{{url_for('login')}}">connexion</a>
+
+    {%endif %}
+</div>

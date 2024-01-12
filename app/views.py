@@ -60,6 +60,7 @@ def registration():
     return render_template('inscription.html', form=form)
 
 
+
 @app.route("/groupes")
 def groupes():
     """
@@ -68,3 +69,9 @@ def groupes():
     """
     liste_groupe = get_groupes()
     return render_template('groupes.html', liste_groupes = liste_groupe)
+
+@app.route('/home', methods=['GET', 'POST'])
+def home():
+    print(current_user.is_authenticated)
+    return render_template('accueil.html',connecter=current_user.is_authenticated)
+
