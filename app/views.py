@@ -36,11 +36,14 @@ def login():
     user = get_user_by_email(form.mail.data)
     if form.validate_on_submit():
         if user:
-            if mot_de_passe_correct(user.mdpPompier, form.mdp.data):
-                login_user(user, remember=True)
+            if user.mdp_spectateur == form.mdp.data:
+                login_user(user, force=True)
                 return redirect(url_for('home'))
     return render_template('connexion.html', form=form)
 
+@app.route('/')
+def home():
+    return render_template('home.html')
 
 @app.route('/logout')
 @login_required
@@ -56,7 +59,19 @@ def registration():
         return redirect(url_for('login'))
     return render_template('inscription.html', form=form)
 
+
+
+@app.route("/groupes")
+def groupes():
+    """
+        Cette fonction nous permet de nous diriger vers la page qui
+        liste les parcours
+    """
+    liste_groupe = get_groupes()
+    return render_template('groupes.html', liste_groupes = liste_groupe)
+
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     print(current_user.is_authenticated)
     return render_template('accueil.html',connecter=current_user.is_authenticated)
+

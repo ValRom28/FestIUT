@@ -210,6 +210,9 @@ class Spectateur(Base):
     def is_authenticated(self):
         return True
 
+    def get_id(self):
+        return self.id_spectateur
+
 class Type(Base):
     __tablename__ = 'TYPE'
     id_type = Column(Integer, primary_key=True)
