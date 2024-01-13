@@ -28,14 +28,14 @@
     font-size: 200%;
     flex-basis: 8%;
     text-decoration: none;
-    background-color: gray;
+    background: linear-gradient(to right, #351d79, pink);
     text-align: center;
     border-radius: 2rem;
     margin-right:2rem;
+    height: 3rem;
 }
 
 .choix:hover{
-    color: #281460;
     transition: 0.5s;
-    background-color: white;
+    background: linear-gradient(to right, pink, #351d79);
 }
