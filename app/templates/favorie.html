@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="connexion">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/favorie.css')}}">
+    </head>
+    <body>
+        <header>
+            {% include "components/headerPage.html" %}
+        </header>
+        <main>
+            {% for groupe in liste_favoris %}
+            <a href="#groupe-{{ groupe.nom_groupe }}">
+                <div class='bloc_groupe'>
+                    <img src="{{ groupe.image_groupe }}" alt="image_groupe">
+                    <p>{{ groupe.nom_groupe }}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </main>
+    </body>
+</html>

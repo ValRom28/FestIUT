@@ -74,8 +74,29 @@ def groupes():
         Cette fonction nous permet de nous diriger vers la page qui
         liste les parcours
     """
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
     liste_groupe = get_groupes()
-    return render_template('groupes.html', liste_groupes = liste_groupe)
+    return render_template('groupes.html', liste_groupes = liste_groupe,connecter=connecter,admin=admin)
 
+@app.route("/favoris")
+def favoris():
+    """
+        Cette fonction nous permet de nous diriger vers la page qui
+        liste les parcours
+    """
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+        liste_favoris = get_favoris(current_user.get_id())
+    
+    print(current_user.get_id())
+    print(liste_favoris)
+    return render_template('favorie.html', liste_favoris = liste_favoris,connecter=connecter,admin=admin)
 
 
