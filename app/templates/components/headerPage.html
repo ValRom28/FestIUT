@@ -1,14 +1,18 @@
 <div class="top">
-    <img src="{{ url_for('static',filename='img/logo.png')}}" alt="logo">
+    <a href="{{url_for('home')}}" class=logo> <img src="{{ url_for('static',filename='img/logo.png')}}" alt="logo"> </a>
     <p>Fest'iut</p>
-    <a href="#">billeterie</a>
-    <a href="#">programmation</a>
-    <a href="#">artistes</a>
+    <a href="#" class='choix'>billeterie</a>
+    <a href="#" class='choix'>programmation</a>
+    <a href="{{url_for('groupes')}}"  class='choix'>artistes</a>
+    <a href="#" class='choix'>favorie</a>
     {% if connecter %}
-    <a href="{{url_for('login')}}">déconnexion</a>
+    {% if admin %}
+    <a href="#"  class='choix'>admin</a>
+    {% endif %}
+    <a href="{{url_for('logout')}}" class='choix'>déconnexion</a>
     
     {% else %}
-    <a href="{{url_for('login')}}">connexion</a>
+    <a href="{{url_for('login')}}" class='choix'>connexion</a>
 
     {%endif %}
 </div>

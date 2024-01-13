@@ -16,13 +16,13 @@
     margin-left:4rem;
     margin-bottom: 2rem;
 }
-.top>img{
-    width: 8%;
-    height: 8%;
+.logo>img{
+    width: 50%;
+    height: 50%;
     margin-left: 1rem;
     flex-basis: 8%;
 }
-.top>a{
+.choix{
     color: white;
     font-family: 'Lexend Deca', sans-serif;
     font-size: 200%;
@@ -34,7 +34,7 @@
     margin-right:2rem;
 }
 
-.top>a:hover{
+.choix:hover{
     color: #281460;
     transition: 0.5s;
     background-color: white;
