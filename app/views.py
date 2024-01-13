@@ -42,14 +42,23 @@ def login():
                 return redirect(url_for('home'))
     return render_template('connexion.html', form=form)
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
+    if request.method == 'POST':
+        selected_date = request.form.get('date')
+        selected_place = request.form.get('place')
+        filtered_concerts = filter_concerts(selected_date, selected_place)
+    else:
+        selected_date = '2024-01-13'
+        selected_place = 'Venue 1'
+        filtered_concerts = filter_concerts(selected_date, selected_place)
+    lieux = get_lieux()
     admin=False
     connecter=False
     if current_user.is_authenticated:
         connecter=True
         admin=current_user.is_admin()
-    return render_template('accueil.html',connecter=connecter,admin=admin)
+    return render_template('accueil.html', concerts=filtered_concerts, selected_date=selected_date, selected_place=selected_place,connecter=connecter,admin=admin,lieux = lieux)
 
 
 @app.route('/logout')
@@ -76,6 +85,4 @@ def groupes():
     """
     liste_groupe = get_groupes()
     return render_template('groupes.html', liste_groupes = liste_groupe)
-
-
 

@@ -30,3 +30,9 @@ def get_user_by_email(email):
 
 def get_groupes():
     return Groupe.query.all()
+
+def get_lieux():
+    return Lieu.query.all()
+
+def filter_concerts(date, place):
+    return Concert.query.filter_by(date_heure_concert=date, id_lieu=place).all()

@@ -1,12 +1,39 @@
 <!DOCTYPE html>
-    <html lang="fr">
-        <head>
-            <meta charset="utf-8">
-            <meta name="connexion">
-            <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
-        </head>
-        <body>
-            <header>
-                {% include "components/headerPage.html" %}
-            </header>
-        </body>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="connexion">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
+</head>
+<body>
+    <header>
+        {% include "components/headerPage.html" %}
+    </header>
+    <main>
+    <h1>Concert Grid</h1>
+    
+    <form method="post">
+        <input type="date" id="date" name="date" value="{{ selected_date }}">
+        <select id="place" name="place">
+            {% for lieu in lieux %}
+                <option value="{{ lieu.id_lieu }}" {% if selected_place == place %}selected{% endif %}>{{ lieu.nom_lieu }}</option>
+            {% endfor %}
+        </select>
+        
+        <button type="submit">Filter</button>
+    </form>
+    
+    <table border="1">
+        <tr>
+            <th>Concert</th>
+            <th>Durée</th>
+        </tr>
+        {% for concert in concerts %}
+            <tr>
+                <td>{{ concert.nom_concert }}</td>
+                <td>{{ concert.duree_concert//60 }}h{{concert.duree_concert-concert.duree_concert//60*60}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+</body>

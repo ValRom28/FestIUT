@@ -34,7 +34,10 @@ INSERT INTO LIEU (idLieu, nomLieu, jaugeLieu, coordonneX, coordonneY) VALUES (3,
 -- Insertions pour la table CONCERT
 INSERT INTO CONCERT (idConcert, nomConcert, tpsPrepaConcert, dateHeureConcert, dureeConcert, idLieu) VALUES (1, 'Concert d ouverture', 30, '2023-10-25 19:00:00', 120, 1);
 INSERT INTO CONCERT (idConcert, nomConcert, tpsPrepaConcert, dateHeureConcert, dureeConcert, idLieu) VALUES (2, 'Soirée Musicale', 40, '2023-11-05 20:00:00', 90, 2);
-INSERT INTO CONCERT (idConcert, nomConcert, tpsPrepaConcert, dateHeureConcert, dureeConcert, idLieu) VALUES (3, 'Symphonie en Soirée', 25, '2023-11-15 18:30:00', 150, 3);
+INSERT INTO CONCERT (idConcert, nomConcert, tpsPrepaConcert, dateHeureConcert, dureeConcert, idLieu) VALUES (3, 'Symphonie en Soirée', 25, '2023-11-05 16:30:00', 150, 2);
+INSERT INTO CONCERT (idConcert, nomConcert, tpsPrepaConcert, dateHeureConcert, dureeConcert, idLieu) VALUES (4, 'Concert de clôture', 30, '2023-11-05 19:00:00', 120, 1);
+INSERT INTO CONCERT (idConcert, nomConcert, tpsPrepaConcert, dateHeureConcert, dureeConcert, idLieu) VALUES (5, 'Soirée Musicale', 40, '2023-11-05 20:00:00', 90, 3);
+INSERT INTO CONCERT (idConcert, nomConcert, tpsPrepaConcert, dateHeureConcert, dureeConcert, idLieu) VALUES (6, 'Symphonie en Soirée', 25, '2023-11-05 18:30:00', 50, 3);
 
 -- Insertions pour la table SPECTATEUR
 INSERT INTO SPECTATEUR (idSpectateur, nomSpectateur, prenomSpectateur, motPasseSpectateur, emailSpectateur, anniversaireSpectateur) VALUES (1, 'Valentin', 'Romanet', 'mdpRomanet', 'valentin@example.com', '2004-05-15');
