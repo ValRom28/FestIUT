@@ -206,6 +206,8 @@ def initdb():
     favoris = [
         Favoris(id_groupe=1, id_spectateur=1),
         Favoris(id_groupe=2, id_spectateur=2),
+        Favoris(id_groupe=1, id_spectateur=2),
+        Favoris(id_groupe=3, id_spectateur=2),
         Favoris(id_groupe=3, id_spectateur=3),
     ]
     session.add_all(favoris)
@@ -228,3 +230,4 @@ def initdb():
     # Valider les modifications dans la base de données
     session.commit()
     print('Insertions terminées.')
+    

@@ -97,6 +97,7 @@ class Groupe(Base):
         self.insta_groupe = insta_groupe
         self.spotify_groupe = spotify_groupe
         self.id_hebergement = id_hebergement
+    
 
 class Hebergement(Base):
     __tablename__ = 'HEBERGEMENT'
@@ -233,11 +234,3 @@ class Type(Base):
         self.age_min = age_min
         self.age_max = age_max
         
-class Favorie(Base):
-    __tablename__ = 'FAVORIE'
-    id_spectateur = Column(Integer, ForeignKey('SPECTATEUR.id_spectateur'), primary_key=True)
-    id_groupe = Column(Integer, ForeignKey('GROUPE.id_groupe'), primary_key=True)
-
-    def __init__(self, id_spectateur, id_groupe):
-        self.id_spectateur = id_spectateur
-        self.id_groupe = id_groupe

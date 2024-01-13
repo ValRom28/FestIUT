@@ -30,3 +30,14 @@ def get_user_by_email(email):
 
 def get_groupes():
     return Groupe.query.all()
+
+def get_favoris(user):
+    res = Favoris.query.filter_by(id_spectateur=user).all()
+    groupes = []
+    for favori in res:
+        groupe = Groupe.query.get(favori.id_groupe)
+        groupes.append(groupe)
+    return groupes
+   
+    
+    
