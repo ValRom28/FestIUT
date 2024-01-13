@@ -1,0 +1,11 @@
+#map {
+    position: relative;
+    width: 20rem;
+    height: 20rem;
+    background: url('../img/CarteFrance.jpg');
+    background-size: cover;
+}
+
+.marker {
+    position: absolute;
+}

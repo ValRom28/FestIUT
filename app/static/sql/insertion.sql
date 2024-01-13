@@ -27,9 +27,9 @@ INSERT INTO GROUPE (idGroupe, nomGroupe, idHebergement) VALUES (7, 'Je fait tout
 
 
 -- Insertions pour la table LIEU
-INSERT INTO LIEU (idLieu, nomLieu, jaugeLieu, coordonneX, coordonneY) VALUES (1, 'Stade Olympique', 50000, 47.84316612643946, 1.926633417606354);
-INSERT INTO LIEU (idLieu, nomLieu, jaugeLieu, coordonneX, coordonneY) VALUES (2, 'Arena Music', 10000, 47.94316612643946, 1.916633417606354);
-INSERT INTO LIEU (idLieu, nomLieu, jaugeLieu, coordonneX, coordonneY) VALUES (3, 'Théâtre Royal', 1500, 47.84316612643946, 1.026633417606354);
+INSERT INTO LIEU (idLieu, nomLieu, jaugeLieu, coordonneX, coordonneY) VALUES (1, 'Stade Olympique', 50000, 5, 5);
+INSERT INTO LIEU (idLieu, nomLieu, jaugeLieu, coordonneX, coordonneY) VALUES (2, 'Arena Music', 10000, 7, 3);
+INSERT INTO LIEU (idLieu, nomLieu, jaugeLieu, coordonneX, coordonneY) VALUES (3, 'Théâtre Royal', 1500, 2, 8);
 
 -- Insertions pour la table CONCERT
 INSERT INTO CONCERT (idConcert, nomConcert, tpsPrepaConcert, dateHeureConcert, dureeConcert, idLieu) VALUES (1, 'Concert d ouverture', 30, '2023-10-25 19:00:00', 120, 1);

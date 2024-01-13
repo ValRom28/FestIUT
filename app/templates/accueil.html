@@ -4,36 +4,53 @@
     <meta charset="utf-8">
     <meta name="connexion">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/map.css')}}">
+    <style>
+        {% for i in range(0,lieux|length) %}
+            #marker{{ i }} {
+                top : {{ lieux[i].coordonne_X }}rem;
+                left : {{ lieux[i].coordonne_Y }}rem;
+            }
+            #label{{ i }} {
+                top : {{ lieux[i].coordonne_X +1}}rem;
+                left : {{ lieux[i].coordonne_Y +1}}rem;
+                font-size : 10px;
+            }
+        {% endfor %}
+    </style>
 </head>
 <body>
     <header>
         {% include "components/headerPage.html" %}
     </header>
     <main>
-    <h1>Concert Grid</h1>
-    
     <form method="post">
         <input type="date" id="date" name="date" value="{{ selected_date }}">
-        <select id="place" name="place">
-            {% for lieu in lieux %}
-                <option value="{{ lieu.id_lieu }}" {% if selected_place == place %}selected{% endif %}>{{ lieu.nom_lieu }}</option>
+        <div id="map">
+            {% for i in range(0,lieux|length) %}
+                {% if lieux[i].id_lieu == selected_place|int %}
+                    <label for="marker{{ i }}" id="label{{ i }}"class="marker">{{ lieux[i].nom_lieu }}</label>
+                    <input type="radio" id="marker{{ i }}" class="marker" name="place" value="{{lieux[i].id_lieu}}" checked>
+                {% else %}
+                    <label for="marker{{ i }}" id="label{{ i }}"class="marker">{{ lieux[i].nom_lieu }}</label>
+                    <input type="radio" id="marker{{ i }}" class="marker" name="place" value="{{lieux[i].id_lieu}}">
+                {% endif %}
             {% endfor %}
-        </select>
-        
-        <button type="submit">Filter</button>
-    </form>
-    
+        </div>
+        <input type="submit" value="Valider">
+    </form>    
     <table border="1">
         <tr>
             <th>Concert</th>
+            <th>Début</th>
             <th>Durée</th>
         </tr>
         {% for concert in concerts %}
             <tr>
                 <td>{{ concert.nom_concert }}</td>
+                <td>{{ concert.date_heure_concert.strftime("%Hh%M") }}</td>
                 <td>{{ concert.duree_concert//60 }}h{{concert.duree_concert-concert.duree_concert//60*60}}</td>
             </tr>
         {% endfor %}
     </table>
-
 </body>

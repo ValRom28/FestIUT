@@ -9,6 +9,7 @@ from app.requests import *
 from app.forms import *
 from app import login_manager
 from app.models import *
+import datetime
 import base64
 
 @login_manager.user_loader
@@ -49,8 +50,9 @@ def home():
         selected_place = request.form.get('place')
         filtered_concerts = filter_concerts(selected_date, selected_place)
     else:
-        selected_date = '2024-01-13'
-        selected_place = 'Venue 1'
+        date = datetime.datetime.now()
+        selected_date = date.today().strftime("%Y-%m-%d")
+        selected_place = ''
         filtered_concerts = filter_concerts(selected_date, selected_place)
     lieux = get_lieux()
     admin=False
