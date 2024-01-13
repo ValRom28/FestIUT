@@ -16,26 +16,26 @@
     margin-left:4rem;
     margin-bottom: 2rem;
 }
-.top>img{
-    width: 8%;
-    height: 8%;
+.logo>img{
+    width: 50%;
+    height: 50%;
     margin-left: 1rem;
     flex-basis: 8%;
 }
-.top>a{
+.choix{
     color: white;
     font-family: 'Lexend Deca', sans-serif;
     font-size: 200%;
     flex-basis: 8%;
     text-decoration: none;
-    background-color: gray;
+    background: linear-gradient(to right, #351d79, pink);
     text-align: center;
     border-radius: 2rem;
     margin-right:2rem;
+    height: 3rem;
 }
 
-.top>a:hover{
-    color: #281460;
+.choix:hover{
     transition: 0.5s;
-    background-color: white;
+    background: linear-gradient(to right, pink, #351d79);
 }

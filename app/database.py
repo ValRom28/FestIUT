@@ -90,17 +90,17 @@ def initdb():
     # Insertions pour la table SPECTATEUR
     spectateurs = [
         Spectateur(id_spectateur=1, nom_spectateur='Valentin', prenom_spectateur='Romanet', 
-                   mdp_spectateur='mdpRomanet', email_spectateur='valentin@example.com', 
-                   anniv_spectateur=datetime.strptime('2004-05-15', '%Y-%m-%d').date(), photo_compte=None),
+                   mdp_spectateur='mdpRomanet', email_spectateur='valentin@example.com',
+                   anniv_spectateur=datetime.strptime('2004-05-15', '%Y-%m-%d').date(), photo_compte=None, admin=True),
         Spectateur(id_spectateur=2, nom_spectateur='Hugo', prenom_spectateur='Sainson', 
                    mdp_spectateur='mdpSainson', email_spectateur='hugo@example.com', 
-                   anniv_spectateur=datetime.strptime('2004-12-20', '%Y-%m-%d').date(), photo_compte=None),
+                   anniv_spectateur=datetime.strptime('2004-12-20', '%Y-%m-%d').date(), photo_compte=None, admin=False),
         Spectateur(id_spectateur=3, nom_spectateur='Thibault', prenom_spectateur='Saint-Leger', 
                    mdp_spectateur='mdpSaint', email_spectateur='thibault@example.com', 
-                   anniv_spectateur=datetime.strptime('2004-10-06', '%Y-%m-%d').date(), photo_compte=None),
+                   anniv_spectateur=datetime.strptime('2004-10-06', '%Y-%m-%d').date(), photo_compte=None, admin=False),
         Spectateur(id_spectateur=4, nom_spectateur='Arthur', prenom_spectateur='Villet', 
                    mdp_spectateur='mdpVillet', email_spectateur='arthur@example.com',
-                     anniv_spectateur=datetime.strptime('2004-03-10', '%Y-%m-%d').date(), photo_compte=None),
+                     anniv_spectateur=datetime.strptime('2004-03-10', '%Y-%m-%d').date(), photo_compte=None, admin=True),
     ]
     session.add_all(spectateurs)
 

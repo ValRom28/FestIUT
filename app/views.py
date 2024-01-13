@@ -8,6 +8,7 @@ from werkzeug.utils import secure_filename
 from app.requests import *
 from app.forms import *
 from app import login_manager
+from app.models import *
 import base64
 
 @login_manager.user_loader
@@ -43,8 +44,13 @@ def login():
 
 @app.route('/')
 def home():
-    print(current_user.is_authenticated)
-    return render_template('accueil.html',connecter=current_user.is_authenticated)
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    return render_template('accueil.html',connecter=connecter,admin=admin)
+
 
 @app.route('/logout')
 @login_required

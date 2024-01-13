@@ -1,6 +1,6 @@
 <div class="top">
-<img src="{{ url_for('static',filename='img/logo.png')}}" alt="logo">
+<a href="{{url_for('home')}}" class=logo> <img src="{{ url_for('static',filename='img/logo.png')}}" alt="logo"> </a>
 <p>Fest'iut</p>
-<a href="{{url_for('login')}}">connexion</a>
-<a href="{{url_for('registration')}}">inscription</a>
+<a href="{{url_for('login')}}" class='choix'>connexion</a>
+<a href="{{url_for('registration')}}" class='choix'>inscription</a>
 </div>

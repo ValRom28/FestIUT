@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Date, ForeignKey, Float, LargeBinary
+from sqlalchemy import Column, Integer, String, Date, ForeignKey, Float, LargeBinary, Boolean
 from app import db
 
 Base = db.Model
@@ -198,8 +198,9 @@ class Spectateur(Base):
     email_spectateur = Column(String(42), unique=True)
     anniv_spectateur = Column(Date)
     photo_compte = Column(LargeBinary)
+    admin=Column(Boolean)
 
-    def __init__(self, id_spectateur, nom_spectateur, prenom_spectateur, mdp_spectateur, email_spectateur, anniv_spectateur, photo_compte):
+    def __init__(self, id_spectateur, nom_spectateur, prenom_spectateur, mdp_spectateur, email_spectateur, anniv_spectateur, photo_compte,admin):
         self.id_spectateur = id_spectateur
         self.nom_spectateur = nom_spectateur
         self.prenom_spectateur = prenom_spectateur
@@ -207,11 +208,15 @@ class Spectateur(Base):
         self.email_spectateur = email_spectateur
         self.anniv_spectateur = anniv_spectateur
         self.photo_compte = photo_compte
+        self.admin=admin
     def is_authenticated(self):
         return True
 
     def get_id(self):
         return self.id_spectateur
+    
+    def is_admin(self):
+        return self.admin
 
 class Type(Base):
     __tablename__ = 'TYPE'
