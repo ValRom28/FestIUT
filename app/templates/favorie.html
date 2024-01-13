@@ -12,7 +12,7 @@
         </header>
         <main>
             {% for groupe in liste_favoris %}
-            <a href="#groupe-{{ groupe.nom_groupe }}">
+            <a href="{{ url_for('groupe_detail', id_groupe=groupe.id_groupe) }}">
                 <div class='bloc_groupe'>
                     <img src="{{ groupe.image_groupe }}" alt="image_groupe">
                     <p>{{ groupe.nom_groupe }}</p>

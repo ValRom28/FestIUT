@@ -233,4 +233,25 @@ class Type(Base):
         self.prix = prix
         self.age_min = age_min
         self.age_max = age_max
-        
+
+class Event(Base):
+    __tablename__ = 'EVENT'
+    id_event = Column(Integer, primary_key=True)
+    nom_event = Column(String(42))
+    date_event = Column(Date)
+    id_lieu = Column(Integer, ForeignKey('LIEU.id_lieu'))
+
+    def __init__(self, id_event, nom_event, date_event, id_lieu):
+        self.id_event = id_event
+        self.nom_event = nom_event
+        self.date_event = date_event
+        self.id_lieu = id_lieu
+
+class OrganiserEvent(Base):
+    __tablename__ = 'ORGANISEREVENT'
+    id_groupe = Column(Integer, ForeignKey('GROUPE.id_groupe'), primary_key=True)
+    id_event = Column(Integer, ForeignKey('EVENT.id_event'), primary_key=True)
+
+    def __init__(self, id_groupe, id_event):
+        self.id_groupe = id_groupe
+        self.id_event = id_event

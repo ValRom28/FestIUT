@@ -29,7 +29,7 @@
                     <h2 class="groupes-left">Les groupes</h2>
                     <div class="liste-groupes">
                         {% for groupe in liste_groupes %}
-                        <a href="#groupe-{{ groupe.nom_groupe }}" class="darkmode-ignore">{{ groupe.nom_groupe }}</a>
+                        <a href="{{ url_for('groupe_detail', id_groupe=groupe.id_groupe) }}" class="darkmode-ignore">{{ groupe.nom_groupe }}</a>
                         {% endfor %}
                     </div>
                 </div>

@@ -1,0 +1,67 @@
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="connexion">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/groupe_info.css')}}">
+    </head>
+    <body>
+        <header>
+            {% include "components/headerPage.html" %}
+        </header>
+        <main>
+           <h2> {{groupe.nom_groupe}} </h2>
+           {% if like%}
+              <form action="{{ url_for('supprimer_des_favoris', id_groupe=groupe.id_groupe) }}" method="post">
+                <input type="image" src="{{ url_for('static', filename='img/fav.png') }}" alt="Supprimer des favoris"  class="coeur" />
+                </form> 
+                {% else %}
+           <form action="{{ url_for('ajouter_aux_favoris', id_groupe=groupe.id_groupe) }}" method="post">
+            <input type="image" src="{{ url_for('static', filename='img/pas_fav.png') }}" alt="Ajouter aux favoris" class="coeur" />
+            </form> 
+            {% endif %}
+           <img src="{{ groupe.image_groupe }}" alt="image_groupe">
+           <div class="description">
+            <h3> les artistes </h3>
+            {% for artiste in artistes %}
+            <p> {{artiste.nom_artiste}}</p>
+            {% endfor %}
+            <h3> le style </h3>
+            <p> {{style.nom_style}} </p>
+            <h3> la description </h3>
+               <p> {{ groupe.description_groupe }} </p>
+            <h3> les instruments </h3>
+            {% for instrument in instruments %}
+            <p> {{instrument.nom_instrument}}</p>
+            {% endfor %}
+
+           </div>
+            <div class="concerts">
+                <h2> les concerts </h2>
+                {% for concert in concerts %}
+                <h3>{{concert.nom_concert}}</h2>
+                <p>date: {{concert.date_heure_concert}}</p>
+                <p>lieu: {{concert.id_lieu}}</p>
+                <p>duree: {{concert.duree_concert}}m </p>
+                {% endfor %}
+
+        </main>
+        <footer>
+            <h3> pourrez vous plaire </h3>
+            <div class="les_groupes">
+            {%for groupe in groupes_semblable%}
+            <a href="{{ url_for('groupe_detail', id_groupe=groupe.id_groupe) }}">
+                <div class='bloc_groupe'>
+                    <img src="{{ groupe.image_groupe }}" alt="image_groupe">
+                    <p>{{ groupe.nom_groupe }}</p>
+                </div>
+            </a>
+            {% endfor %}
+            </div>
+            <h3> resaux sociaux:  </h3>
+            <ul class='resaux_sociaux'>
+            <a> {{ groupe.insta_groupe }} </a>
+             <a> {{ groupe.spotify_groupe }} </a>
+             </div>
+        </footer>
+    </body>

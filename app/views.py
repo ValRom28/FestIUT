@@ -100,3 +100,35 @@ def favoris():
     return render_template('favorie.html', liste_favoris = liste_favoris,connecter=connecter,admin=admin)
 
 
+@app.route("/groupe/<int:id_groupe>")
+def groupe_detail(id_groupe):
+    groupes_semblable =[]
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    groupe = get_groupes_by_id(id_groupe)
+    style = get_style_by_id(groupe[0].id_groupe)
+    artistes= get_artistes_by_id_groupe(groupe[0].id_groupe)
+    groupe = groupe[0]
+    like= est_favoris(id_groupe, current_user.get_id())
+    if(len(style)>0):
+        groupes_semblable=get_groupe_by_style(style[0].id_style)  
+        style=style[0]
+    concerts=get_concert_by_id_groupe(id_groupe)
+    instrument=[]
+    for artiste in artistes:
+        instrument.append(get_instrument_by_id_artiste(artiste.id_artiste))
+    return render_template('groupe_info.html', groupe=groupe, style=style, connecter=connecter,admin=admin,artistes=artistes,like=like,groupes_semblable=groupes_semblable,concerts=concerts,instruments=instrument)
+
+@app.route('/ajouter_aux_favoris/<int:id_groupe>', methods=['POST'])
+def ajouter_aux_favoris(id_groupe):
+    ajouter_favoris(id_groupe, current_user.get_id())
+    return redirect(url_for('groupe_detail', id_groupe=id_groupe))
+
+@app.route('/supprimer_des_favoris/<int:id_groupe>', methods=['POST'])
+def supprimer_des_favoris(id_groupe):
+    supprimer_favoris(id_groupe, current_user.get_id())
+    return redirect(url_for('groupe_detail', id_groupe=id_groupe))
+    
