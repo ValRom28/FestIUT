@@ -9,27 +9,12 @@ from app.requests import *
 from app.forms import *
 from app import login_manager
 from app.models import *
-import base64
+
 
 @login_manager.user_loader
 def load_user(user_id):
     return get_user_by_id(user_id)
 
-# @app.route('/editUser', methods=['GET', 'POST'])
-# @activated_required
-# @login_required
-# def editUser():
-#     user = get_user_by_id(current_user.get_id())
-#     form = EditUserForm(id=user.idPompier, nom=user.nomPompier, prenom=user.prenomPompier, mail=user.emailPompier, mdp=user.mdpPompier, photo=user.photoPompier,telephone=user.telephonePompier)
-#     page_name = f'Modifier le profil : {user.nomPompier} {user.prenomPompier}'
-#     if form.validate_on_submit():
-#         password = generate_password_hash(form.mdp.data).decode('utf-8')
-#         if form.photo.data:
-#             encoded_photo = base64.b64encode(form.photo.data.read())
-#             update_user_photo(user.idPompier, encoded_photo)
-#         update_user(user.idPompier, form.prenom.data, form.nom.data, form.mail.data, form.telephone.data, password)
-#         return redirect(url_for('user'))
-#     return render_template('editUser.html', nom_page=page_name, user=user, form=form, notification_enabled=user_has_notifications(current_user.get_id()), is_admin =get_user_by_id(current_user.get_id()).idRole == 1)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -62,7 +47,15 @@ def logout():
 @app.route('/registration',methods=['GET','POST'])
 def registration():
     form = RegistrationForm()
-    if form.validate_on_submit():
+    form.validate_password(form.password)
+    if form.validate_on_submit() and form.password.data == form.confirm_password.data:
+        spectateur = Spectateur(nom_spectateur=form.username.data, email_spectateur=form.email.data, mdp_spectateur=form.password.data)
+        print(spectateur)
+        print(spectateur.nom_spectateur)
+        print(spectateur.email_spectateur)
+        print(spectateur.mdp_spectateur)
+        db.session.add(spectateur)
+        db.session.commit()
         return redirect(url_for('login'))
     return render_template('inscription.html', form=form)
 
@@ -90,6 +83,7 @@ def favoris():
     """
     admin=False
     connecter=False
+    liste_favoris = []
     if current_user.is_authenticated:
         connecter=True
         admin=current_user.is_admin()
