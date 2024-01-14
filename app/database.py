@@ -40,27 +40,29 @@ def initdb():
     session.add_all(hebergements)
 
     # Insertions pour la table GROUPE
+    bytes_img = open('app/static/img/logo.png', 'rb').read()
+    print(bytes_img)
     groupes = [
         Groupe(id_groupe=1, nom_groupe='Les Artistes Brillants', id_hebergement=1,
-               photo_groupe=None, description_groupe='Groupe de musique classique', 
+               photo_groupe=bytes_img, description_groupe='Groupe de musique classique', 
                insta_groupe='@lesartistesbrillants', spotify_groupe='Les Artistes Brillants'),
         Groupe(id_groupe=2, nom_groupe='Thibault et les autres', id_hebergement=2,
-               photo_groupe=None, description_groupe='Groupe de musique rock', 
+               photo_groupe=bytes_img, description_groupe='Groupe de musique rock', 
                insta_groupe='@thibaultetlesautres', spotify_groupe='Thibault et les autres'),
         Groupe(id_groupe=3, nom_groupe='La Saint-Leger tout puissant', id_hebergement=3,
-               photo_groupe=None, description_groupe='Groupe de musique pop', 
+               photo_groupe=bytes_img, description_groupe='Groupe de musique pop', 
                insta_groupe='@lasaintlegertoutpuissant', spotify_groupe='La Saint-Leger tout puissant'),
         Groupe(id_groupe=4, nom_groupe='IUTO', id_hebergement=1,
-               photo_groupe=None, description_groupe='Groupe de musique rock', 
+               photo_groupe=bytes_img, description_groupe='Groupe de musique rock', 
                insta_groupe='@iuto', spotify_groupe='IUTO'),
         Groupe(id_groupe=5, nom_groupe='SLR', id_hebergement=2,
-               photo_groupe=None, description_groupe='Groupe de musique pop',
+               photo_groupe=bytes_img, description_groupe='Groupe de musique pop',
                insta_groupe='@slr', spotify_groupe='SLR'),
         Groupe(id_groupe=6, nom_groupe='La Z compagnie', id_hebergement=3,
-               photo_groupe=None, description_groupe='Groupe de musique classique', 
+               photo_groupe=bytes_img, description_groupe='Groupe de musique classique', 
                insta_groupe='@lazcompagnie', spotify_groupe='La Z compagnie'),
         Groupe(id_groupe=7, nom_groupe='Je fait toutou seul', id_hebergement=3,
-               photo_groupe=None, description_groupe='Groupe de musique rock', 
+               photo_groupe=bytes_img, description_groupe='Groupe de musique rock', 
                insta_groupe='@jefaittoutouseul', spotify_groupe='Je fait toutou seul')
     ]
     session.add_all(groupes)

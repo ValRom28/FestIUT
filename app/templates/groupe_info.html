@@ -20,7 +20,7 @@
             <input type="image" src="{{ url_for('static', filename='img/pas_fav.png') }}" alt="Ajouter aux favoris" class="coeur" />
             </form> 
             {% endif %}
-           <img src="{{ groupe.image_groupe }}" alt="image_groupe">
+            <img src="data:image/png;base64,{{ image_groupe }}" alt="Image du groupe">
            <div class="description">
             <h3> les artistes </h3>
             {% for artiste in artistes %}
