@@ -97,6 +97,7 @@ class Groupe(Base):
         self.insta_groupe = insta_groupe
         self.spotify_groupe = spotify_groupe
         self.id_hebergement = id_hebergement
+    
 
 class Hebergement(Base):
     __tablename__ = 'HEBERGEMENT'
@@ -200,15 +201,21 @@ class Spectateur(Base):
     photo_compte = Column(LargeBinary)
     admin=Column(Boolean)
 
-    def __init__(self, id_spectateur, nom_spectateur, prenom_spectateur, mdp_spectateur, email_spectateur, anniv_spectateur, photo_compte,admin):
-        self.id_spectateur = id_spectateur
+    def __init__(self, nom_spectateur, mdp_spectateur, email_spectateur, id_spectateur=None, prenom_spectateur=None, anniv_spectateur=None, photo_compte=None, admin=False):
+        if id_spectateur is not None:
+            self.id_spectateur = id_spectateur
+        else:
+            self.id_spectateur = max([spectateur.id_spectateur for spectateur in Spectateur.query.all()]) + 1
         self.nom_spectateur = nom_spectateur
         self.prenom_spectateur = prenom_spectateur
         self.mdp_spectateur = mdp_spectateur
         self.email_spectateur = email_spectateur
         self.anniv_spectateur = anniv_spectateur
         self.photo_compte = photo_compte
-        self.admin=admin
+        self.admin = admin
+        
+        
+        
     def is_authenticated(self):
         return True
 
@@ -232,12 +239,25 @@ class Type(Base):
         self.prix = prix
         self.age_min = age_min
         self.age_max = age_max
-        
-class Favorie(Base):
-    __tablename__ = 'FAVORIE'
-    id_spectateur = Column(Integer, ForeignKey('SPECTATEUR.id_spectateur'), primary_key=True)
-    id_groupe = Column(Integer, ForeignKey('GROUPE.id_groupe'), primary_key=True)
 
-    def __init__(self, id_spectateur, id_groupe):
-        self.id_spectateur = id_spectateur
+class Event(Base):
+    __tablename__ = 'EVENT'
+    id_event = Column(Integer, primary_key=True)
+    nom_event = Column(String(42))
+    date_event = Column(Date)
+    id_lieu = Column(Integer, ForeignKey('LIEU.id_lieu'))
+
+    def __init__(self, id_event, nom_event, date_event, id_lieu):
+        self.id_event = id_event
+        self.nom_event = nom_event
+        self.date_event = date_event
+        self.id_lieu = id_lieu
+
+class OrganiserEvent(Base):
+    __tablename__ = 'ORGANISEREVENT'
+    id_groupe = Column(Integer, ForeignKey('GROUPE.id_groupe'), primary_key=True)
+    id_event = Column(Integer, ForeignKey('EVENT.id_event'), primary_key=True)
+
+    def __init__(self, id_groupe, id_event):
         self.id_groupe = id_groupe
+        self.id_event = id_event

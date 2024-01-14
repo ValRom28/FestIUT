@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, HiddenField, FileField
+from wtforms import StringField, PasswordField, SubmitField, HiddenField, FileField, ValidationError
 from wtforms.validators import DataRequired
 
 class LoginForm(FlaskForm):
@@ -13,3 +13,7 @@ class RegistrationForm(FlaskForm):
     password = PasswordField(validators=[DataRequired()], render_kw={"placeholder": "Mot de passe"})
     confirm_password = PasswordField(validators=[DataRequired()], render_kw={"placeholder": "Confirmer le mot de passe"})
     submit = SubmitField('S\'inscrire')
+    
+    def validate_password(self, password):
+        if password.data != self.confirm_password.data:
+            raise ValidationError('Les mots de passe doivent correspondre.')

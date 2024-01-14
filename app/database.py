@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from .models import (Appartenir, Artiste, Billet, Concert, EtreStyle,
                      EtreType, Favoris, Groupe, Hebergement, Instrument,
                      Jouer, Lieu, OrganiserConcert, Possede, Reserver,
-                     Style, SousStyle, Spectateur, Type)
+                     Style, SousStyle, Spectateur, Type, Event, OrganiserEvent)
 
 @app.cli.command('initdb')
 def initdb():
@@ -224,6 +224,8 @@ def initdb():
     favoris = [
         Favoris(id_groupe=1, id_spectateur=1),
         Favoris(id_groupe=2, id_spectateur=2),
+        Favoris(id_groupe=1, id_spectateur=2),
+        Favoris(id_groupe=3, id_spectateur=2),
         Favoris(id_groupe=3, id_spectateur=3),
     ]
     session.add_all(favoris)
@@ -242,7 +244,25 @@ def initdb():
         Style(id_style=3, nom_style='Jazz'),
     ]
     session.add_all(style)
+    
+    event= [
+        Event(id_event=1, nom_event='bière pong', date_event=datetime.strptime('2023-10-15', '%Y-%m-%d').date(), id_lieu=1),
+        Event(id_event=2, nom_event='strip poker', date_event=datetime.strptime('2023-11-02', '%Y-%m-%d').date(), id_lieu=2),
+        Event(id_event=3, nom_event='danse bretonne', date_event=datetime.strptime('2023-11-20', '%Y-%m-%d').date(), id_lieu=3),
+        Event(id_event=4, nom_event='concours de mangeur', date_event=datetime.strptime('2023-11-20', '%Y-%m-%d').date(), id_lieu=3),
+    ]
+    session.add_all(event)
+    
+    organiserevent = [
+        OrganiserEvent(id_groupe=1, id_event=1),
+        OrganiserEvent(id_groupe=2, id_event=2),
+        OrganiserEvent(id_groupe=3, id_event=3),
+        OrganiserEvent(id_groupe=1, id_event=2),
+        OrganiserEvent(id_groupe=1, id_event=3),
+    ]
+    session.add_all(organiserevent)
 
     # Valider les modifications dans la base de données
     session.commit()
     print('Insertions terminées.')
+    
