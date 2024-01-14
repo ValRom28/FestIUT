@@ -7,8 +7,8 @@ body{
 #map {
     position: relative;
     margin-top: 1rem;
-    width: 18rem;
-    height: 19rem;
+    width: 25vw;
+    height: 55vh;
     background: url('../img/CarteFrance.png');
     background-size: cover;
 }
@@ -26,17 +26,17 @@ body{
     background-image: url("../img/fondConnexion.gif");
     background-size: cover;
     background-repeat: no-repeat;
-    padding-top: 3rem;
-    padding-bottom: 3rem;
+    padding-top: 10vh;
+    padding-bottom: 10vh;
 }
 
 .searchGroupe>input{
     justify-content: center;
     align-items: center;
-    height: 30%;
+    height: 3rem;
     margin: 0 1rem;
     width: 15%;
-    border-radius: 1rem;
+    border-radius: 5rem;
 }
 
 aside>form{
@@ -57,11 +57,11 @@ aside>form{
 }
 
 .searchDate>input{
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
 table{
-    margin: 1rem;
+    margin: 2rem;
     background-color: aliceblue;
     color: #281460;
     border: none;
@@ -70,24 +70,38 @@ table{
 th{
     background-color: #281460;
     color: aliceblue;
-    width: 8rem;
+    width: 16rem;
 }
 
 td{
     text-align: center;
 }
 
-#date{
-    width: 10rem;
-    margin: 0;
-}
-
 .submit{
     background-color: #281460;
     color: aliceblue;
     border-color: aliceblue;
-    border-radius: 1rem;
+    border-radius: 3rem;
     width: 10rem;
+    height: 5rem;
+}
+
+#date{
+    width: 20rem;
+    height: 5rem;
+    font-size: 2rem;
+    border-radius: 2rem;
+    margin: 0;
+    background-color: #281460;
+    color: aliceblue;
+    border-color: aliceblue;
+}
+
+#date:hover{
+    background-color: aliceblue;
+    color: #281460;
+    border: #281460;
+    transition: 0.5s;
 }
 
 .submit:hover{
@@ -99,6 +113,8 @@ td{
 
 h2{
     color: aliceblue;
+    font-size: 3rem;
     margin: 0;
-    margin-top: 5px;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
 }
