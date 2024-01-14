@@ -128,9 +128,12 @@ def supprimer_des_favoris(id_groupe):
     return redirect(url_for('groupe_detail', id_groupe=id_groupe))
 
 
-@app.route("/groupe/<int:id_groupe>/modification", methods=['GET'])
+@app.route("/groupe/<int:id_groupe>/modification", methods=['GET', 'POST'])
 def groupe_modification(id_groupe):
     form= GroupeForm()
+    formConcert= ConcertForm()
+    formEvent= EventForm()
+    formLieu= LieuForm()
     admin=True
     connecter=True
     instrument=[]
@@ -139,9 +142,51 @@ def groupe_modification(id_groupe):
     style = get_style_by_id_groupe(groupe.id_groupe)
     style = style[0]
     artistes= get_artistes_by_id_groupe(groupe.id_groupe)
+    concerts=get_concert_by_id_groupe(id_groupe)
+    instrument=[]
     for artiste in artistes:
         instrument.append(get_instrument_by_id_artiste(artiste.id_artiste))
-    return render_template('modif_groupe.html', groupe=groupe, style=style, artistes=artistes,instrument=instrument,connecter=connecter,admin=admin,form=form)
+   
+    event = (get_event_by_id_groupe(groupe.id_groupe))
+    concerts_et_lieux = [(concert, get_lieu_by_id(concert.id_lieu)) for concert in concerts]
+    events_et_lieux = [(e, get_lieu_by_id(e.id_lieu)) for e in event]
+    form.description_groupe.data = groupe.description_groupe
+    form.spotify_groupe.data = groupe.spotify_groupe
+    form.insta_groupe.data = groupe.insta_groupe
+    for concert in concerts_et_lieux:
+        formConcert.tps_prepa_concert.data = concert[0].tps_prepa_concert
+        formConcert.date_heure_concert.data = concert[0].date_heure_concert
+        formConcert.duree_concert.data = concert[0].duree_concert
+        formLieu.nom_lieu.data = concert[1].nom_lieu
+        formLieu.jauge_lieu.data = concert[1].jauge_lieu
+        formLieu.coordonne_X.data = concert[1].coordonne_X
+        formLieu.coordonne_Y.data = concert[1].coordonne_Y
+        
+    for event in events_et_lieux:
+        formEvent.date_event.data = event[0].date_event
+        formLieu.nom_lieu.data = event[1].nom_lieu
+        formLieu.jauge_lieu.data = event[1].jauge_lieu
+        formLieu.coordonne_X.data = event[1].coordonne_X
+        formLieu.coordonne_Y.data = event[1].coordonne_Y
+    # if form.validate_on_submit():
+    #     groupe.description_groupe = form.description_groupe.data
+    #     groupe.spotify_groupe = form.spotify_groupe.data
+    #     groupe.insta_groupe = form.insta_groupe.data
+    #     db.session.commit()
+        
+    # for concert,lieu in concerts_et_lieux:
+    #     if formConcert.validate_on_submit():
+    #         concert.tps_prepa_concert = formConcert.tps_prepa_concert.data
+    #         concert.date_heure_concert = formConcert.date_heure_concert.data
+    #         concert.duree_concert = formConcert.duree_concert.data
+    #         lieu.nom_lieu = formLieu.nom_lieu.data
+    #         lieu.jauge_lieu = formLieu.jauge_lieu.data
+    #         lieu.coordonne_X = formLieu.coordonne_X.data
+    #         lieu.coordonne_Y = formLieu.coordonne_Y.data
+    #         db.session.commit()
+    #         return redirect(url_for('groupe_detail', id_groupe=id_groupe))
+        
+    return render_template('modif_groupe.html', groupe=groupe, style=style, artistes=artistes,instrument=instrument,connecter=connecter,admin=admin,form=form,formConcert=formConcert,formEvent=formEvent,concerts_et_lieux=concerts_et_lieux,events_et_lieux=events_et_lieux,formLieu=formLieu)
     
 @app.route("/groupe/<int:id_groupe>/delete", methods=['GET'])
 def groupe_delete(id_groupe):

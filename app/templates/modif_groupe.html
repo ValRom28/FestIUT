@@ -10,6 +10,7 @@
             {% include "components/headerPage.html" %}
         </header>
         <main>
+            <div class='info_groupe'>
             <h2> {{groupe.nom_groupe}} </h2>
             <form action="" method="post" class=modif>
                 {{ form.hidden_tag() }}
@@ -30,5 +31,41 @@
                     <object data="" type="image/jpeg"></object>
                     {{ form.photo_groupe }}
 
-                <input type="submit" value="Modifier">
+                </div>
+                <div class="modif">
+                    {{ form.modif }}
+                </div>
+            </form>
+            </div>
+            <div class="concerts">
+                <h2> les concerts </h2>
+                {% for concert,lieu in concerts_et_lieux %}
+                <form action="" method="post" class=modif>
+                {{ form.hidden_tag() }}
+                <h3>{{concert.nom_concert}}</h2>
+                <p>date: {{formConcert.date_heure_concert}} </p>
+                <p> temps de préparation: {{formConcert.tps_prepa_concert}}m </p>
+                <p>duree: {{formConcert.duree_concert}}m </p>
+                <p>lieu: {{formLieu.nom_lieu}} </p>
+                <p> lieu positionX: {{formLieu.coordonne_X}} </p>
+                <p> lieu positionY: {{formLieu.coordonne_Y}} </p>
+                <p> jauge du lieu : {{formLieu.jauge_lieu}} Personne </p>
+                {{ form.modif }}
+                {% endfor %}
+            </div>
+        <div class="event">
+            <h2> les evenements </h2>
+            {% for evenement,lieu in events_et_lieux %}
+            <form action="" method="post" class=modif>
+            {{ form.hidden_tag() }}
+            <h3>{{evenement.nom_event}}</h2>
+            <p>date: {{formEvent.date_event}} </p>
+            <p>lieu:  {{formLieu.nom_lieu}} </p>
+            <p> lieu positionX: {{formLieu.coordonne_X}} </p>
+            <p> lieu positionY: {{formLieu.coordonne_Y}} </p>
+            <p> jauge du lieu : {{formLieu.jauge_lieu}} Personne </p>
+            {{ form.modif }}
+            {% endfor %}
+        </div>
+        </div>
             </main>
