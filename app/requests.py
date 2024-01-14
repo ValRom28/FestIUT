@@ -116,3 +116,6 @@ def get_event_by_id_groupe(id_groupe):
 
 def get_lieu_by_id(id_lieu):
     return Lieu.query.filter_by(id_lieu=id_lieu).first()
+
+def get_groupes_by_nom(nom):
+    return Groupe.query.filter(Groupe.nom_groupe.like('%'+nom+'%')).all()
