@@ -201,15 +201,21 @@ class Spectateur(Base):
     photo_compte = Column(LargeBinary)
     admin=Column(Boolean)
 
-    def __init__(self, id_spectateur, nom_spectateur, prenom_spectateur, mdp_spectateur, email_spectateur, anniv_spectateur, photo_compte,admin):
-        self.id_spectateur = id_spectateur
+    def __init__(self, nom_spectateur, mdp_spectateur, email_spectateur, id_spectateur=None, prenom_spectateur=None, anniv_spectateur=None, photo_compte=None, admin=False):
+        if id_spectateur is not None:
+            self.id_spectateur = id_spectateur
+        else:
+            self.id_spectateur = max([spectateur.id_spectateur for spectateur in Spectateur.query.all()]) + 1
         self.nom_spectateur = nom_spectateur
         self.prenom_spectateur = prenom_spectateur
         self.mdp_spectateur = mdp_spectateur
         self.email_spectateur = email_spectateur
         self.anniv_spectateur = anniv_spectateur
         self.photo_compte = photo_compte
-        self.admin=admin
+        self.admin = admin
+        
+        
+        
     def is_authenticated(self):
         return True
 
