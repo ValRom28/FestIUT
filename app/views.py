@@ -57,6 +57,16 @@ def home():
                            admin=admin,
                            lieux = lieux)
 
+@app.route('/rechercheGroupe')
+def rechercheGroupe():
+    nomGroupe = request.args.get('nomGroupe')
+    groupes = get_groupes_by_nom(nomGroupe)
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    return render_template('rechercheGroupe.html', groupes=groupes,connecter=connecter,admin=admin)
 
 @app.route('/logout')
 @login_required
