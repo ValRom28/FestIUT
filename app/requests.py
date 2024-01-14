@@ -35,4 +35,9 @@ def get_lieux():
     return Lieu.query.all()
 
 def filter_concerts(date, place):
-    return Concert.query.filter_by(date_heure_concert=date, id_lieu=place).all()
+    concert_lieu = Concert.query.filter_by(id_lieu=place).all()
+    res = []
+    for concert in concert_lieu:
+        if concert.date_heure_concert.strftime("%Y-%m-%d") == date:
+            res.append(concert)
+    return res

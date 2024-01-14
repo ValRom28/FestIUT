@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Date, ForeignKey, Float, LargeBinary, Boolean
+from sqlalchemy import Column, Integer, String, Date, ForeignKey, Float, LargeBinary, Boolean, DateTime
 from app import db
 
 Base = db.Model
@@ -40,7 +40,7 @@ class Concert(Base):
     id_concert = Column(Integer, primary_key=True)
     nom_concert = Column(String(42))
     tps_prepa_concert = Column(Integer)
-    date_heure_concert = Column(Date)
+    date_heure_concert = Column(DateTime)
     duree_concert = Column(Integer)
     id_lieu = Column(Integer, ForeignKey('LIEU.id_lieu'))
 
