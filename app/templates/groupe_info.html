@@ -58,6 +58,18 @@
             {% endfor %}
         </div>
 
+            {% if admin %}
+            <div class="admin">
+            <h2> gestion admin</h2>
+            <a href="{{ url_for('groupe_modification', id_groupe=groupe.id_groupe) }}">
+                <button> modifier </button>
+            </a>
+            <a href="{{ url_for('groupe_delete', id_groupe=groupe.id_groupe) }}">
+                <button> supprimer </button>
+            </a>
+            </div>
+            {% endif %}
+
         </main>
         <footer>
             <h3> pourrez vous plaire </h3>

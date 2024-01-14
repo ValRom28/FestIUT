@@ -50,10 +50,6 @@ def registration():
     form.validate_password(form.password)
     if form.validate_on_submit() and form.password.data == form.confirm_password.data:
         spectateur = Spectateur(nom_spectateur=form.username.data, email_spectateur=form.email.data, mdp_spectateur=form.password.data)
-        print(spectateur)
-        print(spectateur.nom_spectateur)
-        print(spectateur.email_spectateur)
-        print(spectateur.mdp_spectateur)
         db.session.add(spectateur)
         db.session.commit()
         return redirect(url_for('login'))
@@ -130,4 +126,28 @@ def ajouter_aux_favoris(id_groupe):
 def supprimer_des_favoris(id_groupe):
     supprimer_favoris(id_groupe, current_user.get_id())
     return redirect(url_for('groupe_detail', id_groupe=id_groupe))
+
+
+@app.route("/groupe/<int:id_groupe>/modification", methods=['GET'])
+def groupe_modification(id_groupe):
+    form= GroupeForm()
+    admin=True
+    connecter=True
+    instrument=[]
+    groupe = get_groupes_by_id(id_groupe)
+    groupe = groupe[0]
+    style = get_style_by_id_groupe(groupe.id_groupe)
+    style = style[0]
+    artistes= get_artistes_by_id_groupe(groupe.id_groupe)
+    for artiste in artistes:
+        instrument.append(get_instrument_by_id_artiste(artiste.id_artiste))
+    return render_template('modif_groupe.html', groupe=groupe, style=style, artistes=artistes,instrument=instrument,connecter=connecter,admin=admin,form=form)
     
+@app.route("/groupe/<int:id_groupe>/delete", methods=['GET'])
+def groupe_delete(id_groupe):
+    print("delete")
+    groupe = get_groupes_by_id(id_groupe)
+    groupe = groupe[0]
+    delete_groupe(groupe)
+    print("true")
+    return redirect(url_for('groupes'))

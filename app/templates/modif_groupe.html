@@ -1,0 +1,34 @@
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="connexion">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/groupe_info.css')}}">
+    </head>
+    <body>
+        <header>
+            {% include "components/headerPage.html" %}
+        </header>
+        <main>
+            <h2> {{groupe.nom_groupe}} </h2>
+            <form action="" method="post" class=modif>
+                {{ form.hidden_tag() }}
+                <div class="description">
+                    <p> Description : </p>
+                    {{ form.description_groupe }}
+                </div>
+                <div class="lien_spotify">
+                    <p> Lien Spotify : </p>
+                    {{ form.spotify_groupe }}
+                </div>
+                <div class="lien_instagram">
+                    <p> Lien instagram : </p>
+                    {{ form.insta_groupe }}
+                </div>
+                <div class="picture">
+                    <p> Photo : </p>
+                    <object data="" type="image/jpeg"></object>
+                    {{ form.photo_groupe }}
+
+                <input type="submit" value="Modifier">
+            </main>

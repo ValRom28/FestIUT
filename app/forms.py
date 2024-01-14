@@ -17,3 +17,11 @@ class RegistrationForm(FlaskForm):
     def validate_password(self, password):
         if password.data != self.confirm_password.data:
             raise ValidationError('Les mots de passe doivent correspondre.')
+        
+class GroupeForm(FlaskForm):
+    description_groupe = StringField(validators=[DataRequired()], render_kw={"placeholder": "Description du groupe"})
+    photo_groupe = FileField(validators=[DataRequired()], render_kw={"placeholder": "Photo du groupe"})
+    insta_groupe = StringField(validators=[DataRequired()], render_kw={"placeholder": "Lien Instagram"})
+    spotify_groupe = StringField(validators=[DataRequired()], render_kw={"placeholder": "Lien Spotify"})
+    id_hebergement = HiddenField()
+    modif = SubmitField('modifier')
