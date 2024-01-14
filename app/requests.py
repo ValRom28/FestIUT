@@ -1,3 +1,4 @@
+import base64
 from app import db
 from app.models import (Appartenir, Artiste, Billet, Concert, EtreStyle,
                      EtreType, Favoris, Groupe, Hebergement, Instrument,
@@ -50,6 +51,7 @@ def get_favoris(user):
     groupes = []
     for favori in res:
         groupe = Groupe.query.get(favori.id_groupe)
+        groupe.photo_groupe = base64.b64encode(groupe.photo_groupe).decode('utf-8')
         groupes.append(groupe)
     return groupes
 

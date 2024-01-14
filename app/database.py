@@ -1,3 +1,4 @@
+import base64
 from app import app, db
 from datetime import datetime
 from sqlalchemy.orm import sessionmaker
@@ -41,7 +42,6 @@ def initdb():
 
     # Insertions pour la table GROUPE
     bytes_img = open('app/static/img/logo.png', 'rb').read()
-    print(bytes_img)
     groupes = [
         Groupe(id_groupe=1, nom_groupe='Les Artistes Brillants', id_hebergement=1,
                photo_groupe=bytes_img, description_groupe='Groupe de musique classique', 

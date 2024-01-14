@@ -141,7 +141,6 @@ def groupe_detail(id_groupe):
     style = style[0]
     print(style)
     artistes= get_artistes_by_id_groupe(groupe.id_groupe)
-    image_groupe = base64.b64encode(groupe.photo_groupe).decode('utf-8')
     like= est_favoris(id_groupe, current_user.get_id())
     groupes_semblable=get_groupe_by_style(style.id_style)  
     concerts=get_concert_by_id_groupe(id_groupe)
