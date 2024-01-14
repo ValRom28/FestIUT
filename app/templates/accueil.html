@@ -24,8 +24,32 @@
         {% include "components/headerPage.html" %}
     </header>
     <main>
+        <form class="searchGroupe" method="post" name="rechercheGroupe">
+            <input type="text" name="rechercheGroupe" placeholder="Rechercher un Groupe">
+            <input class="submit" type="submit" value="Rechercher">
+        </form>
+    <aside>
     <form method="post">
-        <input type="date" id="date" name="date" value="{{ selected_date }}">
+        <div class="searchConcert">
+            <div class="searchDate">
+                <input type="date" id="date" name="date" value="{{ selected_date }}">
+                <input class="submit" type="submit" value="Valider">
+            </div>
+            <table border="1">
+                <tr>
+                    <th>Concert</th>
+                    <th>Début</th>
+                    <th>Durée</th>
+                </tr>
+                {% for concert in concerts %}
+                    <tr>
+                        <td>{{ concert.nom_concert }}</td>
+                        <td>{{ concert.date_heure_concert.strftime("%Hh%M") }}</td>
+                        <td>{{ concert.duree_concert//60 }}h{{concert.duree_concert-concert.duree_concert//60*60}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
         <div id="map">
             {% for i in range(0,lieux|length) %}
                 {% if lieux[i].id_lieu == selected_place|int %}
@@ -37,20 +61,6 @@
                 {% endif %}
             {% endfor %}
         </div>
-        <input type="submit" value="Valider">
-    </form>    
-    <table border="1">
-        <tr>
-            <th>Concert</th>
-            <th>Début</th>
-            <th>Durée</th>
-        </tr>
-        {% for concert in concerts %}
-            <tr>
-                <td>{{ concert.nom_concert }}</td>
-                <td>{{ concert.date_heure_concert.strftime("%Hh%M") }}</td>
-                <td>{{ concert.duree_concert//60 }}h{{concert.duree_concert-concert.duree_concert//60*60}}</td>
-            </tr>
-        {% endfor %}
-    </table>
+    </form>   
+    </aside>
 </body>

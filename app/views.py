@@ -46,6 +46,8 @@ def login():
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
+        if request.form.get("rechercheGroupe") != None:
+            return redirect(url_for('rechercheGroupe', nomGroupe=request.form.get("rechercheGroupe")))
         selected_date = request.form.get('date')
         selected_place = request.form.get('place')
         filtered_concerts = filter_concerts(selected_date, selected_place)
