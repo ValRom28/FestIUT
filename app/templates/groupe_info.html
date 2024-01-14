@@ -62,13 +62,15 @@
         <footer>
             <h3> pourrez vous plaire </h3>
             <div class="les_groupes">
-            {%for groupe in groupes_semblable%}
-            <a href="{{ url_for('groupe_detail', id_groupe=groupe.id_groupe) }}">
+            {%for g in groupes_semblable%}
+            {% if g.id_groupe != groupe.id_groupe %}
+            <a href="{{ url_for('groupe_detail', id_groupe=g.id_groupe) }}">
                 <div class='bloc_groupe'>
-                    <img src="{{ groupe.image_groupe }}" alt="image_groupe">
-                    <p>{{ groupe.nom_groupe }}</p>
+                    <img src="{{ g.image_groupe }}" alt="image_groupe">
+                    <p>{{ g.nom_groupe }}</p>
                 </div>
             </a>
+            {% endif %}
             {% endfor %}
             </div>
             <h3> resaux sociaux:  </h3>

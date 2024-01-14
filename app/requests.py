@@ -43,8 +43,12 @@ def get_favoris(user):
 def get_groupes_by_id(id):
     return Groupe.query.filter_by(id_groupe=id).all()
 
-def get_style_by_id(id):
-    return Style.query.filter_by(id_style=id).all()
+def get_style_by_id_groupe(id):
+    res = EtreStyle.query.filter_by(id_groupe=id).all()
+    styles = []
+    for style in res:
+        styles.append(Style.query.get(style.id_style))
+    return styles
 
 def get_sous_style_by_id(id):
     return SousStyle.query.filter_by(id_sous_style=id).all()
