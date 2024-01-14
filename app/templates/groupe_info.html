@@ -4,6 +4,7 @@
         <meta name="connexion">
         <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
         <link rel="stylesheet" href="{{ url_for('static',filename='css/groupe_info.css')}}">
+        <script src="{{ url_for('static', filename='js/groupe_info.js') }}"></script>
     </head>
     <body>
         <header>
@@ -64,11 +65,18 @@
             <a href="{{ url_for('groupe_modification', id_groupe=groupe.id_groupe) }}">
                 <button> modifier </button>
             </a>
-            <a href="{{ url_for('groupe_delete', id_groupe=groupe.id_groupe) }}">
-                <button> supprimer </button>
-            </a>
+                <button id="sup" class="sup"> supprimer </button>
             </div>
             {% endif %}
+
+            <div id="popup" class="popup">
+                <p>voulez vous vraiment supprimer le groupe: {{groupe.nom_groupe}}?</p>
+                <a href="{{ url_for('groupe_delete', id_groupe=groupe.id_groupe) }}">
+                    <button> oui </button>
+                </a>
+                <button id="non"> non </button>
+                
+            </div>
 
         </main>
         <footer>

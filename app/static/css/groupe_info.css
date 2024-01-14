@@ -156,7 +156,7 @@ main{
     margin-left: 2rem;
 }
 
-.admin>a>button{
+.admin>a>button, #sup{
     background-color: #351d79;
     color: pink;
     font-size: 200%;
@@ -168,8 +168,49 @@ main{
     padding: 1rem;
     border: none;
 }
-.admin>a>button:hover{
+.admin>a>button:hover, #sup:hover{
     background-color: pink;
     color: #351d79;
     transition: 0.5s;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    width: 30%;
+    height: 30%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #351d79;
+    border: solid 0.5rem pink;
+    border-radius: 1rem;
+    z-index: 2;
+    flex-basis: 100%;
+}
+  .popup>a>button:hover, .popup>button:hover{
+    background: linear-gradient(to right, #351d79, pink);
+    color: #351d79;
+}
+    .popup>a>button, .popup>button{
+        background: linear-gradient(to right, pink, #351d79);
+        color: white;
+        font-size: 200%;
+        margin-top: 4rem;
+        margin-bottom: 4rem;
+        flex-basis: 30%;
+        margin-left: 2rem;
+        border-radius: 2rem;
+        padding: 1rem;
+        border: none;
+        text-align: center;
+        content: center;
+    }
+.popup>p{
+    color: white;
+    font-size: 200%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    flex-basis: 100%;
+    text-align: center;
 }
