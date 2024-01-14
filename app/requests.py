@@ -31,6 +31,17 @@ def get_user_by_email(email):
 def get_groupes():
     return Groupe.query.all()
 
+def get_lieux():
+    return Lieu.query.all()
+
+def filter_concerts(date, place):
+    concert_lieu = Concert.query.filter_by(id_lieu=place).all()
+    res = []
+    for concert in concert_lieu:
+        if concert.date_heure_concert.strftime("%Y-%m-%d") == date:
+            res.append(concert)
+    return res
+
 def get_favoris(user):
     res = Favoris.query.filter_by(id_spectateur=user).all()
     groupes = []

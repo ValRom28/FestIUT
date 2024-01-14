@@ -10,7 +10,6 @@ from app.forms import *
 from app import login_manager
 from app.models import *
 
-
 @login_manager.user_loader
 def load_user(user_id):
     return get_user_by_id(user_id)
@@ -27,14 +26,26 @@ def login():
                 return redirect(url_for('home'))
     return render_template('connexion.html', form=form)
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
+    if request.method == 'POST':
+        if request.form.get("rechercheGroupe") != None:
+            return redirect(url_for('rechercheGroupe', nomGroupe=request.form.get("rechercheGroupe")))
+        selected_date = request.form.get('date')
+        selected_place = request.form.get('place')
+        filtered_concerts = filter_concerts(selected_date, selected_place)
+    else:
+        date = datetime.datetime.now()
+        selected_date = date.today().strftime("%Y-%m-%d")
+        selected_place = ''
+        filtered_concerts = filter_concerts(selected_date, selected_place)
+    lieux = get_lieux()
     admin=False
     connecter=False
     if current_user.is_authenticated:
         connecter=True
         admin=current_user.is_admin()
-    return render_template('accueil.html',connecter=connecter,admin=admin)
+    return render_template('accueil.html', concerts=filtered_concerts, selected_date=selected_date, selected_place=selected_place,connecter=connecter,admin=admin,lieux = lieux)
 
 
 @app.route('/logout')
@@ -130,4 +141,3 @@ def ajouter_aux_favoris(id_groupe):
 def supprimer_des_favoris(id_groupe):
     supprimer_favoris(id_groupe, current_user.get_id())
     return redirect(url_for('groupe_detail', id_groupe=id_groupe))
-    

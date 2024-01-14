@@ -1,12 +1,66 @@
 <!DOCTYPE html>
-    <html lang="fr">
-        <head>
-            <meta charset="utf-8">
-            <meta name="connexion">
-            <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
-        </head>
-        <body>
-            <header>
-                {% include "components/headerPage.html" %}
-            </header>
-        </body>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="connexion">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/map.css')}}">
+    <style>
+        {% for i in range(0,lieux|length) %}
+            #marker{{ i }} {
+                top : {{ lieux[i].coordonne_X }}rem;
+                left : {{ lieux[i].coordonne_Y }}rem;
+            }
+            #label{{ i }} {
+                top : {{ lieux[i].coordonne_X +1}}rem;
+                left : {{ lieux[i].coordonne_Y +1}}rem;
+                font-size : 10px;
+            }
+        {% endfor %}
+    </style>
+</head>
+<body>
+    <header>
+        {% include "components/headerPage.html" %}
+    </header>
+    <main>
+        <form class="searchGroupe" method="post" name="rechercheGroupe">
+            <input type="text" name="rechercheGroupe" placeholder="Rechercher un Groupe">
+            <input class="submit" type="submit" value="Rechercher">
+        </form>
+    <aside>
+    <form method="post">
+        <div class="searchConcert">
+            <div class="searchDate">
+                <input type="date" id="date" name="date" value="{{ selected_date }}">
+                <input class="submit" type="submit" value="Valider">
+            </div>
+            <table border="1">
+                <tr>
+                    <th>Concert</th>
+                    <th>Début</th>
+                    <th>Durée</th>
+                </tr>
+                {% for concert in concerts %}
+                    <tr>
+                        <td>{{ concert.nom_concert }}</td>
+                        <td>{{ concert.date_heure_concert.strftime("%Hh%M") }}</td>
+                        <td>{{ concert.duree_concert//60 }}h{{concert.duree_concert-concert.duree_concert//60*60}}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div id="map">
+            {% for i in range(0,lieux|length) %}
+                {% if lieux[i].id_lieu == selected_place|int %}
+                    <label for="marker{{ i }}" id="label{{ i }}"class="marker">{{ lieux[i].nom_lieu }}</label>
+                    <input type="radio" id="marker{{ i }}" class="marker" name="place" value="{{lieux[i].id_lieu}}" checked>
+                {% else %}
+                    <label for="marker{{ i }}" id="label{{ i }}"class="marker">{{ lieux[i].nom_lieu }}</label>
+                    <input type="radio" id="marker{{ i }}" class="marker" name="place" value="{{lieux[i].id_lieu}}">
+                {% endif %}
+            {% endfor %}
+        </div>
+    </form>   
+    </aside>
+</body>
