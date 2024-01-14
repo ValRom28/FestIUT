@@ -2,7 +2,7 @@ from app import db
 from app.models import (Appartenir, Artiste, Billet, Concert, EtreStyle,
                      EtreType, Favoris, Groupe, Hebergement, Instrument,
                      Jouer, Lieu, OrganiserConcert, Possede, Reserver,
-                     Style, SousStyle, Spectateur, Type)
+                     Style, SousStyle, Spectateur, Type, OrganiserEvent, Event)
 
 def get_user_by_id(id):
     """
@@ -87,3 +87,14 @@ def get_instrument_by_id_artiste(id_artiste):
     res= Jouer.query.filter_by(id_artiste=id_artiste).all()
     instrument= Instrument.query.get(res[0].id_instrument)
     return instrument
+
+def get_event_by_id_groupe(id_groupe):
+    res= OrganiserEvent.query.filter_by(id_groupe=id_groupe).all()
+    print(res)
+    events=[]
+    for event in res:
+        events.append(Event.query.get(event.id_event))
+    return events
+
+def get_lieu_by_id(id_lieu):
+    return Lieu.query.filter_by(id_lieu=id_lieu).first()

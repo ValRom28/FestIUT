@@ -38,12 +38,25 @@
            </div>
             <div class="concerts">
                 <h2> les concerts </h2>
-                {% for concert in concerts %}
+                {% for concert,lieu in concerts_et_lieux %}
+                <div class="bloc_concert">
                 <h3>{{concert.nom_concert}}</h2>
                 <p>date: {{concert.date_heure_concert}}</p>
-                <p>lieu: {{concert.id_lieu}}</p>
+                <p>lieu: {{lieu.nom_lieu}}</p>
                 <p>duree: {{concert.duree_concert}}m </p>
+                </div>
                 {% endfor %}
+            </div>
+        <div class="event">
+            <h2> les evenements </h2>
+            {% for evenement,lieu in events_et_lieux %}
+            <div class="bloc_event">
+            <h3>{{evenement.nom_event}}</h2>
+            <p>date: {{evenement.date_event}}</p>
+            <p>lieu: {{lieu.nom_lieu}}</p>
+            </div>
+            {% endfor %}
+        </div>
 
         </main>
         <footer>
@@ -60,8 +73,8 @@
             </div>
             <h3> resaux sociaux:  </h3>
             <ul class='resaux_sociaux'>
-            <a> {{ groupe.insta_groupe }} </a>
-             <a> {{ groupe.spotify_groupe }} </a>
+            <a href='#'> {{ groupe.insta_groupe }} </a>
+             <a href='#'> {{ groupe.spotify_groupe }} </a>
              </div>
         </footer>
     </body>
