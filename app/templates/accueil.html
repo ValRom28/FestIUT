@@ -31,19 +31,23 @@
     <aside>
     <form method="post">
         <div class="searchConcert">
+            <h2>Selectionnez la date de début, de fin, et le lieu</h2>
             <div class="searchDate">
-                <input type="date" id="date" name="date" value="{{ selected_date }}">
+                <input type="date" id="date" name="dateDebut" value="{{ selected_date_debut }}">
+                <input type="date" id="date" name="dateFin" value="{{ selected_date_fin }}">
                 <input class="submit" type="submit" value="Valider">
             </div>
             <table border="1">
                 <tr>
                     <th>Concert</th>
+                    <th>Date</th>
                     <th>Début</th>
                     <th>Durée</th>
                 </tr>
                 {% for concert in concerts %}
                     <tr>
                         <td>{{ concert.nom_concert }}</td>
+                        <td>{{ concert.date_heure_concert.strftime("%d/%m/%Y") }}</td>
                         <td>{{ concert.date_heure_concert.strftime("%Hh%M") }}</td>
                         <td>{{ concert.duree_concert//60 }}h{{concert.duree_concert-concert.duree_concert//60*60}}</td>
                     </tr>

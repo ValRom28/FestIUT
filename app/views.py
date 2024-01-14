@@ -9,6 +9,7 @@ from app.requests import *
 from app.forms import *
 from app import login_manager
 from app.models import *
+import datetime
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -31,21 +32,30 @@ def home():
     if request.method == 'POST':
         if request.form.get("rechercheGroupe") != None:
             return redirect(url_for('rechercheGroupe', nomGroupe=request.form.get("rechercheGroupe")))
-        selected_date = request.form.get('date')
+        selected_date_debut = request.form.get('dateDebut')
+        selected_date_fin = request.form.get('dateFin')
         selected_place = request.form.get('place')
-        filtered_concerts = filter_concerts(selected_date, selected_place)
+        filtered_concerts = filter_concerts(selected_date_debut,selected_date_fin, selected_place)
     else:
         date = datetime.datetime.now()
-        selected_date = date.today().strftime("%Y-%m-%d")
-        selected_place = ''
-        filtered_concerts = filter_concerts(selected_date, selected_place)
+        selected_date_debut = date.today().strftime("%Y-%m-%d")
+        selected_date_fin = (date + datetime.timedelta(days=7)).strftime("%Y-%m-%d")
+        selected_place = '1'
+        filtered_concerts = filter_concerts(selected_date_debut,selected_date_fin, selected_place)
     lieux = get_lieux()
     admin=False
     connecter=False
     if current_user.is_authenticated:
         connecter=True
         admin=current_user.is_admin()
-    return render_template('accueil.html', concerts=filtered_concerts, selected_date=selected_date, selected_place=selected_place,connecter=connecter,admin=admin,lieux = lieux)
+    return render_template('accueil.html', 
+                           concerts=filtered_concerts, 
+                           selected_date_debut=selected_date_debut,
+                           selected_date_fin=selected_date_fin, 
+                           selected_place=selected_place,
+                           connecter=connecter,
+                           admin=admin,
+                           lieux = lieux)
 
 
 @app.route('/logout')

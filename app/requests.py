@@ -3,6 +3,7 @@ from app.models import (Appartenir, Artiste, Billet, Concert, EtreStyle,
                      EtreType, Favoris, Groupe, Hebergement, Instrument,
                      Jouer, Lieu, OrganiserConcert, Possede, Reserver,
                      Style, SousStyle, Spectateur, Type, OrganiserEvent, Event)
+import datetime
 
 def get_user_by_id(id):
     """
@@ -34,11 +35,13 @@ def get_groupes():
 def get_lieux():
     return Lieu.query.all()
 
-def filter_concerts(date, place):
-    concert_lieu = Concert.query.filter_by(id_lieu=place).all()
+def filter_concerts(date_debut,date_fin, place):
+    concert_lieu = Concert.query.filter_by(id_lieu=place).order_by("date_heure_concert").all()
     res = []
+    date_debut = datetime.datetime.strptime(date_debut,"%Y-%m-%d")
+    date_fin = datetime.datetime.strptime(date_fin,"%Y-%m-%d")
     for concert in concert_lieu:
-        if concert.date_heure_concert.strftime("%Y-%m-%d") == date:
+        if concert.date_heure_concert >= date_debut and concert.date_heure_concert <= date_fin:
             res.append(concert)
     return res
 
