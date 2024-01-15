@@ -1,0 +1,40 @@
+main{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    padding: 10px;
+    border: 1px solid aliceblue;
+    border-radius: 2rem;
+}
+
+body{
+    background-color: #281460;
+
+}
+
+table{
+    border-collapse: collapse;
+    border: 1px solid aliceblue;
+}
+
+th{
+    border: 1px solid #281460;
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 5px;
+    font-weight: bold;
+    background-color: aliceblue;
+    color: #281460;
+    border-radius: 1rem 1rem 0 0;
+}
+
+td{
+    border: 1px solid aliceblue;
+    text-align: center;
+    font-size: 1rem;
+    padding: 5px;
+    font-weight: bold;
+    background-color: #281460;
+    color: aliceblue;
+}

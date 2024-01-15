@@ -1,41 +1,56 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#imgTitre{
+    display: flex;
+    flex-wrap: nowrap;
+    
+}
+
 .top{
     background-color:  #281460;
     display: flex;
     flex-wrap: nowrap;
-    align-items: center;
+    justify-content: space-between;
     
 }
-.top>p{
-    color: white;
-    font-family: 'Lexend Deca', sans-serif;
-    font-size: 500%;
-    flex-basis: 50%;
+.top h1{
+    color: aliceblue;
+    font-size: 5rem;
     text-align: center;
-    margin-top:2rem;
-    flex-grow: 1;
-    margin-left:4rem;
-    margin-bottom: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 0rem;
 }
 .logo>img{
-    width: 50%;
-    height: 50%;
+    width: 10rem;
+    height: 10rem;
     margin-left: 1rem;
-    flex-basis: 8%;
 }
+
+#choix{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
 .choix{
-    color: white;
-    font-family: 'Lexend Deca', sans-serif;
+    color: #281460;
     font-size: 200%;
-    flex-basis: 8%;
     text-decoration: none;
-    background: linear-gradient(to right, #351d79, pink);
+    background: aliceblue;
     text-align: center;
     border-radius: 2rem;
     margin-right:2rem;
-    height: 3rem;
+    border: 1px solid #281460;
+    padding: 10px;
 }
 
 .choix:hover{
-    transition: 0.5s;
-    background: linear-gradient(to right, pink, #351d79);
+    transition: 0.2s;
+    background: #281460;
+    color: aliceblue;
+    border: 1px solid aliceblue;
 }

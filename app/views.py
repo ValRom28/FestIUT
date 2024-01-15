@@ -12,7 +12,6 @@ from app import login_manager
 from app.models import *
 from datetime import datetime
 
-
 @login_manager.user_loader
 def load_user(user_id):
     return get_user_by_id(user_id)
@@ -29,15 +28,56 @@ def login():
                 return redirect(url_for('home'))
     return render_template('connexion.html', form=form)
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
+    if request.method == 'POST':
+        if request.form.get("rechercheGroupe") != None:
+            return redirect(url_for('rechercheGroupe', nomGroupe=request.form.get("rechercheGroupe")))
+        selected_date_debut = request.form.get('dateDebut')
+        selected_date_fin = request.form.get('dateFin')
+        selected_place = request.form.get('place')
+        filtered_concerts = filter_concerts(selected_date_debut,selected_date_fin, selected_place)
+    else:
+        date = datetime.datetime.now()
+        selected_date_debut = date.today().strftime("%Y-%m-%d")
+        selected_date_fin = (date + datetime.timedelta(days=7)).strftime("%Y-%m-%d")
+        selected_place = '1'
+        filtered_concerts = filter_concerts(selected_date_debut,selected_date_fin, selected_place)
+    lieux = get_lieux()
     admin=False
     connecter=False
     if current_user.is_authenticated:
         connecter=True
         admin=current_user.is_admin()
-    return render_template('accueil.html',connecter=connecter,admin=admin)
+    return render_template('accueil.html', 
+                           concerts=filtered_concerts, 
+                           selected_date_debut=selected_date_debut,
+                           selected_date_fin=selected_date_fin, 
+                           selected_place=selected_place,
+                           connecter=connecter,
+                           admin=admin,
+                           lieux = lieux)
 
+@app.route('/rechercheGroupe')
+def rechercheGroupe():
+    nomGroupe = request.args.get('nomGroupe')
+    groupes = get_groupes_by_nom(nomGroupe)
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    return render_template('favoris.html', liste_favoris=groupes,connecter=connecter,admin=admin)
+
+@app.route('/programmation')
+def programmation():
+    concerts = filter_concerts_date(datetime.datetime.now())
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    return render_template('programmation.html', concerts=concerts,connecter=connecter,admin=admin)
 
 @app.route('/logout')
 @login_required
@@ -89,7 +129,7 @@ def favoris():
     
     print(current_user.get_id())
     print(liste_favoris)
-    return render_template('favorie.html', liste_favoris = liste_favoris,connecter=connecter,admin=admin)
+    return render_template('favoris.html', liste_favoris = liste_favoris,connecter=connecter,admin=admin)
 
 
 @app.route("/groupe/<int:id_groupe>")
@@ -128,6 +168,7 @@ def ajouter_aux_favoris(id_groupe):
 def supprimer_des_favoris(id_groupe):
     supprimer_favoris(id_groupe, current_user.get_id())
     return redirect(url_for('groupe_detail', id_groupe=id_groupe))
+
 
 
 @app.route("/groupe/<int:id_groupe>/modification", methods=['GET', 'POST'])
@@ -233,3 +274,4 @@ def groupe_delete(id_groupe):
     delete_groupe(groupe)
     print("true")
     return redirect(url_for('groupes'))
+

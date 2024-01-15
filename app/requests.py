@@ -3,6 +3,7 @@ from app.models import (Appartenir, Artiste, Billet, Concert, EtreStyle,
                      EtreType, Favoris, Groupe, Hebergement, Instrument,
                      Jouer, Lieu, OrganiserConcert, Possede, Reserver,
                      Style, SousStyle, Spectateur, Type, OrganiserEvent, Event)
+import datetime
 
 def get_user_by_id(id):
     """
@@ -30,6 +31,27 @@ def get_user_by_email(email):
 
 def get_groupes():
     return Groupe.query.all()
+
+def get_lieux():
+    return Lieu.query.all()
+
+def filter_concerts(date_debut,date_fin, place):
+    concert_lieu = Concert.query.filter_by(id_lieu=place).order_by("date_heure_concert").all()
+    res = []
+    date_debut = datetime.datetime.strptime(date_debut,"%Y-%m-%d")
+    date_fin = datetime.datetime.strptime(date_fin,"%Y-%m-%d")
+    for concert in concert_lieu:
+        if concert.date_heure_concert >= date_debut and concert.date_heure_concert <= date_fin:
+            res.append(concert)
+    return res
+
+def filter_concerts_date(date):
+    concert_lieu = Concert.query.order_by("date_heure_concert").all()
+    res = []
+    for concert in concert_lieu:
+        if concert.date_heure_concert >= date:
+            res.append(concert)
+    return res
 
 def get_favoris(user):
     res = Favoris.query.filter_by(id_spectateur=user).all()
@@ -103,6 +125,7 @@ def get_event_by_id_groupe(id_groupe):
 def get_lieu_by_id(id_lieu):
     return Lieu.query.filter_by(id_lieu=id_lieu).first()
 
+
 def delete_groupe(groupe):
     fav= Favoris.query.filter_by(id_groupe=groupe.id_groupe).all()
     for f in fav:
@@ -121,3 +144,6 @@ def delete_groupe(groupe):
         db.session.delete(e)
     db.session.delete(groupe)
     db.session.commit()
+
+def get_groupes_by_nom(nom):
+    return Groupe.query.filter(Groupe.nom_groupe.like('%'+nom+'%')).all()

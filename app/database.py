@@ -67,23 +67,57 @@ def initdb():
 
     # Insertions pour la table LIEU
     lieux = [
-        Lieu(id_lieu=1, nom_lieu='Stade Olympique', jauge_lieu=50000, coordonne_X = 47.84316612643946, coordonne_Y = 1.926633417606354),
-        Lieu(id_lieu=2, nom_lieu='Arena Music', jauge_lieu=10000, coordonne_X = 47.94316612643946, coordonne_Y = 1.916633417606354),
-        Lieu(id_lieu=3, nom_lieu='Théâtre Royal', jauge_lieu=1500, coordonne_X = 47.84316612643946, coordonne_Y = 1.026633417606354),
+        Lieu(id_lieu=1, nom_lieu='Stade Olympique', jauge_lieu=50000, coordonne_X = 12, coordonne_Y = 8),
+        Lieu(id_lieu=2, nom_lieu='Arena Music', jauge_lieu=10000, coordonne_X = 7, coordonne_Y = 10),
+        Lieu(id_lieu=3, nom_lieu='Théâtre Royal', jauge_lieu=1500, coordonne_X = 11, coordonne_Y = 15),
     ]
     session.add_all(lieux)
 
     # Insertions pour la table CONCERT
     concerts = [
         Concert(id_concert=1, nom_concert='Concert d ouverture', tps_prepa_concert=30, 
-                date_heure_concert=datetime.strptime('2023-10-25 19:00:00', '%Y-%m-%d %H:%M:%S').date(), 
+                date_heure_concert=datetime.strptime('2024-10-25 19:00:00', '%Y-%m-%d %H:%M:%S'), 
                 duree_concert=120, id_lieu=1),
         Concert(id_concert=2, nom_concert='Soirée Musicale', tps_prepa_concert=40, 
-                date_heure_concert=datetime.strptime('2023-11-05 20:00:00', '%Y-%m-%d %H:%M:%S').date(), 
+                date_heure_concert=datetime.strptime('2024-01-14 20:00:00', '%Y-%m-%d %H:%M:%S'), 
                 duree_concert=90, id_lieu=2),
-        Concert(id_concert=3, nom_concert='Symphonie en Soirée', tps_prepa_concert=25, 
-                date_heure_concert=datetime.strptime('2023-11-15 18:30:00', '%Y-%m-%d %H:%M:%S').date(), 
+        Concert(id_concert=3, nom_concert='Soirée Musicale', tps_prepa_concert=40, 
+                date_heure_concert=datetime.strptime('2024-01-14 10:00:00', '%Y-%m-%d %H:%M:%S'), 
+                duree_concert=90, id_lieu=2),
+        Concert(id_concert=4, nom_concert='Soirée Musicale', tps_prepa_concert=40, 
+                date_heure_concert=datetime.strptime('2024-01-14 12:00:00', '%Y-%m-%d %H:%M:%S'), 
+                duree_concert=90, id_lieu=1),
+        Concert(id_concert=5, nom_concert='Soirée Musicale', tps_prepa_concert=40, 
+                date_heure_concert=datetime.strptime('2024-01-14 20:00:00', '%Y-%m-%d %H:%M:%S'), 
+                duree_concert=90, id_lieu=1),
+        Concert(id_concert=6, nom_concert='Symphonie en Soirée', tps_prepa_concert=25, 
+                date_heure_concert=datetime.strptime('2024-11-15 18:30:00', '%Y-%m-%d %H:%M:%S'), 
                 duree_concert=150, id_lieu=3),
+        Concert(id_concert=7, nom_concert='Concert de clôture', tps_prepa_concert=35,
+                date_heure_concert=datetime.strptime('2024-11-25 19:00:00', '%Y-%m-%d %H:%M:%S'),
+                duree_concert=120, id_lieu=1),
+        Concert(id_concert=8, nom_concert='Soirée Musicale', tps_prepa_concert=40,
+                date_heure_concert=datetime.strptime('2024-11-25 23:00:00', '%Y-%m-%d %H:%M:%S'),
+                duree_concert=90, id_lieu=2),
+        Concert(id_concert=9, nom_concert='Soirée Musicale', tps_prepa_concert=40,
+                date_heure_concert=datetime.strptime('2024-11-25 20:00:00', '%Y-%m-%d %H:%M:%S'),
+                duree_concert=90, id_lieu=2),
+        Concert(id_concert=10, nom_concert='Soirée Musicale', tps_prepa_concert=40,
+                date_heure_concert=datetime.strptime('2024-11-25 18:00:00', '%Y-%m-%d %H:%M:%S'),
+                duree_concert=90, id_lieu=2),
+        Concert(id_concert=11, nom_concert='Soirée Musicale', tps_prepa_concert=40,
+                date_heure_concert=datetime.strptime('2024-11-25 15:00:00', '%Y-%m-%d %H:%M:%S'),
+                duree_concert=90, id_lieu=2),
+        Concert(id_concert=12, nom_concert='Soirée Musicale', tps_prepa_concert=40,
+                date_heure_concert=datetime.strptime('2024-11-25 10:00:00', '%Y-%m-%d %H:%M:%S'),
+                duree_concert=90, id_lieu=2),
+        Concert(id_concert=13, nom_concert='Soirée Musicale', tps_prepa_concert=40,
+                date_heure_concert=datetime.strptime('2024-11-25 6:00:00', '%Y-%m-%d %H:%M:%S'),
+                duree_concert=90, id_lieu=2),
+        Concert(id_concert=14, nom_concert='Soirée Musicale', tps_prepa_concert=40,
+                date_heure_concert=datetime.strptime('2024-11-25 4:00:00', '%Y-%m-%d %H:%M:%S'),
+                duree_concert=90, id_lieu=2),
+        
         ]
     session.add_all(concerts)
 
