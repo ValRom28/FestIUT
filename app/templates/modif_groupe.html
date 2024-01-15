@@ -42,7 +42,8 @@
                 {% for concert,lieu in concerts_et_lieux %}
                 <form action="" method="post" class=modif>
                 {{ form.hidden_tag() }}
-                <h3>{{concert.nom_concert}}</h2>
+                {{ formConcert.hidden_tag() }}
+                <h2>nom:  {{formConcert.nom_concert}}</h2>
                 <p>date: {{formConcert.date_heure_concert}} </p>
                 <p> temps de préparation: {{formConcert.tps_prepa_concert}}m </p>
                 <p>duree: {{formConcert.duree_concert}}m </p>
@@ -50,7 +51,8 @@
                 <p> lieu positionX: {{formLieu.coordonne_X}} </p>
                 <p> lieu positionY: {{formLieu.coordonne_Y}} </p>
                 <p> jauge du lieu : {{formLieu.jauge_lieu}} Personne </p>
-                {{ form.modif }}
+                <input type="hidden" name="formConcert.id_concert" value="{{ concert.id_concert }}">
+                {{ formConcert.modif }}
                 {% endfor %}
             </div>
         <div class="event">
@@ -64,7 +66,7 @@
             <p> lieu positionX: {{formLieu.coordonne_X}} </p>
             <p> lieu positionY: {{formLieu.coordonne_Y}} </p>
             <p> jauge du lieu : {{formLieu.jauge_lieu}} Personne </p>
-            {{ form.modif }}
+            {{ formEvent.modif }}
             {% endfor %}
         </div>
         </div>

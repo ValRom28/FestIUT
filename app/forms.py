@@ -27,7 +27,9 @@ class GroupeForm(FlaskForm):
     id_hebergement = HiddenField()
     modif = SubmitField('modifier')
     
+    
 class ConcertForm(FlaskForm):
+    id_concert = HiddenField()
     nom_concert= StringField(validators=[DataRequired()], render_kw={"placeholder": "Nom du concert"})
     tps_prepa_concert = StringField(validators=[DataRequired()], render_kw={"placeholder": "Temps de préparation du concert"})
     date_heure_concert = StringField(validators=[DataRequired()], render_kw={"placeholder": "Date du concert"})
@@ -35,6 +37,7 @@ class ConcertForm(FlaskForm):
     modif = SubmitField('modifier')
     
 class EventForm(FlaskForm):
+    id_event= HiddenField()
     date_event = StringField(validators=[DataRequired()], render_kw={"placeholder": "Date de l'event"})
     nom_event = StringField(validators=[DataRequired()], render_kw={"placeholder": "Nom de l'event"})
     

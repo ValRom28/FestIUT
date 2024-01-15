@@ -9,6 +9,7 @@ from app.requests import *
 from app.forms import *
 from app import login_manager
 from app.models import *
+from datetime import datetime
 
 
 @login_manager.user_loader
@@ -144,16 +145,44 @@ def groupe_modification(id_groupe):
     artistes= get_artistes_by_id_groupe(groupe.id_groupe)
     concerts=get_concert_by_id_groupe(id_groupe)
     instrument=[]
-    for artiste in artistes:
-        instrument.append(get_instrument_by_id_artiste(artiste.id_artiste))
-   
     event = (get_event_by_id_groupe(groupe.id_groupe))
     concerts_et_lieux = [(concert, get_lieu_by_id(concert.id_lieu)) for concert in concerts]
     events_et_lieux = [(e, get_lieu_by_id(e.id_lieu)) for e in event]
+    
+    for concert, lieu in concerts_et_lieux:
+        formConcert = ConcertForm()
+        formConcert.id_concert.data = concert.id_concert
+        print("Données du formulaire avant validation :", formConcert.data)
+        if formConcert.validate_on_submit():
+            
+            print("cc")
+            concert.tps_prepa_concert = formConcert.tps_prepa_concert.data
+            concert.date_heure_concert = datetime.strptime(formConcert.date_heure_concert.data, '%Y-%m-%d')
+            concert.duree_concert = formConcert.duree_concert.data
+            lieu.nom_lieu = formLieu.nom_lieu.data
+            lieu.jauge_lieu = formLieu.jauge_lieu.data
+            lieu.coordonne_X = formLieu.coordonne_X.data
+            lieu.coordonne_Y = formLieu.coordonne_Y.data
+            db.session.commit()
+            return redirect(url_for('groupe_detail', id_groupe=id_groupe))
+
+    
+    if form.validate_on_submit():
+        groupe.description_groupe = form.description_groupe.data
+        groupe.spotify_groupe = form.spotify_groupe.data
+        groupe.insta_groupe = form.insta_groupe.data
+        db.session.commit()
+        return redirect(url_for('groupe_detail', id_groupe=groupe.id_groupe))
+    
+    for artiste in artistes:
+        instrument.append(get_instrument_by_id_artiste(artiste.id_artiste))
+   
+    
     form.description_groupe.data = groupe.description_groupe
     form.spotify_groupe.data = groupe.spotify_groupe
     form.insta_groupe.data = groupe.insta_groupe
     for concert in concerts_et_lieux:
+        formConcert.nom_concert.data = concert[0].nom_concert
         formConcert.tps_prepa_concert.data = concert[0].tps_prepa_concert
         formConcert.date_heure_concert.data = concert[0].date_heure_concert
         formConcert.duree_concert.data = concert[0].duree_concert
@@ -168,23 +197,6 @@ def groupe_modification(id_groupe):
         formLieu.jauge_lieu.data = event[1].jauge_lieu
         formLieu.coordonne_X.data = event[1].coordonne_X
         formLieu.coordonne_Y.data = event[1].coordonne_Y
-    # if form.validate_on_submit():
-    #     groupe.description_groupe = form.description_groupe.data
-    #     groupe.spotify_groupe = form.spotify_groupe.data
-    #     groupe.insta_groupe = form.insta_groupe.data
-    #     db.session.commit()
-        
-    # for concert,lieu in concerts_et_lieux:
-    #     if formConcert.validate_on_submit():
-    #         concert.tps_prepa_concert = formConcert.tps_prepa_concert.data
-    #         concert.date_heure_concert = formConcert.date_heure_concert.data
-    #         concert.duree_concert = formConcert.duree_concert.data
-    #         lieu.nom_lieu = formLieu.nom_lieu.data
-    #         lieu.jauge_lieu = formLieu.jauge_lieu.data
-    #         lieu.coordonne_X = formLieu.coordonne_X.data
-    #         lieu.coordonne_Y = formLieu.coordonne_Y.data
-    #         db.session.commit()
-    #         return redirect(url_for('groupe_detail', id_groupe=id_groupe))
         
     return render_template('modif_groupe.html', groupe=groupe, style=style, artistes=artistes,instrument=instrument,connecter=connecter,admin=admin,form=form,formConcert=formConcert,formEvent=formEvent,concerts_et_lieux=concerts_et_lieux,events_et_lieux=events_et_lieux,formLieu=formLieu)
     
