@@ -1,3 +1,4 @@
+import base64
 from app import db
 from app.models import (Appartenir, Artiste, Billet, Concert, EtreStyle,
                      EtreType, Favoris, Groupe, Hebergement, Instrument,
