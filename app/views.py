@@ -131,31 +131,31 @@ def supprimer_des_favoris(id_groupe):
 
 @app.route("/groupe/<int:id_groupe>/modification", methods=['GET', 'POST'])
 def groupe_modification(id_groupe):
-    form= GroupeForm()
-    formConcert= ConcertForm()
-    formEvent= EventForm()
-    formLieu= LieuForm()
-    admin=True
-    connecter=True
-    instrument=[]
+    form = GroupeForm()
+    formConcert = ConcertForm()
+    formEvent = EventForm()
+    formLieu = LieuForm()
+    admin = True
+    connecter = True
+    instrument = []
     groupe = get_groupes_by_id(id_groupe)
     groupe = groupe[0]
     style = get_style_by_id_groupe(groupe.id_groupe)
     style = style[0]
-    artistes= get_artistes_by_id_groupe(groupe.id_groupe)
-    concerts=get_concert_by_id_groupe(id_groupe)
-    instrument=[]
-    event = (get_event_by_id_groupe(groupe.id_groupe))
+    artistes = get_artistes_by_id_groupe(groupe.id_groupe)
+    concerts = get_concert_by_id_groupe(id_groupe)
+    instrument = []
+    event = get_event_by_id_groupe(groupe.id_groupe)
     concerts_et_lieux = [(concert, get_lieu_by_id(concert.id_lieu)) for concert in concerts]
     events_et_lieux = [(e, get_lieu_by_id(e.id_lieu)) for e in event]
-    
+
     for concert, lieu in concerts_et_lieux:
         formConcert = ConcertForm()
         formConcert.id_concert.data = concert.id_concert
         print("Données du formulaire avant validation :", formConcert.data)
         if formConcert.validate_on_submit():
-            
-            print("cc")
+            print("Validation réussie pour le concert ", concert.id_concert)
+            concert.nom_concert = formConcert.nom_concert.data
             concert.tps_prepa_concert = formConcert.tps_prepa_concert.data
             concert.date_heure_concert = datetime.strptime(formConcert.date_heure_concert.data, '%Y-%m-%d')
             concert.duree_concert = formConcert.duree_concert.data
@@ -164,7 +164,25 @@ def groupe_modification(id_groupe):
             lieu.coordonne_X = formLieu.coordonne_X.data
             lieu.coordonne_Y = formLieu.coordonne_Y.data
             db.session.commit()
+            print("Données après la mise à jour :", concert.__dict__)
+            print("Données après la mise à jour (lieu) :", lieu.__dict__)
             return redirect(url_for('groupe_detail', id_groupe=id_groupe))
+
+    for e, lieu in events_et_lieux:
+        formEvent = EventForm()
+        formEvent.id_event.data = e.id_event
+        print("Données du formulaire avant validation :", formEvent.data)
+        if formEvent.validate_on_submit():
+            e.nom_event = formEvent.nom_event.data
+            e.date_event = formEvent.date_event.data
+            lieu.nom_lieu = formLieu.nom_lieu.data
+            lieu.jauge_lieu = formLieu.jauge_lieu.data
+            lieu.coordonne_X = formLieu.coordonne_X.data
+            lieu.coordonne_Y = formLieu.coordonne_Y.data
+            print("Données du formulaire avant validation :", formEvent.data)
+            db.session.commit()
+            return redirect(url_for('groupe_detail', id_groupe=id_groupe))
+            
 
     
     if form.validate_on_submit():
@@ -192,6 +210,8 @@ def groupe_modification(id_groupe):
         formLieu.coordonne_Y.data = concert[1].coordonne_Y
         
     for event in events_et_lieux:
+        nom = event[0].nom_event
+        formEvent.nom_event.data = nom
         formEvent.date_event.data = event[0].date_event
         formLieu.nom_lieu.data = event[1].nom_lieu
         formLieu.jauge_lieu.data = event[1].jauge_lieu

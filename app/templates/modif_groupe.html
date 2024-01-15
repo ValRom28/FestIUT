@@ -43,7 +43,7 @@
                 <form action="" method="post" class=modif>
                 {{ form.hidden_tag() }}
                 {{ formConcert.hidden_tag() }}
-                <h2>nom:  {{formConcert.nom_concert}}</h2>
+                <p>nom:  {{formConcert.nom_concert}}</p>
                 <p>date: {{formConcert.date_heure_concert}} </p>
                 <p> temps de préparation: {{formConcert.tps_prepa_concert}}m </p>
                 <p>duree: {{formConcert.duree_concert}}m </p>
@@ -58,15 +58,17 @@
         <div class="event">
             <h2> les evenements </h2>
             {% for evenement,lieu in events_et_lieux %}
-            <form action="" method="post" class=modif>
-            {{ form.hidden_tag() }}
-            <h3>{{evenement.nom_event}}</h2>
-            <p>date: {{formEvent.date_event}} </p>
-            <p>lieu:  {{formLieu.nom_lieu}} </p>
-            <p> lieu positionX: {{formLieu.coordonne_X}} </p>
-            <p> lieu positionY: {{formLieu.coordonne_Y}} </p>
-            <p> jauge du lieu : {{formLieu.jauge_lieu}} Personne </p>
-            {{ formEvent.modif }}
+                <form action="" method="post" class=modif>
+                {{ form.hidden_tag() }}
+                {{ formEvent.hidden_tag() }}
+                <p>nom: {{formEvent.nom_event}}</p>
+                <p>date: {{formEvent.date_event}} </p>
+                <p>lieu:  {{formLieu.nom_lieu}} </p>
+                <p> lieu positionX: {{formLieu.coordonne_X}} </p>
+                <p> lieu positionY: {{formLieu.coordonne_Y}} </p>
+                <p> jauge du lieu : {{formLieu.jauge_lieu}} Personne </p>
+                <input type="hidden" name="formEvent.id_event" value="{{ evenement.id_event }}">
+                {{ formEvent.modif }}
             {% endfor %}
         </div>
         </div>
