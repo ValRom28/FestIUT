@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="connexion">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/programmation.css')}}">
+    </head>
+    <body>
+        <header>
+            {% include "components/headerPage.html" %}
+        </header>
+        <main>
+            <table>
+                <tr>
+                    <th>Concert</th>
+                    <th>Date</th>
+                    <th>Début</th>
+                    <th>Durée</th>
+                    <th>Lieu</th>
+                </tr>
+                {% for concert in concerts %}
+                    <tr>
+                        <td>{{ concert.nom_concert }}</td>
+                        <td>{{ concert.date_heure_concert.strftime("%d/%m/%Y") }}</td>
+                        <td>{{ concert.date_heure_concert.strftime("%Hh%M") }}</td>
+                        <td>{{ concert.duree_concert//60 }}h{{concert.duree_concert-concert.duree_concert//60*60}}</td>
+                        <td>{{ concert.id_lieu }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </main>
+    </body>
+</html>

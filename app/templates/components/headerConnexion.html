@@ -1,6 +1,10 @@
 <div class="top">
-<a href="{{url_for('home')}}" class=logo> <img src="{{ url_for('static',filename='img/logo.png')}}" alt="logo"> </a>
-<p>Fest'iut</p>
-<a href="{{url_for('login')}}" class='choix'>connexion</a>
-<a href="{{url_for('registration')}}" class='choix'>inscription</a>
+    <div id="imgTitre">
+        <a href="{{url_for('home')}}" class=logo> <img src="{{ url_for('static',filename='img/logo.png')}}" alt="logo"> </a>
+        <h1>Festiut'O</h1>
+    </div>
+    <div id="choix">
+        <a href="{{url_for('login')}}" class='choix'>connexion</a>
+        <a href="{{url_for('registration')}}" class='choix'>inscription</a>
+    </div>
 </div>

@@ -46,6 +46,14 @@ def filter_concerts(date_debut,date_fin, place):
             res.append(concert)
     return res
 
+def filter_concerts_date(date):
+    concert_lieu = Concert.query.order_by("date_heure_concert").all()
+    res = []
+    for concert in concert_lieu:
+        if concert.date_heure_concert >= date:
+            res.append(concert)
+    return res
+
 def get_favoris(user):
     res = Favoris.query.filter_by(id_spectateur=user).all()
     groupes = []
@@ -118,6 +126,26 @@ def get_event_by_id_groupe(id_groupe):
 
 def get_lieu_by_id(id_lieu):
     return Lieu.query.filter_by(id_lieu=id_lieu).first()
+
+
+def delete_groupe(groupe):
+    fav= Favoris.query.filter_by(id_groupe=groupe.id_groupe).all()
+    for f in fav:
+        db.session.delete(f)
+    appartient= Appartenir.query.filter_by(id_groupe=groupe.id_groupe).all()
+    for a in appartient:
+        db.session.delete(a)
+    style= EtreStyle.query.filter_by(id_groupe=groupe.id_groupe).all()
+    for s in style:
+        db.session.delete(s)
+    concert= OrganiserConcert.query.filter_by(id_groupe=groupe.id_groupe).all()
+    for c in concert:
+        db.session.delete(c)
+    event= OrganiserEvent.query.filter_by(id_groupe=groupe.id_groupe).all()
+    for e in event:
+        db.session.delete(e)
+    db.session.delete(groupe)
+    db.session.commit()
 
 def get_groupes_by_nom(nom):
     return Groupe.query.filter(Groupe.nom_groupe.like('%'+nom+'%')).all()
