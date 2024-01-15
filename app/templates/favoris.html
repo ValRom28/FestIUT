@@ -11,6 +11,9 @@
             {% include "components/headerPage.html" %}
         </header>
         <main>
+            {% if liste_favoris|length == 0 %}
+                <p>Aucun groupe ne correspond à votre recherche</p>
+            {% endif %}
             {% for groupe in liste_favoris %}
             <a href="{{ url_for('groupe_detail', id_groupe=groupe.id_groupe) }}">
                 <div class='bloc_groupe'>
