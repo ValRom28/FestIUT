@@ -4,6 +4,7 @@
         <meta name="connexion">
         <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
         <link rel="stylesheet" href="{{ url_for('static',filename='css/groupe_info.css')}}">
+        <script src="{{ url_for('static', filename='js/groupe_info.js') }}"></script>
     </head>
     <body>
         <header>
@@ -11,6 +12,7 @@
         </header>
         <main>
            <h2> {{groupe.nom_groupe}} </h2>
+           {% if connecter%}
            {% if like%}
               <form action="{{ url_for('supprimer_des_favoris', id_groupe=groupe.id_groupe) }}" method="post">
                 <input type="image" src="{{ url_for('static', filename='img/fav.png') }}" alt="Supprimer des favoris"  class="coeur" />
@@ -19,6 +21,7 @@
            <form action="{{ url_for('ajouter_aux_favoris', id_groupe=groupe.id_groupe) }}" method="post">
             <input type="image" src="{{ url_for('static', filename='img/pas_fav.png') }}" alt="Ajouter aux favoris" class="coeur" />
             </form> 
+            {% endif %}
             {% endif %}
            <img src="{{ groupe.image_groupe }}" alt="image_groupe">
            <div class="description">
@@ -57,6 +60,25 @@
             </div>
             {% endfor %}
         </div>
+
+            {% if admin %}
+            <div class="admin">
+            <h2> gestion admin</h2>
+            <a href="{{ url_for('groupe_modification', id_groupe=groupe.id_groupe) }}">
+                <button> modifier </button>
+            </a>
+                <button id="sup" class="sup"> supprimer </button>
+            </div>
+            {% endif %}
+
+            <div id="popup" class="popup">
+                <p>voulez vous vraiment supprimer le groupe: {{groupe.nom_groupe}}?</p>
+                <a href="{{ url_for('groupe_delete', id_groupe=groupe.id_groupe) }}">
+                    <button> oui </button>
+                </a>
+                <button id="non"> non </button>
+                
+            </div>
 
         </main>
         <footer>
