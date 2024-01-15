@@ -3,6 +3,10 @@ body{
     background-color: #6439da;
 }
 
+img{
+    width: 8rem;
+    height: 8rem;
+}
 
 footer{
     background: #281460;
@@ -31,31 +35,8 @@ footer>h3{
     margin-bottom: 1rem;
     border-radius: 2rem;
     padding: 1rem;
-    flex-basis: 30%;
-}
-.bloc_groupe{
-    background: #6439da;
-    margin-top: 1rem;;
-    border-radius: 2rem 2rem 2rem 0;
-    border: 1px solid aliceblue;
-    flex-basis: 50%;
-    margin-left: 2rem;
-    padding: 2rem;
 }
 
-.bloc_groupe:hover{
-    background: #281460;
-    transition: 0.2s;
-}
-
-.bloc_groupe>p{
-    color: aliceblue;
-    font-size: 200%;
-    text-align: center;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    margin-right: 3rem;
-}
 main>h2{
     color: aliceblue;
     font-size: 400%;
@@ -254,4 +235,33 @@ footer>h3>a>img{
     height: 5rem;
     margin-left: 1rem;
     margin-right: 1rem;
+}
+
+footer>h3>a>img:hover{
+    width: 6rem;
+    height: 6rem;
+    transition: 0.2s;
+}
+
+.bloc_groupe{
+    background: #6439da;
+    border-radius: 2rem 2rem 2rem 0;
+    border: 1px solid aliceblue;
+}
+
+.bloc_groupe:hover{
+    background: #281460;
+    transition: 0.2s;
+}
+
+.bloc_groupe>p{
+    color: aliceblue;
+    font-size: 200%;
+    text-align: center;
+}
+
+.bloc_groupe>img{
+    width: 20rem;
+    height: 20rem;
+    border-radius: 2rem;
 }
