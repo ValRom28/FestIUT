@@ -60,6 +60,7 @@
             {% for evenement,lieu in events_et_lieux %}
                 <form action="" method="post" class=modif>
                 {{ form.hidden_tag() }}
+                {{ form.csrf_token }}
                 {{ formEvent.hidden_tag() }}
                 <p>nom: {{formEvent.nom_event}}</p>
                 <p>date: {{formEvent.date_event}} </p>

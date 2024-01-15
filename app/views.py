@@ -1,3 +1,4 @@
+from app import db
 import os
 from app import app
 from flask import render_template, request, redirect, url_for, make_response, send_file, jsonify, Response
@@ -138,6 +139,7 @@ def groupe_modification(id_groupe):
     admin = True
     connecter = True
     instrument = []
+
     groupe = get_groupes_by_id(id_groupe)
     groupe = groupe[0]
     style = get_style_by_id_groupe(groupe.id_groupe)
@@ -148,11 +150,24 @@ def groupe_modification(id_groupe):
     event = get_event_by_id_groupe(groupe.id_groupe)
     concerts_et_lieux = [(concert, get_lieu_by_id(concert.id_lieu)) for concert in concerts]
     events_et_lieux = [(e, get_lieu_by_id(e.id_lieu)) for e in event]
+    
+    for e, lieu in events_et_lieux:
+        formEvent = EventForm()
+        formEvent.id_event.data = e.id_event
+        if formEvent.validate_on_submit():
+            e.nom_event = formEvent.nom_event.data
+            e.date_event =  datetime.strptime(formEvent.date_event.data, '%Y-%m-%d')
+            lieu.nom_lieu = formLieu.nom_lieu.data
+            lieu.jauge_lieu = formLieu.jauge_lieu.data
+            lieu.coordonne_X = formLieu.coordonne_X.data
+            lieu.coordonne_Y = formLieu.coordonne_Y.data
+            print("Données du formulaire avant validation :", formEvent.data)
+            db.session.commit()
+            return redirect(url_for('groupe_detail', id_groupe=id_groupe))
 
     for concert, lieu in concerts_et_lieux:
         formConcert = ConcertForm()
         formConcert.id_concert.data = concert.id_concert
-        print("Données du formulaire avant validation :", formConcert.data)
         if formConcert.validate_on_submit():
             print("Validation réussie pour le concert ", concert.id_concert)
             concert.nom_concert = formConcert.nom_concert.data
@@ -168,24 +183,12 @@ def groupe_modification(id_groupe):
             print("Données après la mise à jour (lieu) :", lieu.__dict__)
             return redirect(url_for('groupe_detail', id_groupe=id_groupe))
 
-    for e, lieu in events_et_lieux:
-        formEvent = EventForm()
-        formEvent.id_event.data = e.id_event
-        print("Données du formulaire avant validation :", formEvent.data)
-        if formEvent.validate_on_submit():
-            e.nom_event = formEvent.nom_event.data
-            e.date_event = formEvent.date_event.data
-            lieu.nom_lieu = formLieu.nom_lieu.data
-            lieu.jauge_lieu = formLieu.jauge_lieu.data
-            lieu.coordonne_X = formLieu.coordonne_X.data
-            lieu.coordonne_Y = formLieu.coordonne_Y.data
-            print("Données du formulaire avant validation :", formEvent.data)
-            db.session.commit()
-            return redirect(url_for('groupe_detail', id_groupe=id_groupe))
+    
             
 
     
     if form.validate_on_submit():
+        print("cc")
         groupe.description_groupe = form.description_groupe.data
         groupe.spotify_groupe = form.spotify_groupe.data
         groupe.insta_groupe = form.insta_groupe.data
@@ -209,14 +212,16 @@ def groupe_modification(id_groupe):
         formLieu.coordonne_X.data = concert[1].coordonne_X
         formLieu.coordonne_Y.data = concert[1].coordonne_Y
         
-    for event in events_et_lieux:
-        nom = event[0].nom_event
-        formEvent.nom_event.data = nom
+    for event in events_et_lieux: 
+        formEvent.id_event.data = event[0].id_event
+        formEvent.nom_event.data = event[0].nom_event
         formEvent.date_event.data = event[0].date_event
         formLieu.nom_lieu.data = event[1].nom_lieu
         formLieu.jauge_lieu.data = event[1].jauge_lieu
         formLieu.coordonne_X.data = event[1].coordonne_X
         formLieu.coordonne_Y.data = event[1].coordonne_Y
+        print("Données du formulaire avant validation :", formEvent.data)
+        
         
     return render_template('modif_groupe.html', groupe=groupe, style=style, artistes=artistes,instrument=instrument,connecter=connecter,admin=admin,form=form,formConcert=formConcert,formEvent=formEvent,concerts_et_lieux=concerts_et_lieux,events_et_lieux=events_et_lieux,formLieu=formLieu)
     
