@@ -101,8 +101,6 @@ def registration():
         return redirect(url_for('login'))
     return render_template('inscription.html', form=form)
 
-
-
 @app.route("/groupes")
 def groupes():
     """
@@ -130,10 +128,13 @@ def favoris():
         connecter=True
         admin=current_user.is_admin()
         liste_favoris = get_favoris(current_user.get_id())
-    
+
+    images = dict()
+    for groupe in liste_favoris:
+        images[groupe.id_groupe] = base64.b64encode(groupe.photo_groupe).decode('utf-8')
     print(current_user.get_id())
     print(liste_favoris)
-    return render_template('favoris.html', liste_favoris = liste_favoris,connecter=connecter,admin=admin)
+    return render_template('favoris.html', liste_favoris = liste_favoris,connecter=connecter,admin=admin, images=images)
 
 
 @app.route("/groupe/<int:id_groupe>")

@@ -12,8 +12,8 @@
         </header>
         <main>
            <h2> {{groupe.nom_groupe}} </h2>
-           {% if connecter%}
-           {% if like%}
+           {% if connecter %}
+           {% if like %}
               <form action="{{ url_for('supprimer_des_favoris', id_groupe=groupe.id_groupe) }}" method="post">
                 <input type="image" src="{{ url_for('static', filename='img/fav.png') }}" alt="Supprimer des favoris"  class="coeur" />
                 </form> 
@@ -36,6 +36,7 @@
             {% for instrument in instruments %}
             <p> {{instrument.nom_instrument}}</p>
             {% endfor %}
+            {% endif %}
 
            </div>
             <div class="concerts">
