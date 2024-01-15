@@ -66,7 +66,17 @@ def rechercheGroupe():
     if current_user.is_authenticated:
         connecter=True
         admin=current_user.is_admin()
-    return render_template('rechercheGroupe.html', groupes=groupes,connecter=connecter,admin=admin)
+    return render_template('favoris.html', liste_favoris=groupes,connecter=connecter,admin=admin)
+
+@app.route('/programmation')
+def programmation():
+    concerts = filter_concerts_date(datetime.datetime.now())
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    return render_template('programmation.html', concerts=concerts,connecter=connecter,admin=admin)
 
 @app.route('/logout')
 @login_required
@@ -122,7 +132,7 @@ def favoris():
     
     print(current_user.get_id())
     print(liste_favoris)
-    return render_template('favorie.html', liste_favoris = liste_favoris,connecter=connecter,admin=admin)
+    return render_template('favoris.html', liste_favoris = liste_favoris,connecter=connecter,admin=admin)
 
 
 @app.route("/groupe/<int:id_groupe>")

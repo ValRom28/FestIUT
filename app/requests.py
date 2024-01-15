@@ -45,6 +45,14 @@ def filter_concerts(date_debut,date_fin, place):
             res.append(concert)
     return res
 
+def filter_concerts_date(date):
+    concert_lieu = Concert.query.order_by("date_heure_concert").all()
+    res = []
+    for concert in concert_lieu:
+        if concert.date_heure_concert >= date:
+            res.append(concert)
+    return res
+
 def get_favoris(user):
     res = Favoris.query.filter_by(id_spectateur=user).all()
     groupes = []

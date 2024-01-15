@@ -2,7 +2,7 @@
     <a href="{{url_for('home')}}" class=logo> <img src="{{ url_for('static',filename='img/logo.png')}}" alt="logo"> </a>
     <p>Fest'iut</p>
     <a href="#" class='choix'>billeterie</a>
-    <a href="#" class='choix'>programmation</a>
+    <a href="{{url_for('programmation')}}" class='choix'>programmation</a>
     <a href="{{url_for('groupes')}}"  class='choix'>artistes</a>
     {% if connecter %}
     <a href="{{url_for('favoris')}}" class='choix'>favoris</a>
