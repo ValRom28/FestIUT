@@ -135,6 +135,12 @@ def initdb():
         Spectateur(id_spectateur=4, nom_spectateur='Arthur', prenom_spectateur='Villet', 
                    mdp_spectateur='mdpVillet', email_spectateur='arthur@example.com',
                      anniv_spectateur=datetime.strptime('2004-03-10', '%Y-%m-%d').date(), photo_compte=None, admin=True),
+        Spectateur(id_spectateur=5, nom_spectateur='a', prenom_spectateur='a', 
+                   mdp_spectateur='a', email_spectateur='a',
+                     anniv_spectateur=datetime.strptime('2004-03-10', '%Y-%m-%d').date(), photo_compte=None, admin=True),
+        Spectateur(id_spectateur=6, nom_spectateur='b', prenom_spectateur='b', 
+                   mdp_spectateur='b', email_spectateur='b',
+                     anniv_spectateur=datetime.strptime('2004-03-10', '%Y-%m-%d').date(), photo_compte=None, admin=True),
     ]
     session.add_all(spectateurs)
 

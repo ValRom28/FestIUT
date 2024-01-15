@@ -44,13 +44,11 @@ body {
     text-align: center;
     border-radius: 2rem;
     margin-right:2rem;
-    border: 1px solid #281460;
     padding: 10px;
 }
 
 .choix:hover{
     transition: 0.2s;
-    background: #281460;
+    background: #6439da;
     color: aliceblue;
-    border: 1px solid aliceblue;
 }

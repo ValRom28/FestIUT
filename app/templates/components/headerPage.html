@@ -5,18 +5,18 @@
         <h1>Festiut'O</h1>
     </div>
     <div id="choix">
-        <a href="#" class='choix'>billeterie</a>
-        <a href="{{url_for('programmation')}}" class='choix'>programmation</a>
-        <a href="{{url_for('groupes')}}"  class='choix'>artistes</a>
+        <a href="#" class='choix'>Billeterie</a>
+        <a href="{{url_for('programmation')}}" class='choix'>Programmation</a>
+        <a href="{{url_for('groupes')}}"  class='choix'>Groupes</a>
         {% if connecter %}
-        <a href="{{url_for('favoris')}}" class='choix'>favoris</a>
+        <a href="{{url_for('favoris')}}" class='choix'>Favoris</a>
         {% if admin %}
-        <a href="#"  class='choix'>admin</a>
+        <a href="#"  class='choix'>Administration</a>
         {% endif %}
-        <a href="{{url_for('logout')}}" class='choix'>déconnexion</a>
+        <a href="{{url_for('logout')}}" class='choix'>Déconnexion</a>
         
         {% else %}
-        <a href="{{url_for('login')}}" class='choix'>connexion</a>
+        <a href="{{url_for('login')}}" class='choix'>Connexion</a>
     
         {%endif %}
     </div>
