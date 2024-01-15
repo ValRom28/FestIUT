@@ -1,18 +1,22 @@
 <div class="top">
-    <a href="{{url_for('home')}}" class=logo> <img src="{{ url_for('static',filename='img/logo.png')}}" alt="logo"> </a>
-    <p>Fest'iut</p>
-    <a href="#" class='choix'>billeterie</a>
-    <a href="{{url_for('programmation')}}" class='choix'>programmation</a>
-    <a href="{{url_for('groupes')}}"  class='choix'>artistes</a>
-    {% if connecter %}
-    <a href="{{url_for('favoris')}}" class='choix'>favoris</a>
-    {% if admin %}
-    <a href="#"  class='choix'>admin</a>
-    {% endif %}
-    <a href="{{url_for('logout')}}" class='choix'>déconnexion</a>
+    <div id="imgTitre">
+        <a href="{{url_for('home')}}" class=logo> <img src="{{ url_for('static',filename='img/logo.png')}}" alt="logo"> </a>
+        <h1>Festiut'O</h1>
+    </div>
+    <div id="choix">
+        <a href="#" class='choix'>billeterie</a>
+        <a href="{{url_for('programmation')}}" class='choix'>programmation</a>
+        <a href="{{url_for('groupes')}}"  class='choix'>artistes</a>
+        {% if connecter %}
+        <a href="{{url_for('favoris')}}" class='choix'>favoris</a>
+        {% if admin %}
+        <a href="#"  class='choix'>admin</a>
+        {% endif %}
+        <a href="{{url_for('logout')}}" class='choix'>déconnexion</a>
+        
+        {% else %}
+        <a href="{{url_for('login')}}" class='choix'>connexion</a>
     
-    {% else %}
-    <a href="{{url_for('login')}}" class='choix'>connexion</a>
-
-    {%endif %}
+        {%endif %}
+    </div>
 </div>
