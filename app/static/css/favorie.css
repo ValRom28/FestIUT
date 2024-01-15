@@ -8,6 +8,7 @@ main{
     padding: 1rem;
     border-radius: 5rem;
     display: flex;
+    flex-wrap: wrap;
 }
 .bloc_groupe{
     background: #281460;
@@ -16,11 +17,20 @@ main{
     flex-basis: 50%;
     margin-left: 2rem;
     padding: 2rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
+
 .bloc_groupe>p{
     color: white;
     font-size: 200%;
     text-align: center;
     margin-top: 1rem;
     margin-bottom: 1rem;
+}
+
+img {
+    width: 13em;
+    height: 13em;
 }

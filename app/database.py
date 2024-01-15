@@ -44,7 +44,8 @@ def initdb():
     bytes_img = open('app/static/img/logo.png', 'rb').read()
     groupes = [
         Groupe(id_groupe=1, nom_groupe='Les Artistes Brillants', id_hebergement=1,
-               photo_groupe=bytes_img, description_groupe='Groupe de musique classique', 
+               photo_groupe=open('app/static/img/artistes_brillants.png', 'rb').read(), 
+               description_groupe='Groupe de musique classique', 
                insta_groupe='@lesartistesbrillants', spotify_groupe='Les Artistes Brillants'),
         Groupe(id_groupe=2, nom_groupe='Thibault et les autres', id_hebergement=2,
                photo_groupe=bytes_img, description_groupe='Groupe de musique rock', 

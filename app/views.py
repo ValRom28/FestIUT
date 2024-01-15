@@ -67,7 +67,10 @@ def rechercheGroupe():
     if current_user.is_authenticated:
         connecter=True
         admin=current_user.is_admin()
-    return render_template('rechercheGroupe.html', groupes=groupes,connecter=connecter,admin=admin)
+    images = dict()
+    for groupe in groupes:
+        images[groupe.id_groupe] = base64.b64encode(groupe.photo_groupe).decode('utf-8')
+    return render_template('rechercheGroupe.html', groupes=groupes,connecter=connecter,admin=admin, images=images)
 
 @app.route('/logout')
 @login_required
@@ -136,13 +139,16 @@ def groupe_detail(id_groupe):
         admin=current_user.is_admin()
     groupe = get_groupes_by_id(id_groupe)
     groupe = groupe[0]
-    
+
     style = get_style_by_id_groupe(groupe.id_groupe)
     style = style[0]
-    print(style)
+    photo_groupe = base64.b64encode(groupe.photo_groupe).decode('utf-8')
     artistes= get_artistes_by_id_groupe(groupe.id_groupe)
     like= est_favoris(id_groupe, current_user.get_id())
-    groupes_semblable=get_groupe_by_style(style.id_style)  
+    groupes_semblable=get_groupe_by_style(style.id_style)
+    images_propositions = dict()
+    for groupe_semb in groupes_semblable:
+        images_propositions[groupe_semb.id_groupe] = base64.b64encode(groupe_semb.photo_groupe).decode('utf-8')
     concerts=get_concert_by_id_groupe(id_groupe)
     instrument=[]
     for artiste in artistes:
@@ -151,7 +157,11 @@ def groupe_detail(id_groupe):
     event = (get_event_by_id_groupe(groupe.id_groupe))
     concerts_et_lieux = [(concert, get_lieu_by_id(concert.id_lieu)) for concert in concerts]
     events_et_lieux = [(e, get_lieu_by_id(e.id_lieu)) for e in event]
-    return render_template('groupe_info.html', groupe=groupe, style=style, connecter=connecter,admin=admin,artistes=artistes,like=like,groupes_semblable=groupes_semblable,concerts_et_lieux=concerts_et_lieux,instruments=instrument,events_et_lieux=events_et_lieux, image_groupe=image_groupe)
+    return render_template('groupe_info.html', groupe=groupe, style=style, connecter=connecter,
+                           admin=admin,artistes=artistes,like=like,groupes_semblable=groupes_semblable,
+                           concerts_et_lieux=concerts_et_lieux,instruments=instrument,
+                           events_et_lieux=events_et_lieux, photo_groupe=photo_groupe, 
+                           images_prop=images_propositions)
 
 @app.route('/ajouter_aux_favoris/<int:id_groupe>', methods=['POST'])
 def ajouter_aux_favoris(id_groupe):

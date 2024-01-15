@@ -16,12 +16,12 @@
                 <input type="image" src="{{ url_for('static', filename='img/fav.png') }}" alt="Supprimer des favoris"  class="coeur" />
                 </form> 
                 {% else %}
-           <form action="{{ url_for('ajouter_aux_favoris', id_groupe=groupe.id_groupe) }}" method="post">
+            <form action="{{ url_for('ajouter_aux_favoris', id_groupe=groupe.id_groupe) }}" method="post">
             <input type="image" src="{{ url_for('static', filename='img/pas_fav.png') }}" alt="Ajouter aux favoris" class="coeur" />
             </form> 
             {% endif %}
-            <img src="data:image/png;base64,{{ groupe.photo_groupe }}" alt="Image du groupe">
-           <div class="description">
+            <img src="data:image/png;base64,{{ photo_groupe }}" alt="Image du groupe">
+            <div class="description">
             <h3> les artistes </h3>
             {% for artiste in artistes %}
             <p> {{artiste.nom_artiste}}</p>
@@ -66,7 +66,7 @@
             {% if g.id_groupe != groupe.id_groupe %}
             <a href="{{ url_for('groupe_detail', id_groupe=g.id_groupe) }}">
                 <div class='bloc_groupe'>
-                    <img src="{{ g.image_groupe }}" alt="image_groupe">
+                    <img src="data:image/png;base64,{{ images_prop[g.id_groupe] }}" alt="Image du groupe">
                     <p>{{ g.nom_groupe }}</p>
                 </div>
             </a>

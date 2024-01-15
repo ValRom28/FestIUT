@@ -17,7 +17,7 @@
             {% for groupe in groupes %}
             <a href="{{ url_for('groupe_detail', id_groupe=groupe.id_groupe) }}">
                 <div class='bloc_groupe'>
-                    <img src="{{ groupe.image_groupe }}" alt="image_groupe">
+                    <img src="data:image/png;base64,{{ images[groupe.id_groupe] }}" alt="Image du groupe">
                     <p>{{ groupe.nom_groupe }}</p>
                 </div>
             </a>
