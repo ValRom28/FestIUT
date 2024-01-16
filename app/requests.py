@@ -1,3 +1,4 @@
+import base64
 from app import db
 from app.models import (Appartenir, Artiste, Billet, Concert, EtreStyle,
                      EtreType, Favoris, Groupe, Hebergement, Instrument,
@@ -66,6 +67,10 @@ def filter_concerts_date(date):
             res.append(concert)
     return res
 
+def get_all_lieux():
+    return Lieu.query.all()
+    
+
 def get_favoris(user):
     res = Favoris.query.filter_by(id_spectateur=user).all()
     groupes = []
@@ -75,15 +80,12 @@ def get_favoris(user):
     return groupes
 
     
-def get_groupes_by_id(id):
-    return Groupe.query.filter_by(id_groupe=id).all()
+def get_groupe_by_id(id):
+    return Groupe.query.filter_by(id_groupe=id).first()
 
 def get_style_by_id_groupe(id):
-    res = EtreStyle.query.filter_by(id_groupe=id).all()
-    styles = []
-    for style in res:
-        styles.append(Style.query.get(style.id_style))
-    return styles
+    res = EtreStyle.query.filter_by(id_groupe=id).first()
+    return Style.query.get(res.id_style)
 
 def get_sous_style_by_id(id):
     return SousStyle.query.filter_by(id_sous_style=id).all()
@@ -139,6 +141,36 @@ def get_event_by_id_groupe(id_groupe):
 def get_lieu_by_id(id_lieu):
     return Lieu.query.filter_by(id_lieu=id_lieu).first()
 
+
+def delete_groupe(groupe):
+    fav= Favoris.query.filter_by(id_groupe=groupe.id_groupe).all()
+    for f in fav:
+        db.session.delete(f)
+    appartient= Appartenir.query.filter_by(id_groupe=groupe.id_groupe).all()
+    for a in appartient:
+        db.session.delete(a)
+    style= EtreStyle.query.filter_by(id_groupe=groupe.id_groupe).all()
+    for s in style:
+        db.session.delete(s)
+    concert= OrganiserConcert.query.filter_by(id_groupe=groupe.id_groupe).all()
+    for c in concert:
+        db.session.delete(c)
+    event= OrganiserEvent.query.filter_by(id_groupe=groupe.id_groupe).all()
+    for e in event:
+        db.session.delete(e)
+    db.session.delete(groupe)
+    db.session.commit()
+
+def delete_concert(concert):
+    billet= Billet.query.filter_by(id_concert=concert.id_concert).all()
+    for b in billet:
+        db.session.delete(b)
+    reserver= Reserver.query.filter_by(id_concert=concert.id_concert).all()
+    for r in reserver:
+        db.session.delete(r)
+    db.session.delete(concert)
+    db.session.commit()
+
 def get_groupes_by_nom(nom):
     return Groupe.query.filter(Groupe.nom_groupe.like('%'+nom+'%')).all()
 
@@ -171,4 +203,9 @@ def insere_etrestyle(id_style, id_groupe):
     etrestyle = EtreStyle(id_style=id_style, id_groupe=id_groupe)
     db.session.add(etrestyle)
     db.session.commit()
+def get_groupe_by_id_concert(id):
+    res = OrganiserConcert.query.filter_by(id_concert=id).first()
+    return Groupe.query.get(res.id_groupe)
 
+def get_concert_by_id(id):
+    return Concert.query.filter_by(id_concert=id).first()

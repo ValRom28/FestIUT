@@ -20,12 +20,16 @@
                     <th>Lieu</th>
                 </tr>
                 {% for concert in concerts %}
-                    <tr>
-                        <td>{{ concert.nom_concert }}</td>
+                    <tr onclick='document.location = "{{ url_for("concert", concert=concert.id_concert) }}"'>
+                        <td>{{ concert.nom_concert }}</a></td>
                         <td>{{ concert.date_heure_concert.strftime("%d/%m/%Y") }}</td>
                         <td>{{ concert.date_heure_concert.strftime("%Hh%M") }}</td>
                         <td>{{ concert.duree_concert//60 }}h{{concert.duree_concert-concert.duree_concert//60*60}}</td>
-                        <td>{{ concert.id_lieu }}</td>
+                        {% for lieu in lieux %}
+                            {% if lieu.id_lieu == concert.id_lieu %}
+                                <td>{{ lieu.nom_lieu }}</td>
+                            {% endif %}
+                        {% endfor %}
                     </tr>
                 {% endfor %}
             </table>

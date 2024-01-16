@@ -20,7 +20,7 @@ body{
     border-radius: 5rem;
 }
 .email>p, .password>p {
-    color: white;
+    color: aliceblue;
     font-size: 200%;
 
 }
@@ -33,7 +33,7 @@ body{
 .connexion>input {
     margin-top: 0%;
     font-size: 150%;
-    background: white;
+    background: aliceblue;
     border: none;
     border-radius: 2rem;
     padding-top: 0%;
@@ -44,8 +44,9 @@ body{
 
 
 .connexion>input:hover {
-    color: rgb(253, 0, 0);
-    transition: 0.5s;
+    background: #6439da;
+    color: aliceblue;
+    transition: 0.2s;
 }
 
 .email, .password,.connexion{
@@ -84,7 +85,7 @@ body{
             padding-bottom: 150%;
     }
     .email>p, .password>p {
-        color: white;
+        color: aliceblue;
         font-size: 400%;
     
     }
@@ -124,7 +125,7 @@ body{
                 margin-top: 1rem;
         }
         .email>p, .password>p {
-            color: white;
+            color: aliceblue;
             font-size: 200%;
         
         }

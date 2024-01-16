@@ -4,6 +4,7 @@
         <meta name="connexion">
         <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
         <link rel="stylesheet" href="{{ url_for('static',filename='css/groupe_info.css')}}">
+        <script src="{{ url_for('static', filename='js/groupe_info.js') }}"></script>
     </head>
     <body>
         <header>
@@ -11,72 +12,97 @@
         </header>
         <main>
            <h2> {{groupe.nom_groupe}} </h2>
-           {% if like%}
+           {% if connecter %}
+           {% if like %}
               <form action="{{ url_for('supprimer_des_favoris', id_groupe=groupe.id_groupe) }}" method="post">
                 <input type="image" src="{{ url_for('static', filename='img/fav.png') }}" alt="Supprimer des favoris"  class="coeur" />
                 </form> 
                 {% else %}
-           <form action="{{ url_for('ajouter_aux_favoris', id_groupe=groupe.id_groupe) }}" method="post">
-            <input type="image" src="{{ url_for('static', filename='img/pas_fav.png') }}" alt="Ajouter aux favoris" class="coeur" />
-            </form> 
+                <form action="{{ url_for('ajouter_aux_favoris', id_groupe=groupe.id_groupe) }}" method="post">
+                <input type="image" src="{{ url_for('static', filename='img/pas_fav.png') }}" alt="Ajouter aux favoris" class="coeur" />
+                </form> 
             {% endif %}
-           <img src="{{ groupe.image_groupe }}" alt="image_groupe">
-           <div class="description">
-            <h3> les artistes </h3>
-            {% for artiste in artistes %}
-            <p> {{artiste.nom_artiste}}</p>
-            {% endfor %}
-            <h3> le style </h3>
-            <p> {{style.nom_style}} </p>
-            <h3> la description </h3>
-               <p> {{ groupe.description_groupe }} </p>
-            <h3> les instruments </h3>
-            {% for instrument in instruments %}
-            <p> {{instrument.nom_instrument}}</p>
-            {% endfor %}
-
-           </div>
+            {% endif %}
+            <img src="data:image/png;base64,{{ photo_groupe }}" alt="Image du groupe">
+            <div class="description">
+                <div>
+                    <h3>Artistes</h3>
+                    {% for artiste in artistes %}
+                    <p> {{artiste.nom_artiste}}</p>
+                    {% endfor %}
+                </div>
+                <div>
+                    <h3>Style</h3>
+                    <p> {{style.nom_style}} </p>
+                </div>
+                <div>
+                    <h3>Description</h3>
+                    <p> {{ groupe.description_groupe }} </p>
+                </div>
+                <div>
+                    <h3>Instruments</h3>
+                    {% for instrument in instruments %}
+                    <p> {{instrument.nom_instrument}}</p>
+                    {% endfor %}
+                </div>
+            </div>
             <div class="concerts">
-                <h2> les concerts </h2>
+                <h2>Concerts</h2>
                 {% for concert,lieu in concerts_et_lieux %}
                 <div class="bloc_concert">
-                <h3>{{concert.nom_concert}}</h2>
-                <p>date: {{concert.date_heure_concert}}</p>
-                <p>lieu: {{lieu.nom_lieu}}</p>
-                <p>duree: {{concert.duree_concert}}m </p>
+                    <h3>{{concert.nom_concert}}</h2>
+                    <p>Date: {{concert.date_heure_concert.strftime("%d/%m %Hh%m")}}</p>
+                    <p>Lieu: {{lieu.nom_lieu}}</p>
+                    <p>Durée: {{ concert.duree_concert//60 }}h{{concert.duree_concert-concert.duree_concert//60*60}} </p>
                 </div>
                 {% endfor %}
             </div>
-        <div class="event">
-            <h2> les evenements </h2>
-            {% for evenement,lieu in events_et_lieux %}
-            <div class="bloc_event">
-            <h3>{{evenement.nom_event}}</h2>
-            <p>date: {{evenement.date_event}}</p>
-            <p>lieu: {{lieu.nom_lieu}}</p>
+            <div class="event">
+                <h2>Evenements</h2>
+                {% for evenement,lieu in events_et_lieux %}
+                <div class="bloc_event">
+                    <h3>{{evenement.nom_event}}</h2>
+                    <p>Date: {{evenement.date_event}}</p>
+                    <p>Lieu: {{lieu.nom_lieu}}</p>
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
+            
+            {% if admin %}
+                <div class="admin">
+                <h2>Administation</h2>
+                <a href="{{ url_for('groupe_modification', id_groupe=groupe.id_groupe) }}">
+                    <button> Modifier </button>
+                </a>
+                    <button id="sup" class="sup"> Supprimer </button>
+                </div>
+            {% endif %}
 
+            <div id="popup" class="popup">
+                <p>Souhaitez vous vraiment supprimer le groupe : {{groupe.nom_groupe}}   ?</p>
+                <a href="{{ url_for('groupe_delete', id_groupe=groupe.id_groupe) }}">
+                    <button> Oui </button>
+                </a>
+                <button id="non"> Non </button>
+            </div>
         </main>
         <footer>
-            <h3> pourrez vous plaire </h3>
+            <h3>Pourrait vous plaire</h3>
             <div class="les_groupes">
             {%for g in groupes_semblable%}
             {% if g.id_groupe != groupe.id_groupe %}
             <a href="{{ url_for('groupe_detail', id_groupe=g.id_groupe) }}">
                 <div class='bloc_groupe'>
-                    <img src="{{ g.image_groupe }}" alt="image_groupe">
+                    <img src="data:image/png;base64,{{ images_prop[g.id_groupe] }}" alt="Image du groupe">
                     <p>{{ g.nom_groupe }}</p>
                 </div>
             </a>
             {% endif %}
             {% endfor %}
             </div>
-            <h3> resaux sociaux:  </h3>
-            <ul class='resaux_sociaux'>
-            <a href='#'> {{ groupe.insta_groupe }} </a>
-             <a href='#'> {{ groupe.spotify_groupe }} </a>
-             </div>
+            <h3>
+                <a href="{{groupe.insta_groupe}}"><img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram"></a>
+                <a href="{{groupe.spotify_groupe}}"><img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify"></a>
+            </h3>
         </footer>
     </body>

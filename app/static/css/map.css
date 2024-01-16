@@ -61,30 +61,55 @@ aside>form{
 }
 
 table{
-    margin: 2rem;
-    background-color: aliceblue;
-    color: #281460;
-    border: none;
+    border-collapse: collapse;
+    border: 1px solid aliceblue;
+    cursor: pointer;
 }
 
 th{
+    border: 1px solid #281460;
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 5px;
+    font-weight: bold;
+    background-color: aliceblue;
+    color: #281460;
+    border-radius: 1rem 1rem 0 0;
+    width: 16rem;
+}
+
+tr{
     background-color: #281460;
     color: aliceblue;
-    width: 16rem;
+    border: 1px solid aliceblue;
+}
+tr:hover{
+    border: 1px solid #6439da;
+    background-color: aliceblue;
+    color: #6439da;
+    transition: 0.2s;
 }
 
 td{
     text-align: center;
+    font-size: 1rem;
+    padding: 5px;
+    font-weight: bold;
 }
 
 .submit{
-    background-color: #281460;
-    color: aliceblue;
-    border-color: aliceblue;
+    background-color: aliceblue;
+    color: #281460;
     border-radius: 3rem;
     width: 10rem;
     height: 5rem;
     font-size: 1.5rem;
+}
+
+.submit:hover{
+    background-color: #6439da;
+    color: aliceblue;
+    transition: 0.2s;
 }
 
 #date{
@@ -101,14 +126,7 @@ td{
 #date:hover{
     background-color: aliceblue;
     color: #281460;
-    border: #281460;
-    transition: 0.5s;
-}
-
-.submit:hover{
-    background-color: aliceblue;
-    color: #281460;
-    border: 1px solid #281460;
+    border: aliceblue;
     transition: 0.5s;
 }
 

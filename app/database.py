@@ -1,3 +1,4 @@
+import base64
 from app import app, db
 from datetime import datetime
 from sqlalchemy.orm import sessionmaker
@@ -40,27 +41,29 @@ def initdb():
     session.add_all(hebergements)
 
     # Insertions pour la table GROUPE
+    bytes_img = open('app/static/img/logo.png', 'rb').read()
     groupes = [
         Groupe(id_groupe=1, nom_groupe='Les Artistes Brillants', id_hebergement=1,
-               photo_groupe=None, description_groupe='Groupe de musique classique', 
+               photo_groupe=open('app/static/img/artistes_brillants.png', 'rb').read(), 
+               description_groupe='Groupe de musique classique', 
                insta_groupe='@lesartistesbrillants', spotify_groupe='Les Artistes Brillants'),
         Groupe(id_groupe=2, nom_groupe='Thibault et les autres', id_hebergement=2,
-               photo_groupe=None, description_groupe='Groupe de musique rock', 
+               photo_groupe=bytes_img, description_groupe='Groupe de musique rock', 
                insta_groupe='@thibaultetlesautres', spotify_groupe='Thibault et les autres'),
         Groupe(id_groupe=3, nom_groupe='La Saint-Leger tout puissant', id_hebergement=3,
-               photo_groupe=None, description_groupe='Groupe de musique pop', 
+               photo_groupe=bytes_img, description_groupe='Groupe de musique pop', 
                insta_groupe='@lasaintlegertoutpuissant', spotify_groupe='La Saint-Leger tout puissant'),
         Groupe(id_groupe=4, nom_groupe='IUTO', id_hebergement=1,
-               photo_groupe=None, description_groupe='Groupe de musique rock', 
+               photo_groupe=bytes_img, description_groupe='Groupe de musique rock', 
                insta_groupe='@iuto', spotify_groupe='IUTO'),
         Groupe(id_groupe=5, nom_groupe='SLR', id_hebergement=2,
-               photo_groupe=None, description_groupe='Groupe de musique pop',
+               photo_groupe=bytes_img, description_groupe='Groupe de musique pop',
                insta_groupe='@slr', spotify_groupe='SLR'),
         Groupe(id_groupe=6, nom_groupe='La Z compagnie', id_hebergement=3,
-               photo_groupe=None, description_groupe='Groupe de musique classique', 
+               photo_groupe=bytes_img, description_groupe='Groupe de musique classique', 
                insta_groupe='@lazcompagnie', spotify_groupe='La Z compagnie'),
         Groupe(id_groupe=7, nom_groupe='Je fait toutou seul', id_hebergement=3,
-               photo_groupe=None, description_groupe='Groupe de musique rock', 
+               photo_groupe=bytes_img, description_groupe='Groupe de musique rock', 
                insta_groupe='@jefaittoutouseul', spotify_groupe='Je fait toutou seul')
     ]
     session.add_all(groupes)
@@ -134,6 +137,12 @@ def initdb():
                    anniv_spectateur=datetime.strptime('2004-10-06', '%Y-%m-%d').date(), photo_compte=None, admin=False),
         Spectateur(id_spectateur=4, nom_spectateur='Arthur', prenom_spectateur='Villet', 
                    mdp_spectateur='mdpVillet', email_spectateur='arthur@example.com',
+                     anniv_spectateur=datetime.strptime('2004-03-10', '%Y-%m-%d').date(), photo_compte=None, admin=True),
+        Spectateur(id_spectateur=5, nom_spectateur='a', prenom_spectateur='a', 
+                   mdp_spectateur='a', email_spectateur='a',
+                     anniv_spectateur=datetime.strptime('2004-03-10', '%Y-%m-%d').date(), photo_compte=None, admin=True),
+        Spectateur(id_spectateur=6, nom_spectateur='b', prenom_spectateur='b', 
+                   mdp_spectateur='b', email_spectateur='b',
                      anniv_spectateur=datetime.strptime('2004-03-10', '%Y-%m-%d').date(), photo_compte=None, admin=True),
     ]
     session.add_all(spectateurs)

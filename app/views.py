@@ -1,4 +1,6 @@
-import os
+from app import db
+import base64
+from PIL import Image
 from app import app
 from flask import render_template, request, redirect, url_for, make_response, send_file, jsonify, Response
 from flask_login import login_required, login_user, logout_user, current_user
@@ -66,17 +68,21 @@ def rechercheGroupe():
     if current_user.is_authenticated:
         connecter=True
         admin=current_user.is_admin()
-    return render_template('favoris.html', liste_favoris=groupes,connecter=connecter,admin=admin)
+    images = dict()
+    for groupe in groupes:
+        images[groupe.id_groupe] = base64.b64encode(groupe.photo_groupe).decode('utf-8')
+    return render_template('favoris.html', liste_favoris=groupes,connecter=connecter,admin=admin, images=images)
 
 @app.route('/programmation')
 def programmation():
     concerts = filter_concerts_date(datetime.datetime.now())
+    lieux = get_lieux()
     admin=False
     connecter=False
     if current_user.is_authenticated:
         connecter=True
         admin=current_user.is_admin()
-    return render_template('programmation.html', concerts=concerts,connecter=connecter,admin=admin)
+    return render_template('programmation.html', concerts=concerts,lieux=lieux,connecter=connecter,admin=admin)
 
 @app.route('/logout')
 @login_required
@@ -91,16 +97,10 @@ def registration():
     form.validate_password(form.password)
     if form.validate_on_submit() and form.password.data == form.confirm_password.data:
         spectateur = Spectateur(nom_spectateur=form.username.data, email_spectateur=form.email.data, mdp_spectateur=form.password.data)
-        print(spectateur)
-        print(spectateur.nom_spectateur)
-        print(spectateur.email_spectateur)
-        print(spectateur.mdp_spectateur)
         db.session.add(spectateur)
         db.session.commit()
         return redirect(url_for('login'))
     return render_template('inscription.html', form=form)
-
-
 
 @app.route("/groupes")
 def groupes():
@@ -129,10 +129,13 @@ def favoris():
         connecter=True
         admin=current_user.is_admin()
         liste_favoris = get_favoris(current_user.get_id())
-    
+
+    images = dict()
+    for groupe in liste_favoris:
+        images[groupe.id_groupe] = base64.b64encode(groupe.photo_groupe).decode('utf-8')
     print(current_user.get_id())
     print(liste_favoris)
-    return render_template('favoris.html', liste_favoris = liste_favoris,connecter=connecter,admin=admin)
+    return render_template('favoris.html', liste_favoris = liste_favoris,connecter=connecter,admin=admin, images=images)
 
 
 @app.route("/groupe/<int:id_groupe>")
@@ -143,15 +146,15 @@ def groupe_detail(id_groupe):
     if current_user.is_authenticated:
         connecter=True
         admin=current_user.is_admin()
-    groupe = get_groupes_by_id(id_groupe)
-    groupe = groupe[0]
+    groupe = get_groupe_by_id(id_groupe)
     style = get_style_by_id_groupe(groupe.id_groupe)
-    style = style[0]
-    print(style)
+    photo_groupe = base64.b64encode(groupe.photo_groupe).decode('utf-8')
     artistes= get_artistes_by_id_groupe(groupe.id_groupe)
-    
     like= est_favoris(id_groupe, current_user.get_id())
-    groupes_semblable=get_groupe_by_style(style.id_style)  
+    groupes_semblable=get_groupe_by_style(style.id_style)
+    images_propositions = dict()
+    for groupe_semb in groupes_semblable:
+        images_propositions[groupe_semb.id_groupe] = base64.b64encode(groupe_semb.photo_groupe).decode('utf-8')
     concerts=get_concert_by_id_groupe(id_groupe)
     instrument=[]
     for artiste in artistes:
@@ -160,7 +163,11 @@ def groupe_detail(id_groupe):
     event = (get_event_by_id_groupe(groupe.id_groupe))
     concerts_et_lieux = [(concert, get_lieu_by_id(concert.id_lieu)) for concert in concerts]
     events_et_lieux = [(e, get_lieu_by_id(e.id_lieu)) for e in event]
-    return render_template('groupe_info.html', groupe=groupe, style=style, connecter=connecter,admin=admin,artistes=artistes,like=like,groupes_semblable=groupes_semblable,concerts_et_lieux=concerts_et_lieux,instruments=instrument,events_et_lieux=events_et_lieux)
+    return render_template('groupe_info.html', groupe=groupe, style=style, connecter=connecter,
+                           admin=admin,artistes=artistes,like=like,groupes_semblable=groupes_semblable,
+                           concerts_et_lieux=concerts_et_lieux,instruments=instrument,
+                           events_et_lieux=events_et_lieux, photo_groupe=photo_groupe, 
+                           images_prop=images_propositions)
 
 @app.route('/ajouter_aux_favoris/<int:id_groupe>', methods=['POST'])
 def ajouter_aux_favoris(id_groupe):
@@ -211,3 +218,120 @@ def inserer_groupe():
     insere_etrestyle(style, id_groupe)
     insere_groupe(id_groupe, nom_groupe, None, description, nom_insta, nom_spotify, hebergement)
     return redirect(url_for("ajout_groupe")) # ca faudra le changer quand t'aura fait la page admin
+  
+@app.route("/groupe/<int:id_groupe>/modification", methods=['GET', 'POST'])
+def groupe_modification(id_groupe):
+    form = GroupeForm()
+    formConcert = ConcertForm()
+    formEvent = EventForm()
+    formLieu = LieuForm()
+    admin = True
+    connecter = True
+    instrument = []
+
+    groupe = get_groupe_by_id(id_groupe)
+    style = get_style_by_id_groupe(groupe.id_groupe)
+    artistes = get_artistes_by_id_groupe(groupe.id_groupe)
+    concerts = get_concert_by_id_groupe(id_groupe)
+    instrument = []
+    event = get_event_by_id_groupe(groupe.id_groupe)
+    concerts_et_lieux = [(concert, get_lieu_by_id(concert.id_lieu)) for concert in concerts]
+    events_et_lieux = [(e, get_lieu_by_id(e.id_lieu)) for e in event]
+    
+    for e, lieu in events_et_lieux:
+        formEvent = EventForm()
+        formEvent.id_event.data = e.id_event
+        if formEvent.validate_on_submit():
+            e.nom_event = formEvent.nom_event.data
+            e.date_event =  datetime.strptime(formEvent.date_event.data, '%Y-%m-%d')
+            lieu.nom_lieu = formLieu.nom_lieu.data
+            lieu.jauge_lieu = formLieu.jauge_lieu.data
+            lieu.coordonne_X = formLieu.coordonne_X.data
+            lieu.coordonne_Y = formLieu.coordonne_Y.data
+            print("Données du formulaire avant validation :", formEvent.data)
+            db.session.commit()
+            return redirect(url_for('groupe_detail', id_groupe=id_groupe))
+
+    for concert, lieu in concerts_et_lieux:
+        formConcert = ConcertForm()
+        formConcert.id_concert.data = concert.id_concert
+        if formConcert.validate_on_submit():
+            print("Validation réussie pour le concert ", concert.id_concert)
+            concert.nom_concert = formConcert.nom_concert.data
+            concert.tps_prepa_concert = formConcert.tps_prepa_concert.data
+            concert.date_heure_concert = datetime.strptime(formConcert.date_heure_concert.data, '%Y-%m-%d')
+            concert.duree_concert = formConcert.duree_concert.data
+            lieu.nom_lieu = formLieu.nom_lieu.data
+            lieu.jauge_lieu = formLieu.jauge_lieu.data
+            lieu.coordonne_X = formLieu.coordonne_X.data
+            lieu.coordonne_Y = formLieu.coordonne_Y.data
+            db.session.commit()
+            print("Données après la mise à jour :", concert.__dict__)
+            print("Données après la mise à jour (lieu) :", lieu.__dict__)
+            return redirect(url_for('groupe_detail', id_groupe=id_groupe))
+
+    
+            
+
+    
+    if form.validate_on_submit():
+        print("cc")
+        groupe.description_groupe = form.description_groupe.data
+        groupe.spotify_groupe = form.spotify_groupe.data
+        groupe.insta_groupe = form.insta_groupe.data
+        db.session.commit()
+        return redirect(url_for('groupe_detail', id_groupe=groupe.id_groupe))
+    
+    for artiste in artistes:
+        instrument.append(get_instrument_by_id_artiste(artiste.id_artiste))
+   
+    
+    form.description_groupe.data = groupe.description_groupe
+    form.spotify_groupe.data = groupe.spotify_groupe
+    form.insta_groupe.data = groupe.insta_groupe
+    for concert in concerts_et_lieux:
+        formConcert.nom_concert.data = concert[0].nom_concert
+        formConcert.tps_prepa_concert.data = concert[0].tps_prepa_concert
+        formConcert.date_heure_concert.data = concert[0].date_heure_concert
+        formConcert.duree_concert.data = concert[0].duree_concert
+        formLieu.nom_lieu.data = concert[1].nom_lieu
+        formLieu.jauge_lieu.data = concert[1].jauge_lieu
+        formLieu.coordonne_X.data = concert[1].coordonne_X
+        formLieu.coordonne_Y.data = concert[1].coordonne_Y
+        
+    for event in events_et_lieux: 
+        formEvent.id_event.data = event[0].id_event
+        formEvent.nom_event.data = event[0].nom_event
+        formEvent.date_event.data = event[0].date_event
+        formLieu.nom_lieu.data = event[1].nom_lieu
+        formLieu.jauge_lieu.data = event[1].jauge_lieu
+        formLieu.coordonne_X.data = event[1].coordonne_X
+        formLieu.coordonne_Y.data = event[1].coordonne_Y
+        print("Données du formulaire avant validation :", formEvent.data)
+        
+        
+    return render_template('modif_groupe.html', groupe=groupe, style=style, artistes=artistes,instrument=instrument,connecter=connecter,admin=admin,form=form,formConcert=formConcert,formEvent=formEvent,concerts_et_lieux=concerts_et_lieux,events_et_lieux=events_et_lieux,formLieu=formLieu)
+    
+@app.route("/groupe/<int:id_groupe>/delete", methods=['GET'])
+def groupe_delete(id_groupe):
+    groupe = get_groupe_by_id(id_groupe)
+    delete_groupe(groupe)
+    return redirect(url_for('groupes'))
+
+@app.route("/concert")
+def concert():
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    concert = get_concert_by_id(int(request.args.get("concert")))
+    groupe = get_groupe_by_id_concert(concert.id_concert)
+    style = get_style_by_id_groupe(groupe.id_groupe)
+    return render_template('concert_info.html', concert = concert,groupe=groupe,style = style,connecter=connecter,admin=admin)
+
+@app.route("/concert_delete")
+def concert_delete(id_concert):
+    concert = get_concert_by_id(id_concert)
+    delete_concert(concert)
+    return redirect(url_for('programmation'))
