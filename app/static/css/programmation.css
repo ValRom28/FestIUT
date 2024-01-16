@@ -29,12 +29,22 @@ th{
     border-radius: 1rem 1rem 0 0;
 }
 
-td{
+tr{
+    background-color: #281460;
+    color: aliceblue;
     border: 1px solid aliceblue;
+}
+
+td{
     text-align: center;
     font-size: 1rem;
     padding: 5px;
     font-weight: bold;
-    background-color: #281460;
-    color: aliceblue;
+}
+
+tr:hover{
+    border: 1px solid #6439da;
+    background-color: aliceblue;
+    color: #6439da;
+    transition: 0.2s;
 }

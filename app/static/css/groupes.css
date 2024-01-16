@@ -12,6 +12,7 @@
     font-size: 30px;
     padding: 1em;
     max-width: 365px;
+    border-radius: 2rem 2rem 2rem 0;
 }
 
 h2 {

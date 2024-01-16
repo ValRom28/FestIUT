@@ -71,17 +71,18 @@ def rechercheGroupe():
     images = dict()
     for groupe in groupes:
         images[groupe.id_groupe] = base64.b64encode(groupe.photo_groupe).decode('utf-8')
-    return render_template('rechercheGroupe.html', groupes=groupes,connecter=connecter,admin=admin, images=images)
+    return render_template('favoris.html', liste_favoris=groupes,connecter=connecter,admin=admin, images=images)
 
 @app.route('/programmation')
 def programmation():
     concerts = filter_concerts_date(datetime.datetime.now())
+    lieux = get_lieux()
     admin=False
     connecter=False
     if current_user.is_authenticated:
         connecter=True
         admin=current_user.is_admin()
-    return render_template('programmation.html', concerts=concerts,connecter=connecter,admin=admin)
+    return render_template('programmation.html', concerts=concerts,lieux=lieux,connecter=connecter,admin=admin)
 
 @app.route('/logout')
 @login_required

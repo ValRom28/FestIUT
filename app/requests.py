@@ -54,6 +54,10 @@ def filter_concerts_date(date):
             res.append(concert)
     return res
 
+def get_all_lieux():
+    return Lieu.query.all()
+    
+
 def get_favoris(user):
     res = Favoris.query.filter_by(id_spectateur=user).all()
     groupes = []
