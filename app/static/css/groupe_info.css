@@ -90,6 +90,7 @@ main{
 
 .description p, .description a{
     font-size: 200%;
+    color: aliceblue;
     margin-top: 1rem;
     margin-bottom: 1rem;
     text-decoration: none;

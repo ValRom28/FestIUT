@@ -67,15 +67,12 @@ def get_favoris(user):
     return groupes
 
     
-def get_groupes_by_id(id):
-    return Groupe.query.filter_by(id_groupe=id).all()
+def get_groupe_by_id(id):
+    return Groupe.query.filter_by(id_groupe=id).first()
 
 def get_style_by_id_groupe(id):
-    res = EtreStyle.query.filter_by(id_groupe=id).all()
-    styles = []
-    for style in res:
-        styles.append(Style.query.get(style.id_style))
-    return styles
+    res = EtreStyle.query.filter_by(id_groupe=id).first()
+    return Style.query.get(res.id_style)
 
 def get_sous_style_by_id(id):
     return SousStyle.query.filter_by(id_sous_style=id).all()
@@ -150,5 +147,22 @@ def delete_groupe(groupe):
     db.session.delete(groupe)
     db.session.commit()
 
+def delete_concert(concert):
+    billet= Billet.query.filter_by(id_concert=concert.id_concert).all()
+    for b in billet:
+        db.session.delete(b)
+    reserver= Reserver.query.filter_by(id_concert=concert.id_concert).all()
+    for r in reserver:
+        db.session.delete(r)
+    db.session.delete(concert)
+    db.session.commit()
+
 def get_groupes_by_nom(nom):
     return Groupe.query.filter(Groupe.nom_groupe.like('%'+nom+'%')).all()
+
+def get_groupe_by_id_concert(id):
+    res = OrganiserConcert.query.filter_by(id_concert=id).first()
+    return Groupe.query.get(res.id_groupe)
+
+def get_concert_by_id(id):
+    return Concert.query.filter_by(id_concert=id).first()
