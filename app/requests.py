@@ -37,10 +37,10 @@ def get_groupes():
 def get_lieux():
     return Lieu.query.all()
 
-def get_Artistes():
+def get_artistes():
     return Artiste.query.all()
 
-def get_Hebergement():
+def get_hebergement():
     return Hebergement.query.all()
 
 def get_styles():
