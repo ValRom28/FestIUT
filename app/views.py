@@ -297,3 +297,13 @@ def concert_delete(id_concert):
     concert = get_concert_by_id(id_concert)
     delete_concert(concert)
     return redirect(url_for('programmation'))
+
+@app.route("/billetterie")
+def billetterie():
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    concert = get_concert_by_id(int(request.args.get("concert")))
+    return render_template('billetterie.html', concert=concert, connecter=connecter, admin=admin)
