@@ -133,8 +133,6 @@ def favoris():
     images = dict()
     for groupe in liste_favoris:
         images[groupe.id_groupe] = base64.b64encode(groupe.photo_groupe).decode('utf-8')
-    print(current_user.get_id())
-    print(liste_favoris)
     return render_template('favoris.html', liste_favoris = liste_favoris,connecter=connecter,admin=admin, images=images)
 
 
@@ -202,14 +200,6 @@ def inserer_groupe():
     hebergement = request.form.get('hebergement')
 
     style = request.form.get('style')
-    # Faites quelque chose avec les données récupérées, par exemple, les imprimer
-    print(f"Nom du groupe: {nom_groupe}")
-    print(f"Description du groupe: {description}")
-    print(f"Insta du groupe: {nom_insta}")
-    print(f"Spotify du groupe: {nom_spotify}")
-    print(f"Artistes sélectionnés: {artistes}")
-    print(f"Hébergements sélectionnés: {hebergement}")
-    print(f"Style sélectionnés: {style}")
 
 
     for artiste in artistes:
@@ -248,7 +238,6 @@ def groupe_modification(id_groupe):
             lieu.jauge_lieu = formLieu.jauge_lieu.data
             lieu.coordonne_X = formLieu.coordonne_X.data
             lieu.coordonne_Y = formLieu.coordonne_Y.data
-            print("Données du formulaire avant validation :", formEvent.data)
             db.session.commit()
             return redirect(url_for('groupe_detail', id_groupe=id_groupe))
 
@@ -256,7 +245,6 @@ def groupe_modification(id_groupe):
         formConcert = ConcertForm()
         formConcert.id_concert.data = concert.id_concert
         if formConcert.validate_on_submit():
-            print("Validation réussie pour le concert ", concert.id_concert)
             concert.nom_concert = formConcert.nom_concert.data
             concert.tps_prepa_concert = formConcert.tps_prepa_concert.data
             concert.date_heure_concert = datetime.strptime(formConcert.date_heure_concert.data, '%Y-%m-%d')
@@ -266,8 +254,6 @@ def groupe_modification(id_groupe):
             lieu.coordonne_X = formLieu.coordonne_X.data
             lieu.coordonne_Y = formLieu.coordonne_Y.data
             db.session.commit()
-            print("Données après la mise à jour :", concert.__dict__)
-            print("Données après la mise à jour (lieu) :", lieu.__dict__)
             return redirect(url_for('groupe_detail', id_groupe=id_groupe))
 
     
@@ -275,7 +261,6 @@ def groupe_modification(id_groupe):
 
     
     if form.validate_on_submit():
-        print("cc")
         groupe.description_groupe = form.description_groupe.data
         groupe.spotify_groupe = form.spotify_groupe.data
         groupe.insta_groupe = form.insta_groupe.data
@@ -307,7 +292,6 @@ def groupe_modification(id_groupe):
         formLieu.jauge_lieu.data = event[1].jauge_lieu
         formLieu.coordonne_X.data = event[1].coordonne_X
         formLieu.coordonne_Y.data = event[1].coordonne_Y
-        print("Données du formulaire avant validation :", formEvent.data)
         
         
     return render_template('modif_groupe.html', groupe=groupe, style=style, artistes=artistes,instrument=instrument,connecter=connecter,admin=admin,form=form,formConcert=formConcert,formEvent=formEvent,concerts_et_lieux=concerts_et_lieux,events_et_lieux=events_et_lieux,formLieu=formLieu)

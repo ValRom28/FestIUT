@@ -20,65 +20,69 @@
             </div>
             <div class="conteneur-champs-formulaires">
                 <form action="{{ url_for('inserer_groupe') }}"role="form" method="POST" class="form-champ" enctype="multipart/form-data">
-                    <div>
+                    <section>
+                        <div>
+                            <div class="form-label-admin">
+                                <label for="name" class="label">Nom du groupe </label>
+                                <input type="text" name="nom_groupe" size="40" id="nom_groupe" required placeholder="Exemple : Beetles"/>
+                            </div>
+                            <div class="form-label-admin-desc">
+                                <label for="description" class="label">Description du groupe </label>
+                                <textarea name="textarea" rows="7" cols="50" maxlength="200" placeholder="Ecrivez la description du Groupe ici ..."></textarea>
+                            </div>
+                            <div class="form-label-admin">
+                                <label for="insta" class="label">Lien Instagram du Groupe </label>
+                                <input type="text" name="nom_insta" size="40" id="nom_insta" required value="https://www.instagram.com/"/>
+                            </div>
+                            <div class="form-label-admin">
+                                <label for="spotify" class="label">Lien Spotify du Groupe </label>
+                                <input type="text" name="nom_spotify" size="40" id="nom_spotify" required value="https://open.spotify.com/"/>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
                         <div class="form-label-admin">
-                            <label for="name" class="label">Nom du groupe:</label>
-                            <input type="text" name="nom_groupe" maxlength="20" size="40" id="nom_groupe" required/>
-                        </div>
-                        <div class="form-label-admin-desc">
-                            <label for="description" class="label">Description du groupe:</label>
-                            <textarea name="textarea" rows="7" cols="50" maxlength="200">Vous pouvez écrire ici.</textarea>
+                            <label for="artistes" class="label">Choisir les artistes :</label>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" onclick="toggleCheckboxList()">
+                                    Sélectionner des artistes
+                                </button>
+                                <div class="checkbox-list" id="checkboxList">
+                                    {% for artiste in liste %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" onclick="addArtisteListe('{{artiste.id_artiste}}')" type="checkbox" name="artiste[]" value="{{ artiste.id_artiste }}" data-id="{{ artiste.id_artiste }}">
+                                            <label class="label" for="{{ artiste.id_artiste }}">{{ artiste.nom_artiste }}</label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
                         </div>
                         <div class="form-label-admin">
-                            <label for="insta" class="label">Insta du groupe:</label>
-                            <input type="text" name="nom_insta" maxlength="20" size="40" id="nom_insta" required/>
-                        </div>
-                        <div class="form-label-admin">
-                            <label for="spotify" class="label">Spotify du groupe:</label>
-                            <input type="text" name="nom_spotify" maxlength="20" size="40" id="nom_spotify" required/>
-                        </div>
-                    </div>
-                    <div class="form-label-admin">
-                        <label for="artistes" class="label">Choisir les artistes :</label>
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" onclick="toggleCheckboxList()" aria-haspopup="true" aria-expanded="false">
-                                Sélectionner des artistes
-                            </button>
-                            <div class="checkbox-list" id="checkboxList">
-                                {% for artiste in liste %}
+                            <label for="hebergement" class="label">Choisir l'hébergement :</label>
+                            <div class="radio-list" id="radioList">
+                                {% for hebergement in hebergements %}
                                     <div class="form-check">
-                                        <input class="form-check-input" onclick="addArtisteListe('{{artiste.id_artiste}}')" type="checkbox" name="artiste[]" value="{{ artiste.id_artiste }}" data-id="{{ artiste.id_artiste }}">
-                                        <label class="label" for="{{ artiste.id_artiste }}">{{ artiste.nom_artiste }}</label>
+                                        <input class="form-check-input" type="radio" name="hebergement" value="{{ hebergement.id_hebergement }}" data-id="{{ hebergement.id_hebergement }}">
+                                        <label class="label" for="{{ hebergement.id_hebergement }}">{{ hebergement.nom_hebergement }}</label>
                                     </div>
                                 {% endfor %}
                             </div>
                         </div>
-                    </div>
-                    <div class="form-label-admin">
-                        <label for="hebergement" class="label">Choisir l'hébergement :</label>
-                        <div class="radio-list" id="radioList">
-                            {% for hebergement in hebergements %}
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="hebergement" value="{{ hebergement.id_hebergement }}" data-id="{{ hebergement.id_hebergement }}">
-                                    <label class="label" for="{{ hebergement.id_hebergement }}">{{ hebergement.nom_hebergement }}</label>
-                                </div>
-                            {% endfor %}
+                        <div class="form-label-admin">
+                            <label for="hebergement" class="label">Choisir le style :</label>
+                            <div class="radio-list" id="radioList">
+                                {% for style in styles %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="style" value="{{ style.id_style }}" data-id="{{ style.id_style }}">
+                                        <label class="label" for="{{ style.id_style }}">{{ style.nom_style }}</label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>                
+                        <div class="creation-groupe">
+                            <input type="submit" value="Créer le groupe" />
                         </div>
-                    </div>
-                    <div class="form-label-admin">
-                        <label for="hebergement" class="label">Choisir l'hébergement :</label>
-                        <div class="radio-list" id="radioList">
-                            {% for style in styles %}
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="style" value="{{ style.id_style }}" data-id="{{ style.id_style }}">
-                                    <label class="label" for="{{ style.id_style }}">{{ style.nom_style }}</label>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>                
-                    <div class="creation-groupe">
-                        <input type="submit" value="Créer le groupe" />
-                    </div>
+                    </section>
                 </form>
                 <script>
                     "use strict";
