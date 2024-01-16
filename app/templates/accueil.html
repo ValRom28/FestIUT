@@ -45,7 +45,7 @@
                     <th>Durée</th>
                 </tr>
                 {% for concert in concerts %}
-                    <tr>
+                    <tr onclick='document.location = "{{ url_for("concert", concert=concert.id_concert) }}"'>
                         <td>{{ concert.nom_concert }}</td>
                         <td>{{ concert.date_heure_concert.strftime("%d/%m/%Y") }}</td>
                         <td>{{ concert.date_heure_concert.strftime("%Hh%M") }}</td>

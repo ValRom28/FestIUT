@@ -16,6 +16,7 @@ body{
 table{
     border-collapse: collapse;
     border: 1px solid aliceblue;
+    cursor: pointer;
 }
 
 th{
@@ -40,15 +41,6 @@ td{
     font-size: 1rem;
     padding: 5px;
     font-weight: bold;
-}
-
-a{
-    text-decoration: none;
-    color: #6439da;
-}
-
-a:hover{
-    color: #281460;
 }
 
 tr:hover{
