@@ -42,6 +42,15 @@ td{
     font-weight: bold;
 }
 
+a{
+    text-decoration: none;
+    color: #6439da;
+}
+
+a:hover{
+    color: #281460;
+}
+
 tr:hover{
     border: 1px solid #6439da;
     background-color: aliceblue;

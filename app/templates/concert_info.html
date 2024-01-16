@@ -1,0 +1,51 @@
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="connexion">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/groupe_info.css')}}">
+        <script src="{{ url_for('static', filename='js/groupe_info.js') }}"></script>
+    </head>
+    <body>
+        <header>
+            {% include "components/headerPage.html" %}
+        </header>
+        <main>
+           <h2> {{concert.nom_concert}} </h2>
+            <div class="description">
+                <div>
+                    <h3>Groupe</h3>
+                    <a href="{{ url_for('groupe_detail', id_groupe=groupe.id_groupe) }}"> {{groupe.nom_groupe}}</a>
+                </div>
+                <div>
+                    <h3>Style</h3>
+                    <p>{{style.nom_style}}</p>
+                </div>
+                <div>
+                    <h3>Date</h3>
+                    <p>{{concert.date_heure_concert.strftime("%d/%m")}}</p>
+                </div>
+                <div>
+                    <h3>Heure</h3>
+                    <p>{{concert.date_heure_concert.strftime("%Hh%m")}}</p>
+                </div>
+            </div>
+            {% if admin %}
+                <div class="admin">
+                <h2>Administation</h2>
+                <a href="{{ url_for('groupe_modification', id_groupe=groupe.id_groupe) }}">
+                    <button> Modifier </button>
+                </a>
+                    <button id="sup" class="sup"> Supprimer </button>
+                </div>
+            {% endif %}
+
+            <div id="popup" class="popup">
+                <p>Souhaitez vous vraiment supprimer le concert : {{concert.nom_concert}}   ?</p>
+                <a href="{{ url_for('concert_delete', id_concert=concert.id_concert) }}">
+                    <button> Oui </button>
+                </a>
+                <button id="non"> Non </button>
+            </div>
+        </main>
+    </body>

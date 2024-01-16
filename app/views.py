@@ -146,11 +146,8 @@ def groupe_detail(id_groupe):
     if current_user.is_authenticated:
         connecter=True
         admin=current_user.is_admin()
-    groupe = get_groupes_by_id(id_groupe)
-    groupe = groupe[0]
-
+    groupe = get_groupe_by_id(id_groupe)
     style = get_style_by_id_groupe(groupe.id_groupe)
-    style = style[0]
     photo_groupe = base64.b64encode(groupe.photo_groupe).decode('utf-8')
     artistes= get_artistes_by_id_groupe(groupe.id_groupe)
     like= est_favoris(id_groupe, current_user.get_id())
@@ -194,10 +191,8 @@ def groupe_modification(id_groupe):
     connecter = True
     instrument = []
 
-    groupe = get_groupes_by_id(id_groupe)
-    groupe = groupe[0]
+    groupe = get_groupe_by_id(id_groupe)
     style = get_style_by_id_groupe(groupe.id_groupe)
-    style = style[0]
     artistes = get_artistes_by_id_groupe(groupe.id_groupe)
     concerts = get_concert_by_id_groupe(id_groupe)
     instrument = []
@@ -281,10 +276,24 @@ def groupe_modification(id_groupe):
     
 @app.route("/groupe/<int:id_groupe>/delete", methods=['GET'])
 def groupe_delete(id_groupe):
-    print("delete")
-    groupe = get_groupes_by_id(id_groupe)
-    groupe = groupe[0]
+    groupe = get_groupe_by_id(id_groupe)
     delete_groupe(groupe)
-    print("true")
     return redirect(url_for('groupes'))
 
+@app.route("/concert")
+def concert():
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    concert = get_concert_by_id(int(request.args.get("concert")))
+    groupe = get_groupe_by_id_concert(concert.id_concert)
+    style = get_style_by_id_groupe(groupe.id_groupe)
+    return render_template('concert_info.html', concert = concert,groupe=groupe,style = style,connecter=connecter,admin=admin)
+
+@app.route("/concert_delete")
+def concert_delete(id_concert):
+    concert = get_concert_by_id(id_concert)
+    delete_concert(concert)
+    return redirect(url_for('programmation'))
