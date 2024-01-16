@@ -70,7 +70,10 @@ def rechercheGroupe():
         admin=current_user.is_admin()
     images = dict()
     for groupe in groupes:
-        images[groupe.id_groupe] = base64.b64encode(groupe.photo_groupe).decode('utf-8')
+        if groupe.photo_groupe != None:
+            images[groupe.id_groupe] = base64.b64encode(groupe.photo_groupe).decode('utf-8')
+        else:
+            images[groupe.id_groupe] = None
     return render_template('favoris.html', liste_favoris=groupes,connecter=connecter,admin=admin, images=images)
 
 @app.route('/programmation')
@@ -133,6 +136,10 @@ def favoris():
     images = dict()
     for groupe in liste_favoris:
         images[groupe.id_groupe] = base64.b64encode(groupe.photo_groupe).decode('utf-8')
+        if groupe.photo_groupe != None:
+            images[groupe.id_groupe] = base64.b64encode(groupe.photo_groupe).decode('utf-8')
+        else:
+            images[groupe.id_groupe] = None
     print(current_user.get_id())
     print(liste_favoris)
     return render_template('favoris.html', liste_favoris = liste_favoris,connecter=connecter,admin=admin, images=images)
@@ -148,15 +155,18 @@ def groupe_detail(id_groupe):
         admin=current_user.is_admin()
     groupe = get_groupe_by_id(id_groupe)
     style = get_style_by_id_groupe(groupe.id_groupe)
-    photo_groupe = base64.b64encode(groupe.photo_groupe).decode('utf-8')
     artistes= get_artistes_by_id_groupe(groupe.id_groupe)
     like= est_favoris(id_groupe, current_user.get_id())
     groupes_semblable=get_groupe_by_style(style.id_style)
     images_propositions = dict()
-    for groupe_semb in groupes_semblable:
-        images_propositions[groupe_semb.id_groupe] = base64.b64encode(groupe_semb.photo_groupe).decode('utf-8')
     concerts=get_concert_by_id_groupe(id_groupe)
     instrument=[]
+    if groupe.photo_groupe is not None:
+        photo_groupe = base64.b64encode(groupe.photo_groupe).decode('utf-8')
+        for groupe_semb in groupes_semblable:
+            images_propositions[groupe_semb.id_groupe] = base64.b64encode(groupe_semb.photo_groupe).decode('utf-8')
+    else:
+        photo_groupe = None
     for artiste in artistes:
         instrument.append(get_instrument_by_id_artiste(artiste.id_artiste))
    
@@ -179,8 +189,38 @@ def supprimer_des_favoris(id_groupe):
     supprimer_favoris(id_groupe, current_user.get_id())
     return redirect(url_for('groupe_detail', id_groupe=id_groupe))
 
+@app.route("/ajout_groupe")
+def ajout_groupe():
+    liste_artiste = get_Artistes()
+    liste_hebergement = get_Hebergement()
+    styles = get_styles()
+    return render_template('ajout_groupe.html', liste = liste_artiste, hebergements = liste_hebergement, styles = styles)
+
+@app.route("/ajout_groupe", methods=['POST'])
+def inserer_groupe():
+    id_groupe = get_prochain_id_groupe()
+    # Récupérer les données du formulaire
+    nom_groupe = request.form.get('nom_groupe')
+    description = request.form.get('textarea')
+    nom_insta = request.form.get('nom_insta')
+    nom_spotify = request.form.get('nom_spotify')
+
+    # Récupérer les artistes sélectionnés
+    artistes = request.form.getlist('artiste[]')
+
+    # Récupérer les hébergements sélectionnés
+    hebergement = request.form.get('hebergement')
+
+    style = request.form.get('style')
 
 
+    for artiste in artistes:
+        insere_appartenir(artiste, id_groupe)
+
+    insere_etrestyle(style, id_groupe)
+    insere_groupe(id_groupe, nom_groupe, None, description, nom_insta, nom_spotify, hebergement)
+    return redirect(url_for("ajout_groupe")) # ca faudra le changer quand t'aura fait la page admin
+  
 @app.route("/groupe/<int:id_groupe>/modification", methods=['GET', 'POST'])
 def groupe_modification(id_groupe):
     form = GroupeForm()
@@ -210,7 +250,6 @@ def groupe_modification(id_groupe):
             lieu.jauge_lieu = formLieu.jauge_lieu.data
             lieu.coordonne_X = formLieu.coordonne_X.data
             lieu.coordonne_Y = formLieu.coordonne_Y.data
-            print("Données du formulaire avant validation :", formEvent.data)
             db.session.commit()
             return redirect(url_for('groupe_detail', id_groupe=id_groupe))
 
@@ -218,7 +257,6 @@ def groupe_modification(id_groupe):
         formConcert = ConcertForm()
         formConcert.id_concert.data = concert.id_concert
         if formConcert.validate_on_submit():
-            print("Validation réussie pour le concert ", concert.id_concert)
             concert.nom_concert = formConcert.nom_concert.data
             concert.tps_prepa_concert = formConcert.tps_prepa_concert.data
             concert.date_heure_concert = datetime.strptime(formConcert.date_heure_concert.data, '%Y-%m-%d')
@@ -228,8 +266,6 @@ def groupe_modification(id_groupe):
             lieu.coordonne_X = formLieu.coordonne_X.data
             lieu.coordonne_Y = formLieu.coordonne_Y.data
             db.session.commit()
-            print("Données après la mise à jour :", concert.__dict__)
-            print("Données après la mise à jour (lieu) :", lieu.__dict__)
             return redirect(url_for('groupe_detail', id_groupe=id_groupe))
 
     
@@ -237,7 +273,6 @@ def groupe_modification(id_groupe):
 
     
     if form.validate_on_submit():
-        print("cc")
         groupe.description_groupe = form.description_groupe.data
         groupe.spotify_groupe = form.spotify_groupe.data
         groupe.insta_groupe = form.insta_groupe.data
@@ -269,7 +304,6 @@ def groupe_modification(id_groupe):
         formLieu.jauge_lieu.data = event[1].jauge_lieu
         formLieu.coordonne_X.data = event[1].coordonne_X
         formLieu.coordonne_Y.data = event[1].coordonne_Y
-        print("Données du formulaire avant validation :", formEvent.data)
         
         
     return render_template('modif_groupe.html', groupe=groupe, style=style, artistes=artistes,instrument=instrument,connecter=connecter,admin=admin,form=form,formConcert=formConcert,formEvent=formEvent,concerts_et_lieux=concerts_et_lieux,events_et_lieux=events_et_lieux,formLieu=formLieu)

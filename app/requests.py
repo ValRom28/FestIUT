@@ -5,6 +5,7 @@ from app.models import (Appartenir, Artiste, Billet, Concert, EtreStyle,
                      Jouer, Lieu, OrganiserConcert, Possede, Reserver,
                      Style, SousStyle, Spectateur, Type, OrganiserEvent, Event)
 import datetime
+from sqlalchemy import desc
 
 def get_user_by_id(id):
     """
@@ -35,6 +36,18 @@ def get_groupes():
 
 def get_lieux():
     return Lieu.query.all()
+
+def get_artistes():
+    return Artiste.query.all()
+
+def get_hebergement():
+    return Hebergement.query.all()
+
+def get_styles():
+    return Style.query.all()
+
+def get_instrument():
+    return Instrument.query.all()
 
 def filter_concerts(date_debut,date_fin, place):
     concert_lieu = Concert.query.filter_by(id_lieu=place).order_by("date_heure_concert").all()
@@ -113,6 +126,7 @@ def get_concert_by_id_groupe(id_groupe):
 
 def get_instrument_by_id_artiste(id_artiste):
     res= Jouer.query.filter_by(id_artiste=id_artiste).all()
+    print(res, id_artiste)
     instrument= Instrument.query.get(res[0].id_instrument)
     return instrument
 
@@ -160,6 +174,35 @@ def delete_concert(concert):
 def get_groupes_by_nom(nom):
     return Groupe.query.filter(Groupe.nom_groupe.like('%'+nom+'%')).all()
 
+def get_prochain_id_groupe():
+    id_g = Groupe.query.order_by(desc(Groupe.id_groupe)).first().id_groupe
+    print(id_g)
+    return id_g + 1
+
+def insere_groupe(id_groupe, nom_groupe, photo_groupe, description_groupe, insta_groupe, spotify_groupe, id_hebergement):
+    groupe = Groupe(id_groupe=id_groupe, nom_groupe=nom_groupe, photo_groupe=photo_groupe, description_groupe=description_groupe, insta_groupe=insta_groupe, spotify_groupe=spotify_groupe, id_hebergement=id_hebergement)
+    db.session.add(groupe)
+    db.session.commit()
+
+def get_prochain_id_artiste():
+    id_g = Artiste.query.order_by(desc(Artiste.id_artiste)).first().id_artiste
+    print(id_g)
+    return id_g + 1
+
+def insere_artiste(id_artiste, nom_artiste):
+    artiste = Artiste(id_artiste=id_artiste, nom_artiste=nom_artiste)
+    db.session.add(artiste)
+    db.session.commit()
+
+def insere_appartenir(id_artiste, id_groupe):
+    appartenir = Appartenir(id_artiste=id_artiste, id_groupe=id_groupe)
+    db.session.add(appartenir)
+    db.session.commit()
+
+def insere_etrestyle(id_style, id_groupe):
+    etrestyle = EtreStyle(id_style=id_style, id_groupe=id_groupe)
+    db.session.add(etrestyle)
+    db.session.commit()
 def get_groupe_by_id_concert(id):
     res = OrganiserConcert.query.filter_by(id_concert=id).first()
     return Groupe.query.get(res.id_groupe)
