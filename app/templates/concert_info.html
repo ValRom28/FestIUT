@@ -13,9 +13,9 @@
         <main>
            <h2> {{concert.nom_concert}} </h2>
             <div class="description">
-                <div>
+                <div onclick='document.location = "{{ url_for("groupe_detail", id_groupe=groupe.id_groupe) }}"' style="cursor: pointer;">
                     <h3>Groupe</h3>
-                    <a href="{{ url_for('groupe_detail', id_groupe=groupe.id_groupe) }}"> {{groupe.nom_groupe}}</a>
+                    <p > {{groupe.nom_groupe}}</p>
                 </div>
                 <div>
                     <h3>Style</h3>
