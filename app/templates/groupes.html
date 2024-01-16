@@ -17,19 +17,11 @@
     <main>
         <div class="main-part">
             <section class="left-part">
-                <!-- Votre formulaire de recherche ici -->
-                <form action="" onsubmit="search(); return false;">
-                    <div class="search-input-container">
-                        <input class="form-control me-2" type="search" name="query" placeholder="Rechercher un groupe"
-                            aria-label="Search">
-                            <img id="toggleSearch" class="search-toggle" src="{{ url_for('static', filename='img/chercher.png') }}" alt="Rechercher" onclick="search()" />
-                    </div>
-                </form>
                 <div class="sommaire-content">
                     <h2 class="groupes-left">Les groupes</h2>
                     <div class="liste-groupes">
                         {% for groupe in liste_groupes %}
-                        <a href="{{ url_for('groupe_detail', id_groupe=groupe.id_groupe) }}" class="darkmode-ignore">{{ groupe.nom_groupe }}</a>
+                        <a href="#groupe-{{groupe.nom_groupe}}" class="darkmode-ignore">{{ groupe.nom_groupe }}</a>
                         {% endfor %}
                     </div>
                 </div>
@@ -37,15 +29,17 @@
             <section class="right-part">
                 <h2 class="title-h2">Détails des groupes</h2>
                 {% for groupe in liste_groupes %}
-                <div class="box-groupe">
-                    <div class="info-groupe">
-                        <h3 id="groupe-{{ groupe.nom_groupe }}" class="groupe-title darkmode-ignore">{{ groupe.nom_groupe }}</h3>
-                        <p class="groupe-description">{{ groupe.description_groupe }}</p>
-                        <a class="groupe-insta" href="#">Instagram: {{ groupe.insta_groupe }}</a>
-                        <a class="groupe-spotify" href="#">Spotify: {{ groupe.spotify_groupe }}</a>
-                        <!-- Ajoutez d'autres informations sur le groupe selon votre modèle -->
+                <a href="{{ url_for('groupe_detail', id_groupe=groupe.id_groupe) }}">
+                    <div class="box-groupe" id="groupe-{{ groupe.nom_groupe }}">
+                        <div class="info-groupe" >
+                            <h3  class="groupe-title darkmode-ignore">{{ groupe.nom_groupe }}</h3>
+                            <p class="groupe-description">{{ groupe.description_groupe }}</p>
+                            <a class="groupe-insta" href="#">Instagram: {{ groupe.insta_groupe }}</a>
+                            <a class="groupe-spotify" href="#">Spotify: {{ groupe.spotify_groupe }}</a>
+                            <!-- Ajoutez d'autres informations sur le groupe selon votre modèle -->
+                        </div>
                     </div>
-                </div>
+                </a>
                 {% endfor %}
             </section>
         </div>
