@@ -171,3 +171,43 @@ def ajouter_aux_favoris(id_groupe):
 def supprimer_des_favoris(id_groupe):
     supprimer_favoris(id_groupe, current_user.get_id())
     return redirect(url_for('groupe_detail', id_groupe=id_groupe))
+
+@app.route("/ajout_groupe")
+def ajout_groupe():
+    liste_artiste = get_Artistes()
+    liste_hebergement = get_Hebergement()
+    styles = get_styles()
+    return render_template('ajout_groupe.html', liste = liste_artiste, hebergements = liste_hebergement, styles = styles)
+
+@app.route("/ajout_groupe", methods=['POST'])
+def inserer_groupe():
+    id_groupe = get_prochain_id_groupe()
+    # Récupérer les données du formulaire
+    nom_groupe = request.form.get('nom_groupe')
+    description = request.form.get('textarea')
+    nom_insta = request.form.get('nom_insta')
+    nom_spotify = request.form.get('nom_spotify')
+
+    # Récupérer les artistes sélectionnés
+    artistes = request.form.getlist('artiste[]')
+
+    # Récupérer les hébergements sélectionnés
+    hebergement = request.form.get('hebergement')
+
+    style = request.form.get('style')
+    # Faites quelque chose avec les données récupérées, par exemple, les imprimer
+    print(f"Nom du groupe: {nom_groupe}")
+    print(f"Description du groupe: {description}")
+    print(f"Insta du groupe: {nom_insta}")
+    print(f"Spotify du groupe: {nom_spotify}")
+    print(f"Artistes sélectionnés: {artistes}")
+    print(f"Hébergements sélectionnés: {hebergement}")
+    print(f"Style sélectionnés: {style}")
+
+
+    for artiste in artistes:
+        insere_appartenir(artiste, id_groupe)
+
+    insere_etrestyle(style, id_groupe)
+    insere_groupe(id_groupe, nom_groupe, None, description, nom_insta, nom_spotify, hebergement)
+    return redirect(url_for("ajout_groupe")) # ca faudra le changer quand t'aura fait la page admin
