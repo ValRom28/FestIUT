@@ -209,3 +209,9 @@ def get_groupe_by_id_concert(id):
 
 def get_concert_by_id(id):
     return Concert.query.filter_by(id_concert=id).first()
+
+def get_Artistes():
+    return Artiste.query.all()
+
+def get_Hebergement():
+    return Hebergement.query.all()

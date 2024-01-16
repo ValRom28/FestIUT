@@ -322,9 +322,10 @@ def concert():
         connecter=True
         admin=current_user.is_admin()
     concert = get_concert_by_id(int(request.args.get("concert")))
+    lieu = get_lieu_by_id(concert.id_lieu)
     groupe = get_groupe_by_id_concert(concert.id_concert)
     style = get_style_by_id_groupe(groupe.id_groupe)
-    return render_template('concert_info.html', concert = concert,groupe=groupe,style = style,connecter=connecter,admin=admin)
+    return render_template('concert_info.html', concert = concert,groupe=groupe,lieu=lieu,style = style,connecter=connecter,admin=admin)
 
 @app.route("/concert_delete")
 def concert_delete(id_concert):
