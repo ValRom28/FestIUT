@@ -70,7 +70,10 @@ def rechercheGroupe():
         admin=current_user.is_admin()
     images = dict()
     for groupe in groupes:
-        images[groupe.id_groupe] = base64.b64encode(groupe.photo_groupe).decode('utf-8')
+        if groupe.photo_groupe != None:
+            images[groupe.id_groupe] = base64.b64encode(groupe.photo_groupe).decode('utf-8')
+        else:
+            images[groupe.id_groupe] = None
     return render_template('favoris.html', liste_favoris=groupes,connecter=connecter,admin=admin, images=images)
 
 @app.route('/programmation')
@@ -132,7 +135,10 @@ def favoris():
 
     images = dict()
     for groupe in liste_favoris:
-        images[groupe.id_groupe] = base64.b64encode(groupe.photo_groupe).decode('utf-8')
+        if groupe.photo_groupe != None:
+            images[groupe.id_groupe] = base64.b64encode(groupe.photo_groupe).decode('utf-8')
+        else:
+            images[groupe.id_groupe] = None
     print(current_user.get_id())
     print(liste_favoris)
     return render_template('favoris.html', liste_favoris = liste_favoris,connecter=connecter,admin=admin, images=images)
@@ -148,15 +154,18 @@ def groupe_detail(id_groupe):
         admin=current_user.is_admin()
     groupe = get_groupe_by_id(id_groupe)
     style = get_style_by_id_groupe(groupe.id_groupe)
-    photo_groupe = base64.b64encode(groupe.photo_groupe).decode('utf-8')
     artistes= get_artistes_by_id_groupe(groupe.id_groupe)
     like= est_favoris(id_groupe, current_user.get_id())
     groupes_semblable=get_groupe_by_style(style.id_style)
     images_propositions = dict()
-    for groupe_semb in groupes_semblable:
-        images_propositions[groupe_semb.id_groupe] = base64.b64encode(groupe_semb.photo_groupe).decode('utf-8')
     concerts=get_concert_by_id_groupe(id_groupe)
     instrument=[]
+    if groupe.photo_groupe is not None:
+        photo_groupe = base64.b64encode(groupe.photo_groupe).decode('utf-8')
+        for groupe_semb in groupes_semblable:
+            images_propositions[groupe_semb.id_groupe] = base64.b64encode(groupe_semb.photo_groupe).decode('utf-8')
+    else:
+        photo_groupe = None
     for artiste in artistes:
         instrument.append(get_instrument_by_id_artiste(artiste.id_artiste))
    
