@@ -332,3 +332,17 @@ def concert_delete(id_concert):
     concert = get_concert_by_id(id_concert)
     delete_concert(concert)
     return redirect(url_for('programmation'))
+
+@app.route("/ajout_instrument")
+def ajout_instrument():
+    instruments = get_instrument()
+    return render_template('ajout_instrument.html', instruments = instruments)
+
+@app.route("/ajout_instrument", methods=['POST'])
+def inserer_instrument():
+    id_instrument = get_prochain_id_instrument()
+    # Récupérer les données du formulaire
+    nom_instrument = request.form.get('nom_instrument')
+
+    insere_instrument(id_instrument, nom_instrument)
+    return redirect(url_for("ajout_instrument")) # ca faudra le changer quand t'aura fait la page admin

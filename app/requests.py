@@ -185,9 +185,8 @@ def insere_groupe(id_groupe, nom_groupe, photo_groupe, description_groupe, insta
     db.session.commit()
 
 def get_prochain_id_artiste():
-    id_g = Artiste.query.order_by(desc(Artiste.id_artiste)).first().id_artiste
-    print(id_g)
-    return id_g + 1
+    id_a = Artiste.query.order_by(desc(Artiste.id_artiste)).first().id_artiste
+    return id_a + 1
 
 def insere_artiste(id_artiste, nom_artiste):
     artiste = Artiste(id_artiste=id_artiste, nom_artiste=nom_artiste)
@@ -203,6 +202,7 @@ def insere_etrestyle(id_style, id_groupe):
     etrestyle = EtreStyle(id_style=id_style, id_groupe=id_groupe)
     db.session.add(etrestyle)
     db.session.commit()
+
 def get_groupe_by_id_concert(id):
     res = OrganiserConcert.query.filter_by(id_concert=id).first()
     return Groupe.query.get(res.id_groupe)
@@ -215,3 +215,12 @@ def get_Artistes():
 
 def get_Hebergement():
     return Hebergement.query.all()
+
+def get_prochain_id_instrument():
+    id_i = Instrument.query.order_by(desc(Instrument.id_instrument)).first().id_instrument
+    return id_i + 1
+
+def insere_instrument(id_instrument, nom_instrument):
+    instrument = Instrument(id_instrument, nom_instrument)
+    db.session.add(instrument)
+    db.session.commit()
