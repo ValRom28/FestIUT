@@ -191,8 +191,8 @@ def supprimer_des_favoris(id_groupe):
 
 @app.route("/ajout_groupe")
 def ajout_groupe():
-    liste_artiste = get_Artistes()
-    liste_hebergement = get_Hebergement()
+    liste_artiste = get_artistes()
+    liste_hebergement = get_hebergement()
     styles = get_styles()
     return render_template('ajout_groupe.html', liste = liste_artiste, hebergements = liste_hebergement, styles = styles)
 
