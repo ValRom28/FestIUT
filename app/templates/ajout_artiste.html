@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="connexion">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/ajout_groupe.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
+
+        <title>Groupes</title>
+    </head>
+
+    <body>
+        <header>
+            {% include "components/headerPage.html" %}
+        </header>
+        <main>
+            <div class="titre-creer">
+                <h3>Créer un groupe:</h3>
+            </div>
+            <div class="conteneur-champs-formulaires">
+                <form action="{{ url_for('inserer_artiste') }}"role="form" method="POST" class="form-champ" enctype="multipart/form-data">
+                    <section>
+                        <div>
+                            <div class="form-label-admin">
+                                <label for="name" class="label">Nom de l'artiste : </label>
+                                <input type="text" name="nom_artiste" size="40" id="nom_artiste" required placeholder="Exemple : Thibault Saint-Leger"/>
+                            </div>
+                            <div class="form-label-admin-desc">
+                                <label for="description" class="label">Description du groupe </label>
+                                <textarea name="textarea" rows="7" cols="50" maxlength="200" placeholder="Ecrivez la description du Groupe ici ..."></textarea>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="form-label-admin">
+                            <label for="hebergement" class="label">Votre artiste jour quel instrument ? : </label>
+                            <div class="radio-list" id="radioList">
+                                {% for instrument in instruments %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="instrument" value="{{ instrument.id_instrument }}">
+                                        <label class="label" for="{{ instrument.id_instrument }}">{{ instrument.nom_instrument }}</label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="creation-groupe">
+                            <input type="submit" value="Ajouter l'artiste" />
+                        </div>
+                    </section>
+                </form>
+            </div>
+        </main>
+    </body>
+</html>
