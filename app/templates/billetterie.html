@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="fr">
     <head>
         <meta charset="utf-8">
@@ -13,10 +14,15 @@
         <main>
             <div class="main-part">
                 <section class="left-part">
-                    <a href="#", class="panier">Mon panier</a>
+                    <a href="{{ url_for('panier') }}", class="panier">Mon panier</a>
                 </section>
                 <section class="right-part">
                     <h2 class="title-h2">Mes billets</h2>
+                    {% if not connecter %}
+                        <p class="no-ticket">Vous n'êtes pas connecté</p>
+                    {% elif mes_billets | length == 0 %}
+                        <p class="no-ticket">Vous n'avez pas de billet</p>
+                    {% endif %}
                     {% for billet, concert in mes_billets %}
                         <div class="box-billet", id="billet-{{ billet.id_billet }}">
                             <h3>{{ concert.nom_concert }}</h3>
