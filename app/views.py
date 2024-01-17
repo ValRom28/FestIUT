@@ -379,3 +379,12 @@ def inserer_hebergement():
     insere_hebergement(id_hebergement, nom_hebergement, adresse_hebergement)
 
     return redirect(url_for("ajout_hebergement")) # ca faudra le changer quand t'aura fait la page admin
+
+@app.route("/administration")
+def administration():
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    return render_template('administration.html',connecter=connecter,admin=admin)
