@@ -1,37 +1,74 @@
-body {
-    margin: 0%;
+.main-part {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
     background-color: #6439da;
 }
 
-main {
-    padding: 1rem;
-    border-radius: 5rem;
+.liste-billets {
     display: flex;
-    flex-wrap: wrap;
-}
-
-.bloc_billet {
-    background: #281460;
-    margin-top: 1rem;;
-    border-radius: 5rem;
-    flex-basis: 50%;
-    margin-left: 2rem;
-    padding: 2rem;
-    display: flex;
-    align-items: center;
     flex-direction: column;
+    border: 3px solid #281460;
+    font-size: 30px;
+    padding: 1em;
+    max-width: 365px;
+    border-radius: 2rem 2rem 2rem 0;
 }
 
-.bloc_billet > p { 
+h2 {
+    font-size: 2.8rem;
     color: aliceblue;
-    font-size: 200%;
-    text-align: center;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    text-decoration: none;
 }
 
-img {
-    width: 13rem;
-    height: 13rem;
+a {
+    text-decoration: none;
+    color: aliceblue;
+}
+
+.infos-billet {
+    font-size: 1.5rem;
+}
+
+h3 {
+    font-size: 2.2rem;
+    color: aliceblue;
+    margin-top: 0.2rem;
+}
+
+.box-billet {
+    padding:1rem;
+    border: 1px solid aliceblue;
+    border-radius: 2rem 2rem 2rem 0;
+    background-color: #281460;
+    margin-bottom: 1rem;
+}
+
+.box-billet:hover {
+    background-color: #6439da;
+    transition: 0.2s;
+}
+
+.left-part {
+    margin-top: 5em;
+}
+
+.right-part {
+    margin-left: 20em;
+}
+
+.panier {
+    color: #281460;
+    font-size: 200%;
+    text-decoration: none;
+    background: aliceblue;
+    text-align: center;
+    border-radius: 2rem;
+    margin-right:2rem;
+    padding: 10px;
+}
+
+.panier:hover {
+    transition: 0.2s;
+    background: #281460;
+    color: aliceblue;
 }
