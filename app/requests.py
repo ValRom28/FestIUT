@@ -185,9 +185,8 @@ def insere_groupe(id_groupe, nom_groupe, photo_groupe, description_groupe, insta
     db.session.commit()
 
 def get_prochain_id_artiste():
-    id_g = Artiste.query.order_by(desc(Artiste.id_artiste)).first().id_artiste
-    print(id_g)
-    return id_g + 1
+    id_a = Artiste.query.order_by(desc(Artiste.id_artiste)).first().id_artiste
+    return id_a + 1
 
 def insere_artiste(id_artiste, nom_artiste):
     artiste = Artiste(id_artiste=id_artiste, nom_artiste=nom_artiste)
@@ -210,8 +209,11 @@ def get_groupe_by_id_concert(id):
 def get_concert_by_id(id):
     return Concert.query.filter_by(id_concert=id).first()
 
-def get_Artistes():
-    return Artiste.query.all()
+def get_prochain_id_hebergement():
+    id_h = Hebergement.query.order_by(desc(Hebergement.id_hebergement)).first().id_hebergement
+    return id_h + 1
 
-def get_Hebergement():
-    return Hebergement.query.all()
+def insere_hebergement(id_hebergement, nom_hebergement, adresse_hebergement):
+    hebergement = Hebergement(id_hebergement, nom_hebergement, adresse_hebergement)
+    db.session.add(hebergement)
+    db.session.commit()

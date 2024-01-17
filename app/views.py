@@ -191,8 +191,8 @@ def supprimer_des_favoris(id_groupe):
 
 @app.route("/ajout_groupe")
 def ajout_groupe():
-    liste_artiste = get_Artistes()
-    liste_hebergement = get_Hebergement()
+    liste_artiste = get_artistes()
+    liste_hebergement = get_hebergement()
     styles = get_styles()
     return render_template('ajout_groupe.html', liste = liste_artiste, hebergements = liste_hebergement, styles = styles)
 
@@ -332,3 +332,18 @@ def concert_delete(id_concert):
     concert = get_concert_by_id(id_concert)
     delete_concert(concert)
     return redirect(url_for('programmation'))
+
+@app.route("/ajout_hebergement")
+def ajout_hebergement():
+    return render_template('ajout_hebergement.html')
+
+@app.route("/ajout_hebergement", methods=['POST'])
+def inserer_hebergement():
+    id_hebergement = get_prochain_id_hebergement()
+    # Récupérer les données du formulaire
+    nom_hebergement = request.form.get('nom_hebergement')
+    adresse_hebergement = request.form.get('adresse_hebergement')
+
+    insere_hebergement(id_hebergement, nom_hebergement, adresse_hebergement)
+
+    return redirect(url_for("ajout_hebergement")) # ca faudra le changer quand t'aura fait la page admin
