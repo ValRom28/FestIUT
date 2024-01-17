@@ -172,3 +172,10 @@ def get_types_billet():
 
 def get_billets_by_id_spectateur(id):
     return Billet.query.filter_by(id_spectateur=id).all()
+
+def get_concert_by_id_billet(id_billet):
+    billet = Billet.query.get(id_billet)
+    spectateur = Spectateur.query.get(billet.id_spectateur)
+    reservation = Reserver.query.filter_by(id_spectateur=spectateur.id_spectateur).first()
+    concert = Concert.query.get(reservation.id_concert)
+    return concert
