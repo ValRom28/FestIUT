@@ -351,3 +351,18 @@ def inserer_artiste():
     insere_artiste(id_artiste, nom_artiste)
     insere_jouer(id_artiste, id_instrument)
     return redirect(url_for("ajout_artiste")) # ca faudra le changer quand t'aura fait la page admin
+  
+@app.route("/ajout_hebergement")
+def ajout_hebergement():
+    return render_template('ajout_hebergement.html')
+
+@app.route("/ajout_hebergement", methods=['POST'])
+def inserer_hebergement():
+    id_hebergement = get_prochain_id_hebergement()
+    # Récupérer les données du formulaire
+    nom_hebergement = request.form.get('nom_hebergement')
+    adresse_hebergement = request.form.get('adresse_hebergement')
+
+    insere_hebergement(id_hebergement, nom_hebergement, adresse_hebergement)
+
+    return redirect(url_for("ajout_hebergement")) # ca faudra le changer quand t'aura fait la page admin
