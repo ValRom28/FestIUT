@@ -346,6 +346,25 @@ def inserer_instrument():
     insere_instrument(id_instrument, nom_instrument)
     return redirect(url_for("ajout_instrument")) # ca faudra le changer quand t'aura fait la page admin
 
+@app.route("/ajout_artiste")
+def ajout_artiste():
+    instruments = get_instrument()
+    return render_template('ajout_artiste.html', instruments = instruments)
+
+@app.route("/ajout_artiste", methods=['POST'])
+def inserer_artiste():
+    id_artiste = get_prochain_id_artiste()
+    # Récupérer les données du formulaire
+    nom_artiste = request.form.get('nom_artiste')
+
+
+    # Récupérer les hébergements sélectionnés
+    id_instrument = request.form.get('instrument')
+
+    insere_artiste(id_artiste, nom_artiste)
+    insere_jouer(id_artiste, id_instrument)
+    return redirect(url_for("ajout_artiste")) # ca faudra le changer quand t'aura fait la page admin
+ 
 @app.route("/ajout_hebergement")
 def ajout_hebergement():
     return render_template('ajout_hebergement.html')

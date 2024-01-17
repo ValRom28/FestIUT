@@ -224,6 +224,11 @@ def insere_instrument(id_instrument, nom_instrument):
     instrument = Instrument(id_instrument, nom_instrument)
     db.session.add(instrument)
     db.session.commit()
+
+def insere_jouer(id_artiste, id_instrument):
+    jouer = Jouer(id_artiste=id_artiste, id_instrument=id_instrument)
+    db.session.add(jouer)
+    db.session.commit()
     
 def get_prochain_id_hebergement():
     id_h = Hebergement.query.order_by(desc(Hebergement.id_hebergement)).first().id_hebergement
