@@ -10,30 +10,16 @@
             {% include "components/headerPage.html" %}
         </header>
         <main>
-            <div class='info_groupe'>
+            <div class='concerts'>
             <h2> {{groupe.nom_groupe}} </h2>
             <form action="" method="post" class=modif>
-                    {{ form_groupe.hidden_tag() }}
-                <div class="description">
-                    <label> Description : </label>
-                    {{ form_groupe.description_groupe }}
-                </div>
-                <div class="lien_spotify">
-                    <label> Lien Spotify : </label>
-                    {{ form_groupe.spotify_groupe }}
-                </div>
-                <div class="lien_instagram">
-                    <label> Lien instagram : </label>
-                    {{ form_groupe.insta_groupe }}
-                </div>
-                <div class="picture">
-                    <label> Photo : </label>
-                    <object data="" type="image/jpeg"></object>
-                    {{ form_groupe.photo_groupe }}
-                </div>
-                <div class="modif">
-                    {{ form_groupe.submit }}
-                </div>
+                {{ form_groupe.hidden_tag() }}
+                <p>Nom : {{form_groupe.nom_groupe }} </p>
+                <p class="descriptionModif">Description : {{ form_groupe.description_groupe }}</p>
+                <p>Lien Spotify : {{ form_groupe.spotify_groupe }}</p>
+                <p>Lien instagram : {{ form_groupe.insta_groupe }}</p>
+                <p><object data="" type="image/jpeg"></object>{{ form_groupe.photo_groupe }}</p>
+                <p>{{ form_groupe.submit }}</p>
             </form>
             </div>
                 <div class="concerts">
@@ -50,7 +36,7 @@
                     </form>
                     {% endfor %}
                 </div>
-                <div class="event">
+                <div class="concerts">
                     <h2>Evenements</h2>
                     {% for evenement in liste_form_events %}
                         <form action="" method="post" class=modif>
@@ -59,7 +45,7 @@
                         <p>Nom: {{evenement.nom_event}}</p>
                         <p>Date: {{evenement.date_event}} </p>
                         <p>Lieu:  {{evenement.lieu_evenement}} </p>
-                        {{ evenement.submit }}
+                        <p>{{ evenement.submit }}</p>
                     {% endfor %}
                 </div>
             </div>

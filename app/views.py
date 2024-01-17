@@ -234,6 +234,7 @@ def groupe_modification(id_groupe):
     events = get_event_by_id_groupe(groupe.id_groupe)
     lieux = get_all_lieux()
     
+    form_groupe.nom_groupe = groupe.nom_groupe
     form_groupe.description_groupe.data = groupe.description_groupe
     form_groupe.spotify_groupe.data = groupe.spotify_groupe
     form_groupe.insta_groupe.data = groupe.insta_groupe
