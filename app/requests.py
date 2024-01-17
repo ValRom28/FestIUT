@@ -169,3 +169,6 @@ def get_concert_by_id(id):
 
 def get_types_billet():
     return Type.query.all()
+
+def get_billets_by_id_spectateur(id):
+    return Billet.query.filter_by(id_spectateur=id).all()
