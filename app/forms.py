@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, HiddenField, FileField, ValidationError,TextAreaField,RadioField,TimeField,DateField
+from wtforms import StringField, PasswordField, SubmitField, HiddenField, FileField, ValidationError,TextAreaField,RadioField,DateField
 from wtforms.validators import DataRequired
 from app.requests import get_all_lieux
 
@@ -32,15 +32,17 @@ class GroupeForm(FlaskForm):
 class ConcertForm(FlaskForm):
     id_concert = HiddenField()
     nom_concert= StringField(validators=[DataRequired()], render_kw={"placeholder": "Nom du concert"})
-    tps_prepa_concert = TimeField(validators=[DataRequired()], render_kw={"placeholder": "Temps de préparation du concert"})
+    tps_prepa_concert = StringField(validators=[DataRequired()], render_kw={"placeholder": "Temps de préparation du concert"})
     date_heure_concert = DateField(validators=[DataRequired()], render_kw={"placeholder": "Date du concert"})
-    duree_concert = TimeField(validators=[DataRequired()], render_kw={"placeholder": "Durée du concert"})
+    duree_concert = StringField(validators=[DataRequired()], render_kw={"placeholder": "Durée du concert"})
     lieu_concert = RadioField(validators=[DataRequired()], render_kw={"placeholder": "Lieu du concert"})
     submit = SubmitField('Modifier')
     
 class EventForm(FlaskForm):
     id_event= HiddenField()
-    date_event = StringField(validators=[DataRequired()], render_kw={"placeholder": "Date de l'event"})
+    date_event = DateField(validators=[DataRequired()], render_kw={"placeholder": "Date de l'event"})
     nom_event = StringField(validators=[DataRequired()], render_kw={"placeholder": "Nom de l'event"})
-    lieu_event = RadioField('Lieu de l\'event')
+    lieux = get_all_lieux()
+    lieux = [(lieu.id_lieu, lieu.nom_lieu) for lieu in lieux]
+    lieu_event = RadioField('Lieu de l\'event' ,validators=[DataRequired()], render_kw={"placeholder": "Lieu de l'event"} ,choices=lieux) 
     submit = SubmitField('Modifier')
