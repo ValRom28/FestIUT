@@ -202,7 +202,7 @@ def insere_etrestyle(id_style, id_groupe):
     etrestyle = EtreStyle(id_style=id_style, id_groupe=id_groupe)
     db.session.add(etrestyle)
     db.session.commit()
-    
+
 def get_groupe_by_id_concert(id):
     res = OrganiserConcert.query.filter_by(id_concert=id).first()
     return Groupe.query.get(res.id_groupe)
@@ -210,10 +210,26 @@ def get_groupe_by_id_concert(id):
 def get_concert_by_id(id):
     return Concert.query.filter_by(id_concert=id).first()
 
+def get_artistes():
+    return Artiste.query.all()
+
+def get_hebergement():
+    return Hebergement.query.all()
+
+def get_prochain_id_instrument():
+    id_i = Instrument.query.order_by(desc(Instrument.id_instrument)).first().id_instrument
+    return id_i + 1
+
+def insere_instrument(id_instrument, nom_instrument):
+    instrument = Instrument(id_instrument, nom_instrument)
+    db.session.add(instrument)
+    db.session.commit()
+
 def insere_jouer(id_artiste, id_instrument):
     jouer = Jouer(id_artiste=id_artiste, id_instrument=id_instrument)
     db.session.add(jouer)
     db.session.commit()
+    
 def get_prochain_id_hebergement():
     id_h = Hebergement.query.order_by(desc(Hebergement.id_hebergement)).first().id_hebergement
     return id_h + 1

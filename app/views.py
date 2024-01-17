@@ -333,6 +333,19 @@ def concert_delete(id_concert):
     delete_concert(concert)
     return redirect(url_for('programmation'))
 
+@app.route("/ajout_instrument")
+def ajout_instrument():
+    return render_template('ajout_instrument.html')
+
+@app.route("/ajout_instrument", methods=['POST'])
+def inserer_instrument():
+    id_instrument = get_prochain_id_instrument()
+    # Récupérer les données du formulaire
+    nom_instrument = request.form.get('nom_instrument')
+
+    insere_instrument(id_instrument, nom_instrument)
+    return redirect(url_for("ajout_instrument")) # ca faudra le changer quand t'aura fait la page admin
+
 @app.route("/ajout_artiste")
 def ajout_artiste():
     instruments = get_instrument()
@@ -351,7 +364,7 @@ def inserer_artiste():
     insere_artiste(id_artiste, nom_artiste)
     insere_jouer(id_artiste, id_instrument)
     return redirect(url_for("ajout_artiste")) # ca faudra le changer quand t'aura fait la page admin
-  
+ 
 @app.route("/ajout_hebergement")
 def ajout_hebergement():
     return render_template('ajout_hebergement.html')
