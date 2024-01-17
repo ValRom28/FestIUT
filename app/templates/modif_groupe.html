@@ -13,64 +13,58 @@
             <div class='info_groupe'>
             <h2> {{groupe.nom_groupe}} </h2>
             <form action="" method="post" class=modif>
-                {{ form.hidden_tag() }}
+                    {{ form_groupe.hidden_tag() }}
                 <div class="description">
-                    <p> Description : </p>
-                    {{ form.description_groupe }}
+                    <label> Description : </label>
+                    {{ form_groupe.description_groupe }}
                 </div>
                 <div class="lien_spotify">
-                    <p> Lien Spotify : </p>
-                    {{ form.spotify_groupe }}
+                    <label> Lien Spotify : </label>
+                    {{ form_groupe.spotify_groupe }}
                 </div>
                 <div class="lien_instagram">
-                    <p> Lien instagram : </p>
-                    {{ form.insta_groupe }}
+                    <label> Lien instagram : </label>
+                    {{ form_groupe.insta_groupe }}
                 </div>
                 <div class="picture">
-                    <p> Photo : </p>
+                    <label> Photo : </label>
                     <object data="" type="image/jpeg"></object>
-                    {{ form.photo_groupe }}
-
+                    {{ form_groupe.photo_groupe }}
                 </div>
                 <div class="modif">
-                    {{ form.modif }}
+                    {{ form_groupe.submit }}
                 </div>
             </form>
             </div>
-            <div class="concerts">
-                <h2> les concerts </h2>
-                {% for concert,lieu in concerts_et_lieux %}
-                <form action="" method="post" class=modif>
-                {{ form.hidden_tag() }}
-                {{ formConcert.hidden_tag() }}
-                <p>nom:  {{formConcert.nom_concert}}</p>
-                <p>date: {{formConcert.date_heure_concert}} </p>
-                <p> temps de préparation: {{formConcert.tps_prepa_concert}}m </p>
-                <p>duree: {{formConcert.duree_concert}}m </p>
-                <p>lieu: {{formLieu.nom_lieu}} </p>
-                <p> lieu positionX: {{formLieu.coordonne_X}} </p>
-                <p> lieu positionY: {{formLieu.coordonne_Y}} </p>
-                <p> jauge du lieu : {{formLieu.jauge_lieu}} Personne </p>
-                <input type="hidden" name="formConcert.id_concert" value="{{ concert.id_concert }}">
-                {{ formConcert.modif }}
-                {% endfor %}
+                <div class="concerts">
+                    <h2>Concerts</h2>
+                    {% for concert in liste_form_concerts %}
+                    <form action="" method="post" class=modif>
+                        {{ concert.hidden_tag() }}
+                        {{ concert.hidden_tag() }}
+                        Nom:  {{concert.nom_concert}}
+                        Date: {{concert.date_heure_concert}}
+                        Temps de préparation: {{concert.tps_prepa_concert.str}}m
+                        Duree: {{concert.duree_concert}}m 
+                        Lieu: {{concert.nom_lieu}}
+                        {{ concert.modif }}
+                    </form>
+                    {% endfor %}
+                </div>
+                <div class="event">
+                    <h2>Evenements</h2>
+                    {% for evenement in liste_form_events %}
+                        <form action="" method="post" class=modif>
+                        {{ evenement.hidden_tag() }}
+                        {{ forevenementm.csrf_token }}
+                        {{ evenement.hidden_tag() }}
+                        <p>Nom: {{evenement.nom_event}}</p>
+                        <p>Date: {{evenement.date_event}} </p>
+                        <p>Lieu:  {{evenement.lieu_evenement}} </p>
+                        {{ formEvent.modif }}
+                    {% endfor %}
+                </div>
             </div>
-        <div class="event">
-            <h2> les evenements </h2>
-            {% for evenement,lieu in events_et_lieux %}
-                <form action="" method="post" class=modif>
-                {{ form.hidden_tag() }}
-                {{ form.csrf_token }}
-                {{ formEvent.hidden_tag() }}
-                <p>nom: {{formEvent.nom_event}}</p>
-                <p>date: {{formEvent.date_event}} </p>
-                <p>lieu:  {{formLieu.nom_lieu}} </p>
-                <p> lieu positionX: {{formLieu.coordonne_X}} </p>
-                <p> lieu positionY: {{formLieu.coordonne_Y}} </p>
-                <p> jauge du lieu : {{formLieu.jauge_lieu}} Personne </p>
-                <input type="hidden" name="formEvent.id_event" value="{{ evenement.id_event }}">
-                {{ formEvent.modif }}
-            {% endfor %}
-        </div>
-        </div>
-            </main>
+        </main>
+    </body>
+</html>
