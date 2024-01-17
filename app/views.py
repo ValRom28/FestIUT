@@ -312,3 +312,15 @@ def billetterie():
             billets_et_concert.append((billet, get_concert_by_id_billet(billet.id_billet)))
     types_billets = get_types_billet()
     return render_template('billetterie.html', types_billets=types_billets, mes_billets=billets_et_concert, connecter=connecter, admin=admin)
+
+@app.route("/panier")
+@login_required
+def panier():
+    admin=False
+    connecter=False
+    mes_billets = []
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+        mes_billets = get_billets_by_id_spectateur(current_user.get_id())
+    return render_template('panier.html', mes_billets=mes_billets, connecter=connecter, admin=admin)
