@@ -31,7 +31,7 @@
                 {% for groupe in liste_groupes %}
                 <a href="{{ url_for('groupe_detail', id_groupe=groupe.id_groupe) }}">
                     <div class="box-groupe" id="groupe-{{ groupe.nom_groupe }}">
-                        <div class="info-groupe" >
+                        <div class="info-groupe">
                             <h3  class="groupe-title darkmode-ignore">{{ groupe.nom_groupe }}</h3>
                             <p class="groupe-description">{{ groupe.description_groupe }}</p>
                             <a class="groupe-insta" href="#">Instagram: {{ groupe.insta_groupe }}</a>

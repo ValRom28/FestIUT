@@ -11,17 +11,19 @@
             {% include "components/headerPage.html" %}
         </header>
         <main>
-            {% for type in types_billets %}
-                <div class="bloc_billet">
-                    <p>{{ type.nb_jours }}</p>
-                    <p>{{ type.prix }}€</p>
-                    <p>{{ type.age_min }}</p>
-                    <p>{{ type.age_max }}</p>
-                    <form action="{{ url_for('billetterie') }}" method="post">
-                        <input type="hidden" name="type_billet" value="{{ type.id }}">
-                        <input type="submit" value="Acheter">
-                    </form>
-                </div>
-            {% endfor %}
+            <div class="main-part">
+                <section class="left-part">
+                    <a href="#", class="panier">Mon panier</a>
+                </section>
+                <section class="right-part">
+                    <h2 class="title-h2">Mes billets</h2>
+                    {% for billet in mes_billets %}
+                        <div class="box-billet", id="billet-{{ billet.id_billet }}">
+                            <h3>{{ billet.id_billet }}</h3>
+                            <p>{{ billet.date_billet }}</p>
+                        </div>
+                    {% endfor %}
+                </section>
+            </div>
         </main>
     </body>
