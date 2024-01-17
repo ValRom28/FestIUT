@@ -4,13 +4,24 @@
         <meta name="connexion">
         <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
         <link rel="stylesheet" href="{{ url_for('static',filename='css/billetterie.css')}}">
+        <title>Billetterie</title>
     </head>
     <body>
         <header>
             {% include "components/headerPage.html" %}
         </header>
         <main>
-            <h2>Billetterie</h2>
-            div
+            {% for type in types_billets %}
+                <div class="bloc_billet">
+                    <p>{{ type.nb_jours }}</p>
+                    <p>{{ type.prix }}€</p>
+                    <p>{{ type.age_min }}</p>
+                    <p>{{ type.age_max }}</p>
+                    <form action="{{ url_for('billetterie') }}" method="post">
+                        <input type="hidden" name="type_billet" value="{{ type.id }}">
+                        <input type="submit" value="Acheter">
+                    </form>
+                </div>
+            {% endfor %}
         </main>
     </body>

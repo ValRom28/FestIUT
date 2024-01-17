@@ -305,5 +305,5 @@ def billetterie():
     if current_user.is_authenticated:
         connecter=True
         admin=current_user.is_admin()
-    concert = get_concert_by_id(int(request.args.get("concert")))
-    return render_template('billetterie.html', concert=concert, connecter=connecter, admin=admin)
+    types_billets = get_types_billet()
+    return render_template('billetterie.html', types_billets=types_billets, connecter=connecter, admin=admin)
