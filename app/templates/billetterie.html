@@ -17,9 +17,9 @@
                 </section>
                 <section class="right-part">
                     <h2 class="title-h2">Mes billets</h2>
-                    {% for billet in mes_billets %}
+                    {% for billet, concert in mes_billets %}
                         <div class="box-billet", id="billet-{{ billet.id_billet }}">
-                            <h3>{{ billet.id_billet }}</h3>
+                            <h3>{{ concert.nom_concert }}</h3>
                             <p>{{ billet.date_billet }}</p>
                         </div>
                     {% endfor %}

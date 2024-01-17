@@ -20,7 +20,13 @@ h2 {
     color: aliceblue;
 }
 
-a {
+h3 {
+    font-size: 2.2rem;
+    color: aliceblue;
+    margin-top: 0.2rem;
+}
+
+p {
     text-decoration: none;
     color: aliceblue;
 }
@@ -29,11 +35,6 @@ a {
     font-size: 1.5rem;
 }
 
-h3 {
-    font-size: 2.2rem;
-    color: aliceblue;
-    margin-top: 0.2rem;
-}
 
 .box-billet {
     padding:1rem;
