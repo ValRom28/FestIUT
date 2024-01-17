@@ -21,21 +21,15 @@
             <div class="conteneur-champs-formulaires">
                 <form action="{{ url_for('inserer_hebergement') }}"role="form" method="POST" class="form-champ" enctype="multipart/form-data">
                     <section>
-                        <div>
-                            <div class="form-label-admin">
-                                <label for="name" class="label">Nom de l'hébergement : </label>
-                                <input type="text" name="nom_hebergement" size="40" id="nom_hebergement" required placeholder="Exemple : airbnb "/>
-                            </div>
+                        <div class="form-label-admin">
+                            <label for="name" class="label">Nom de l'hébergement : </label>
+                            <input type="text" name="nom_hebergement" size="40" id="nom_hebergement" required placeholder="Exemple : airbnb "/>
                         </div>
-                        <div>
-                            <div class="form-label-admin">
-                                <label for="name" class="label">Adresse de l'hébergement : </label>
-                                <input type="text" name="adresse_hebergement" size="40" id="adresse_hebergement" required placeholder="Exemple : 123 rue du Grand Chlem "/>
-                            </div>
+                        <div class="form-label-admin">
+                            <label for="name" class="label">Adresse de l'hébergement : </label>
+                            <input type="text" name="adresse_hebergement" size="40" id="adresse_hebergement" required placeholder="Exemple : 123 rue du Grand Chlem "/>
                         </div>
-                        <div class="creation-groupe">
-                            <input type="submit" value="Ajouter l'hébergement" />
-                        </div>
+                        <input type="submit" value="Ajouter" />
                     </section>
                 </form>
             </div>
