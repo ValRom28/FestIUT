@@ -335,8 +335,7 @@ def concert_delete(id_concert):
 
 @app.route("/ajout_instrument")
 def ajout_instrument():
-    instruments = get_instrument()
-    return render_template('ajout_instrument.html', instruments = instruments)
+    return render_template('ajout_instrument.html')
 
 @app.route("/ajout_instrument", methods=['POST'])
 def inserer_instrument():
