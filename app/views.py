@@ -365,6 +365,74 @@ def concert_delete(id_concert):
     delete_concert(concert)
     return redirect(url_for('programmation'))
 
+@app.route("/billetterie")
+@login_required
+def billetterie():
+    admin = False
+    connecter = False
+    age = None
+    mes_billets = []
+    billets_concerts_types_lieu = []
+    lieu = None
+    if current_user.is_authenticated:
+        connecter = True
+        admin = current_user.is_admin()
+        age = datetime.datetime.now().year - current_user.anniv_spectateur.year
+        mes_billets = get_billets_by_id_spectateur(current_user.get_id())
+        for billet in mes_billets:
+            type = Type.query.get(billet.id_type)
+            lieu = get_lieu_by_id_billet_and_dates(billet.id_billet, billet.date_billet,
+                                                    billet.date_billet + datetime.timedelta(days=type.nb_jours))
+            billets_concerts_types_lieu.append((billet, get_concerts_by_id_billet_dates_lieu(billet.id_billet,
+                                        billet.date_billet, billet.date_billet + datetime.timedelta(days=type.nb_jours), lieu.id_lieu), 
+                                        get_type_by_id_billet(billet.id_billet), lieu))
+    types_billets = get_types_billet()
+    return render_template('billetterie.html', types_billets=types_billets, mes_billets=billets_concerts_types_lieu, 
+                           age=age, connecter=connecter, admin=admin, datetime=datetime)
+
+@app.route("/achat_billet/<int:id_type_billet>", methods=['POST', 'GET'])
+@login_required
+def achat_billet(id_type_billet):
+    admin = False
+    connecter = False
+    no_festival = False
+    billet_existe = False
+    valide = False
+    jauge = None
+    plus_place = False
+    form = AchatBillet()
+    lieux = Lieu.query.all()
+    form.lieux.choices = [(lieu.id_lieu, lieu.nom_lieu) for lieu in lieux]
+    if current_user.is_authenticated:
+        connecter = True
+        admin = current_user.is_admin()
+    if form.validate_on_submit():
+        selected_lieu = Lieu.query.get(int(form.lieux.data))
+        jauge = selected_lieu.jauge_lieu
+        type = Type.query.get(id_type_billet)
+        concerts = concerts = get_concerts_by_id_lieu_between_dates(int(form.lieux.data), form.date.data, form.date.data + datetime.timedelta(days=type.nb_jours))
+        if jauge == 0:
+            plus_place = True
+            return render_template('achat_billet.html', connecter=connecter, admin=admin, id_type_billet=id_type_billet,
+                                      form=form, no_festival=no_festival, billet_existe=billet_existe, plus_place=plus_place)
+        if concerts == []:
+            no_festival = True
+            return render_template('achat_billet.html', connecter=connecter, admin=admin, id_type_billet=id_type_billet, 
+                                   form=form, no_festival=no_festival, billet_existe=billet_existe, plus_place=plus_place)
+        for concert in concerts:
+            valide = add_reservation(concert.id_concert, current_user.get_id())
+            if not valide:
+                billet_existe = True
+                return render_template('achat_billet.html', connecter=connecter, admin=admin, id_type_billet=id_type_billet, 
+                                       form=form, no_festival=no_festival, billet_existe=billet_existe, plus_place=plus_place)
+        if valide:
+            selected_lieu.jauge_lieu -= 1
+            db.session.commit()
+            add_billet(form.date.data, id_type_billet, current_user.get_id())
+        return redirect(url_for('billetterie'))
+    return render_template('achat_billet.html', connecter=connecter, admin=admin, id_type_billet=id_type_billet, 
+                           form=form, no_festival=no_festival, billet_existe=billet_existe, plus_place=plus_place)
+
 @app.route("/ajout_instrument")
 @login_required
 def ajout_instrument():

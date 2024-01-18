@@ -366,9 +366,18 @@ def initdb():
 
     # Insertions pour la table TYPE
     types = [
-        Type(id_type=1, nb_jours=3, prix=50.0, age_min=18, age_max=60),
-        Type(id_type=2, nb_jours=1, prix=25.0, age_min=16, age_max=45),
-        Type(id_type=3, nb_jours=2, prix=35.0, age_min=21, age_max=70),
+        Type(id_type=1, nb_jours=1, nom_type='Pass 1 jour', prix=30.0, age_min=25, age_max=60),
+        Type(id_type=2, nb_jours=2, nom_type='Pass 2 jours', prix=60.0, age_min=25, age_max=60),
+        Type(id_type=3, nb_jours=5, nom_type='Pass semaine', prix=150.0, age_min=25, age_max=60),
+        Type(id_type=4, nb_jours=1, nom_type='Pass 1 jour jeunes', prix=20.0, age_min=18, age_max=25),
+        Type(id_type=5, nb_jours=2, nom_type='Pass 2 jours jeunes', prix=40.0, age_min=18, age_max=25),
+        Type(id_type=6, nb_jours=5, nom_type='Pass semaine jeunes', prix=100.0, age_min=18, age_max=25),
+        Type(id_type=7, nb_jours=1, nom_type='Pass 1 jour enfant', prix=10.0, age_min=0, age_max=18),
+        Type(id_type=8, nb_jours=2, nom_type='Pass 2 jours enfant', prix=20.0, age_min=0, age_max=18),
+        Type(id_type=9, nb_jours=5, nom_type='Pass semaine enfant', prix=50.0, age_min=0, age_max=18),
+        Type(id_type=10, nb_jours=1, nom_type='Pass 1 jour senior', prix=20.0, age_min=60, age_max=100),
+        Type(id_type=11, nb_jours=2, nom_type='Pass 2 jours senior', prix=40.0, age_min=60, age_max=100),
+        Type(id_type=12, nb_jours=5, nom_type='Pass semaine senior', prix=100.0, age_min=60, age_max=100)
     ]
     session.add_all(types)
 
@@ -413,7 +422,6 @@ def initdb():
 
     # Insertions pour la table RESERVER
     reserver = [
-        Reserver(id_concert=1, id_spectateur=1),
         Reserver(id_concert=2, id_spectateur=2),
         Reserver(id_concert=3, id_spectateur=3),
     ]
