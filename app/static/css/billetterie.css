@@ -35,7 +35,7 @@ p {
 }
 
 li {
-    list-style-type: disc;
+    list-style-type: none;
     color: aliceblue;
     font-size: 25px;
 }
@@ -69,19 +69,6 @@ a {
     margin-left: 20em;
 }
 
-.panier {
-    color: #281460;
-    font-size: 200%;
-    text-decoration: none;
-    background: aliceblue;
-    text-align: center;
-    border-radius: 2rem;
-    margin-right:2rem;
-    padding: 10px;
-}
-
-.panier:hover {
-    transition: 0.2s;
-    background: #281460;
-    color: aliceblue;
+.left-part {
+    margin-right: 20em;
 }

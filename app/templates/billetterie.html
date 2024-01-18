@@ -19,7 +19,7 @@
                         {% if type.age_min < age < type.age_max %}
                         <div class="box">
                                 <a href="{{ url_for('achat_billet', id_type_billet=type.id_type) }}"><h3>{{ type.nom_type }}</h3></a>
-                                <p>{{ type.prix }}€</p>
+                                <p>Prix : {{ type.prix }}€</p>
                             </div>
                         {% endif %}
                     {% endfor %}
@@ -34,7 +34,8 @@
                     {% for billet, concerts, type, lieu in mes_billets %}
                         <div class="box" id="billet-{{ billet.id_billet }}">
                             <h3>🎟️ {{ type.nom_type }}</h3>
-                            <p>Début : {{ billet.date_billet }}</p>
+                            <p>Début : {{ billet.date_billet.strftime('%d %B %Y') }}</p>
+                            <p>Fin : {{ (billet.date_billet + datetime.timedelta(days=type.nb_jours)).strftime('%d %B %Y') }}</p>
                             <p>Lieu : {{ lieu.nom_lieu }}</p>
                             <p>Concerts :</p>
                             <ul>
