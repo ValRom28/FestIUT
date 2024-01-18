@@ -358,7 +358,6 @@ def achat_billet(id_type_billet):
                 return render_template('achat_billet.html', connecter=connecter, admin=admin, id_type_billet=id_type_billet, 
                                        form=form, no_festival=no_festival, billet_existe=billet_existe, plus_place=plus_place)
         if valide:
-            print("cc")
             selected_lieu.jauge_lieu -= 1
             db.session.commit()
             add_billet(form.date.data, id_type_billet, current_user.get_id())
