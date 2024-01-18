@@ -17,7 +17,7 @@
                     <h2 class="title-h2">Billets en vente</h2>
                     {% for type in types_billets %}
                         <div class="box">
-                            <h3>{{ type.nom_type }}</h3>
+                            <a href="{{ url_for('achat_billet', id_type_billet=type.id_type) }}"><h3>{{ type.nom_type }}</h3></a>
                             <p>{{ type.prix }}€</p>
                         </div>
                     {% endfor %}
@@ -29,10 +29,16 @@
                     {% elif mes_billets | length == 0 %}
                         <p class="no-ticket">Vous n'avez pas de billet</p>
                     {% endif %}
-                    {% for billet, concert in mes_billets %}
+                    {% for billet, concerts, type in mes_billets %}
                         <div class="box" id="billet-{{ billet.id_billet }}">
-                            <h3>{{ concert.nom_concert }}</h3>
-                            <p>{{ billet.date_billet }}</p>
+                            <h3>🎟️ {{ type.nom_type }}</h3>
+                            <p>Début : {{ billet.date_billet }}</p>
+                            <p>Concerts :</p>
+                            <ul>
+                                {% for concert in concerts %}
+                                    <li>{{ concert.nom_concert }}</li>
+                                {% endfor %}
+                            </ul>
                         </div>
                     {% endfor %}
                 </section>

@@ -34,6 +34,20 @@ p {
     color: aliceblue;
 }
 
+li {
+    list-style-type: disc;
+    color: aliceblue;
+    font-size: 25px;
+}
+
+ul {
+    margin-top: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
 .infos-billet {
     font-size: 1.5rem;
 }
