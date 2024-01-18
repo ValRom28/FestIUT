@@ -198,7 +198,12 @@ def ajout_groupe():
     liste_artiste = get_artistes()
     liste_hebergement = get_hebergement()
     styles = get_styles()
-    return render_template('ajout_groupe.html', liste = liste_artiste, hebergements = liste_hebergement, styles = styles)
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    return render_template('ajout_groupe.html', liste = liste_artiste, hebergements = liste_hebergement, styles = styles,connecter=connecter,admin=admin)
 
 @app.route("/ajout_groupe", methods=['POST'])
 @login_required
@@ -344,7 +349,12 @@ def concert_delete(id_concert):
 @app.route("/ajout_instrument")
 @login_required
 def ajout_instrument():
-    return render_template('ajout_instrument.html')
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    return render_template('ajout_instrument.html',connecter=connecter,admin=admin)
 
 @app.route("/ajout_instrument", methods=['POST'])
 @login_required
@@ -359,8 +369,13 @@ def inserer_instrument():
 @app.route("/ajout_artiste")
 @login_required
 def ajout_artiste():
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
     instruments = get_instrument()
-    return render_template('ajout_artiste.html', instruments = instruments)
+    return render_template('ajout_artiste.html', instruments = instruments,connecter=connecter,admin=admin)
 
 @app.route("/ajout_artiste", methods=['POST'])
 @login_required
@@ -380,7 +395,12 @@ def inserer_artiste():
 @app.route("/ajout_hebergement")
 @login_required
 def ajout_hebergement():
-    return render_template('ajout_hebergement.html')
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    return render_template('ajout_hebergement.html',connecter=connecter,admin=admin)
 
 @app.route("/ajout_hebergement", methods=['POST'])
 @login_required
