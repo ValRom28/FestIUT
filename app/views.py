@@ -299,6 +299,7 @@ def concert_delete(id_concert):
     return redirect(url_for('programmation'))
 
 @app.route("/billetterie")
+@login_required
 def billetterie():
     admin = False
     connecter = False
@@ -320,7 +321,7 @@ def billetterie():
                                         get_type_by_id_billet(billet.id_billet), lieu))
     types_billets = get_types_billet()
     return render_template('billetterie.html', types_billets=types_billets, mes_billets=billets_concerts_types_lieu, 
-                           age=age, connecter=connecter, admin=admin)
+                           age=age, connecter=connecter, admin=admin, datetime=datetime)
 
 @app.route("/achat_billet/<int:id_type_billet>", methods=['POST', 'GET'])
 @login_required
