@@ -329,6 +329,9 @@ def achat_billet(id_type_billet):
     connecter = False
     no_festival = False
     billet_existe = False
+    valide = False
+    jauge = None
+    plus_place = False
     form = AchatBillet()
     lieux = Lieu.query.all()
     form.lieux.choices = [(lieu.id_lieu, lieu.nom_lieu) for lieu in lieux]
@@ -336,19 +339,29 @@ def achat_billet(id_type_billet):
         connecter = True
         admin = current_user.is_admin()
     if form.validate_on_submit():
-        add_billet(form.date.data, id_type_billet, current_user.get_id())
+        selected_lieu = Lieu.query.get(int(form.lieux.data))
+        jauge = selected_lieu.jauge_lieu
         type = Type.query.get(id_type_billet)
         concerts = concerts = get_concerts_by_id_lieu_between_dates(int(form.lieux.data), form.date.data, form.date.data + datetime.timedelta(days=type.nb_jours))
+        if jauge == 0:
+            plus_place = True
+            return render_template('achat_billet.html', connecter=connecter, admin=admin, id_type_billet=id_type_billet,
+                                      form=form, no_festival=no_festival, billet_existe=billet_existe, plus_place=plus_place)
         if concerts == []:
             no_festival = True
             return render_template('achat_billet.html', connecter=connecter, admin=admin, id_type_billet=id_type_billet, 
-                                   form=form, no_festival=no_festival, billet_existe=billet_existe)
+                                   form=form, no_festival=no_festival, billet_existe=billet_existe, plus_place=plus_place)
         for concert in concerts:
             valide = add_reservation(concert.id_concert, current_user.get_id())
             if not valide:
                 billet_existe = True
                 return render_template('achat_billet.html', connecter=connecter, admin=admin, id_type_billet=id_type_billet, 
-                                       form=form, no_festival=no_festival, billet_existe=billet_existe)
+                                       form=form, no_festival=no_festival, billet_existe=billet_existe, plus_place=plus_place)
+        if valide:
+            print("cc")
+            selected_lieu.jauge_lieu -= 1
+            db.session.commit()
+            add_billet(form.date.data, id_type_billet, current_user.get_id())
         return redirect(url_for('billetterie'))
     return render_template('achat_billet.html', connecter=connecter, admin=admin, id_type_billet=id_type_billet, 
-                           form=form, no_festival=no_festival, billet_existe=billet_existe)
+                           form=form, no_festival=no_festival, billet_existe=billet_existe, plus_place=plus_place)

@@ -71,7 +71,7 @@ def initdb():
     # Insertions pour la table LIEU
     lieux = [
         Lieu(id_lieu=1, nom_lieu='Stade Olympique', jauge_lieu=50000, coordonne_X = 12, coordonne_Y = 8),
-        Lieu(id_lieu=2, nom_lieu='Arena Music', jauge_lieu=10000, coordonne_X = 7, coordonne_Y = 10),
+        Lieu(id_lieu=2, nom_lieu='Arena Music', jauge_lieu=1, coordonne_X = 7, coordonne_Y = 10),
         Lieu(id_lieu=3, nom_lieu='Théâtre Royal', jauge_lieu=1500, coordonne_X = 11, coordonne_Y = 15),
     ]
     session.add_all(lieux)

@@ -22,6 +22,9 @@
                 {% if billet_existe %}
                     <p class="error">Vous avez déjà un billet pour ce festival</p>
                 {% endif %}
+                {% if plus_place %}
+                    <p class="error">Il n'y a plus de place pour ce festival</p>
+                {% endif %}
                 <div class="submit">
                     {{ form.submit }}
                 </div>
