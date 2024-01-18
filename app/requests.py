@@ -122,6 +122,8 @@ def est_favoris(id_groupe, id_spectateur):
 
 def get_groupe_by_style(id_style):
     res = EtreStyle.query.filter_by(id_style=id_style).all()
+    if len(res) >= 5:
+        res = res[:4]
     groupes = []
     for groupe in res:
         groupes.append(Groupe.query.get(groupe.id_groupe))
@@ -136,13 +138,11 @@ def get_concert_by_id_groupe(id_groupe):
 
 def get_instrument_by_id_artiste(id_artiste):
     res= Jouer.query.filter_by(id_artiste=id_artiste).all()
-    print(res, id_artiste)
     instrument= Instrument.query.get(res[0].id_instrument)
     return instrument
 
 def get_event_by_id_groupe(id_groupe):
     res= OrganiserEvent.query.filter_by(id_groupe=id_groupe).all()
-    print(res)
     events=[]
     for event in res:
         events.append(Event.query.get(event.id_event))
@@ -186,7 +186,6 @@ def get_groupes_by_nom(nom):
 
 def get_prochain_id_groupe():
     id_g = Groupe.query.order_by(desc(Groupe.id_groupe)).first().id_groupe
-    print(id_g)
     return id_g + 1
 
 def insere_groupe(id_groupe, nom_groupe, photo_groupe, description_groupe, insta_groupe, spotify_groupe, id_hebergement):
