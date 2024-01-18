@@ -173,9 +173,20 @@ def get_types_billet():
 def get_billets_by_id_spectateur(id):
     return Billet.query.filter_by(id_spectateur=id).all()
 
-def get_concert_by_id_billet(id_billet):
+def get_concerts_by_id_billet(id_billet):
     billet = Billet.query.get(id_billet)
     spectateur = Spectateur.query.get(billet.id_spectateur)
-    reservation = Reserver.query.filter_by(id_spectateur=spectateur.id_spectateur).first()
-    concert = Concert.query.get(reservation.id_concert)
-    return concert
+    reservations = Reserver.query.filter_by(id_spectateur=spectateur.id_spectateur).all()
+    concerts = []
+    for reservation in reservations:
+        concerts.append(Concert.query.get(reservation.id_concert))
+    return concerts
+
+def get_type_by_id_billet(id_billet):
+    billet = Billet.query.get(id_billet)
+    type = Type.query.get(billet.id_type)
+    return type
+
+def get_concerts_between_dates(date1, date2):
+    concerts = Concert.query.filter(Concert.date_heure_concert >= date1, Concert.date_heure_concert <= date2).all()
+    return concerts

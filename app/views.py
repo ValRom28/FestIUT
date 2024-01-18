@@ -309,17 +309,30 @@ def billetterie():
         admin = current_user.is_admin()
         mes_billets = get_billets_by_id_spectateur(current_user.get_id())
         for billet in mes_billets:
-            billets_et_concert.append((billet, get_concert_by_id_billet(billet.id_billet)))
+            billets_et_concert.append((billet, get_concerts_by_id_billet(billet.id_billet), get_type_by_id_billet(billet.id_billet)))
     types_billets = get_types_billet()
     return render_template('billetterie.html', types_billets=types_billets, mes_billets=billets_et_concert, connecter=connecter, admin=admin)
 
-@app.route("/achat_billet", methods=['POST', 'GET'])
+@app.route("/achat_billet/<int:id_type_billet>", methods=['POST', 'GET'])
 @login_required
-def achat_billet():
+def achat_billet(id_type_billet):
     admin = False
     connecter = False
+    form = AchatBillet()
+    lieux = Lieu.query.all()
+    form.lieux.choices = [(lieu.id_lieu, lieu.nom_lieu) for lieu in lieux]
     if current_user.is_authenticated:
         connecter = True
         admin = current_user.is_admin()
-    
-    return redirect(url_for('billetterie'))
+    if form.validate_on_submit():
+        print("passe")
+        billet = Billet(date=form.date.data, id_type=id_type_billet, id_spectateur=current_user.get_id())
+        type = Type.query.get(id_type_billet)
+        concerts = get_concerts_between_dates(form.date.data, form.date.data + datetime.timedelta(days=type.nb_jours))
+        for concert in concerts:
+            reserver = Reserver(id_concert=concert.id_concert, id_billet=billet.id_billet)
+            db.session.add(reserver)
+        db.session.add(billet)
+        db.session.commit()
+        return redirect(url_for('billetterie'))
+    return render_template('achat_billet.html', connecter=connecter, admin=admin, id_type_billet=id_type_billet, form=form)
