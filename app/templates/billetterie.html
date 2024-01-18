@@ -14,7 +14,13 @@
         <main>
             <div class="main-part">
                 <section class="left-part">
-                    <a href="{{ url_for('panier') }}", class="panier">Mon panier</a>
+                    <h2 class="title-h2">Billets en vente</h2>
+                    {% for type in types_billets %}
+                        <div class="box">
+                            <h3>{{ type.nom_type }}</h3>
+                            <p>{{ type.prix }}€</p>
+                        </div>
+                    {% endfor %}
                 </section>
                 <section class="right-part">
                     <h2 class="title-h2">Mes billets</h2>
@@ -24,7 +30,7 @@
                         <p class="no-ticket">Vous n'avez pas de billet</p>
                     {% endif %}
                     {% for billet, concert in mes_billets %}
-                        <div class="box-billet", id="billet-{{ billet.id_billet }}">
+                        <div class="box", id="billet-{{ billet.id_billet }}">
                             <h3>{{ concert.nom_concert }}</h3>
                             <p>{{ billet.date_billet }}</p>
                         </div>

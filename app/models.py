@@ -229,13 +229,15 @@ class Type(Base):
     __tablename__ = 'TYPE'
     id_type = Column(Integer, primary_key=True)
     nb_jours = Column(Integer)
+    nom_type = Column(String(42))
     prix = Column(Float)
     age_min = Column(Integer)
     age_max = Column(Integer)
 
-    def __init__(self, id_type, nb_jours, prix, age_min, age_max):
+    def __init__(self, id_type, nb_jours, nom_type, prix, age_min, age_max):
         self.id_type = id_type
         self.nb_jours = nb_jours
+        self.nom_type = nom_type
         self.prix = prix
         self.age_min = age_min
         self.age_max = age_max

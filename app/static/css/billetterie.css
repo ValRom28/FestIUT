@@ -1,11 +1,14 @@
+body {
+    background-color: #6439da;
+}
+
 .main-part {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    background-color: #6439da;
 }
 
-.liste-billets {
+.box {
     display: flex;
     flex-direction: column;
     border: 3px solid #281460;
@@ -35,8 +38,7 @@ p {
     font-size: 1.5rem;
 }
 
-
-.box-billet {
+.box {
     padding:1rem;
     border: 1px solid aliceblue;
     border-radius: 2rem 2rem 2rem 0;
@@ -44,13 +46,9 @@ p {
     margin-bottom: 1rem;
 }
 
-.box-billet:hover {
+.box:hover {
     background-color: #6439da;
     transition: 0.2s;
-}
-
-.left-part {
-    margin-top: 5em;
 }
 
 .right-part {
