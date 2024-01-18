@@ -173,13 +173,17 @@ def get_types_billet():
 def get_billets_by_id_spectateur(id):
     return Billet.query.filter_by(id_spectateur=id).all()
 
-def get_concerts_by_id_billet(id_billet):
+def get_concerts_by_id_billet_dates_lieu(id_billet, date1, date2, id_lieu):
     billet = Billet.query.get(id_billet)
     spectateur = Spectateur.query.get(billet.id_spectateur)
     reservations = Reserver.query.filter_by(id_spectateur=spectateur.id_spectateur).all()
     concerts = []
+    date1 = datetime.datetime.combine(date1, datetime.datetime.min.time())
+    date2 = datetime.datetime.combine(date2, datetime.datetime.min.time())
     for reservation in reservations:
-        concerts.append(Concert.query.get(reservation.id_concert))
+        concert = Concert.query.filter_by(id_concert=reservation.id_concert).first()
+        if date1 <= concert.date_heure_concert <= date2:
+            concerts.append(concert)
     return concerts
 
 def get_type_by_id_billet(id_billet):
@@ -190,3 +194,39 @@ def get_type_by_id_billet(id_billet):
 def get_concerts_between_dates(date1, date2):
     concerts = Concert.query.filter(Concert.date_heure_concert >= date1, Concert.date_heure_concert <= date2).all()
     return concerts
+
+def get_concerts_by_id_lieu_between_dates(id_lieu, date1, date2):
+    concerts = get_concerts_between_dates(date1, date2)
+    res = []
+    for concert in concerts:
+        if concert.id_lieu == id_lieu:
+            res.append(concert)
+    return res
+
+def get_lieu_by_id_billet_and_dates(id_billet, date1, date2):
+    lieu = None
+    billet = Billet.query.get(id_billet)
+    spectateur = Spectateur.query.get(billet.id_spectateur)
+    reservations = Reserver.query.filter_by(id_spectateur=spectateur.id_spectateur).all()
+    date1 = datetime.datetime.combine(date1, datetime.datetime.min.time())
+    date2 = datetime.datetime.combine(date2, datetime.datetime.min.time())
+    for reservation in reservations:
+        concert = Concert.query.get(reservation.id_concert)
+        if date1 <= concert.date_heure_concert <= date2:
+            lieu = Lieu.query.get(concert.id_lieu)
+    return lieu
+
+def add_billet(date, id_type, id_spectateur):
+    billet = Billet(date_billet=date, id_type=id_type, id_spectateur=id_spectateur)
+    db.session.add(billet)
+    db.session.commit()
+
+def add_reservation(id_concert, id_spectateur):
+    existe_reservation = Reserver.query.filter_by(id_concert=id_concert, id_spectateur=id_spectateur).first()
+    if not existe_reservation:
+        reservation = Reserver(id_concert=id_concert, id_spectateur=id_spectateur)
+        db.session.add(reservation)
+        db.session.commit()
+        return True
+    else:
+        return False

@@ -302,22 +302,33 @@ def concert_delete(id_concert):
 def billetterie():
     admin = False
     connecter = False
+    age = None
     mes_billets = []
-    billets_et_concert = []
+    billets_concerts_types_lieu = []
+    lieu = None
     if current_user.is_authenticated:
         connecter = True
         admin = current_user.is_admin()
+        age = datetime.datetime.now().year - current_user.anniv_spectateur.year
+        print(age)
         mes_billets = get_billets_by_id_spectateur(current_user.get_id())
         for billet in mes_billets:
-            billets_et_concert.append((billet, get_concerts_by_id_billet(billet.id_billet), get_type_by_id_billet(billet.id_billet)))
+            type = Type.query.get(billet.id_type)
+            lieu = get_lieu_by_id_billet_and_dates(billet.id_billet, billet.date_billet,
+                                                    billet.date_billet + datetime.timedelta(days=type.nb_jours))
+            billets_concerts_types_lieu.append((billet, get_concerts_by_id_billet_dates_lieu(billet.id_billet,
+                                        billet.date_billet, billet.date_billet + datetime.timedelta(days=type.nb_jours), lieu.id_lieu), 
+                                        get_type_by_id_billet(billet.id_billet), lieu))
     types_billets = get_types_billet()
-    return render_template('billetterie.html', types_billets=types_billets, mes_billets=billets_et_concert, connecter=connecter, admin=admin)
+    return render_template('billetterie.html', types_billets=types_billets, mes_billets=billets_concerts_types_lieu, connecter=connecter, admin=admin)
 
 @app.route("/achat_billet/<int:id_type_billet>", methods=['POST', 'GET'])
 @login_required
 def achat_billet(id_type_billet):
     admin = False
     connecter = False
+    no_festival = False
+    billet_existe = False
     form = AchatBillet()
     lieux = Lieu.query.all()
     form.lieux.choices = [(lieu.id_lieu, lieu.nom_lieu) for lieu in lieux]
@@ -325,14 +336,19 @@ def achat_billet(id_type_billet):
         connecter = True
         admin = current_user.is_admin()
     if form.validate_on_submit():
-        print("passe")
-        billet = Billet(date_billet=form.date.data, id_type=id_type_billet, id_spectateur=current_user.get_id())
+        add_billet(form.date.data, id_type_billet, current_user.get_id())
         type = Type.query.get(id_type_billet)
-        concerts = get_concerts_between_dates(form.date.data, form.date.data + datetime.timedelta(days=type.nb_jours))
+        concerts = concerts = get_concerts_by_id_lieu_between_dates(int(form.lieux.data), form.date.data, form.date.data + datetime.timedelta(days=type.nb_jours))
+        if concerts == []:
+            no_festival = True
+            return render_template('achat_billet.html', connecter=connecter, admin=admin, id_type_billet=id_type_billet, 
+                                   form=form, no_festival=no_festival, billet_existe=billet_existe)
         for concert in concerts:
-            reserver = Reserver(id_concert=concert.id_concert, id_spectateur=current_user.get_id())
-            db.session.add(reserver)
-        db.session.add(billet)
-        db.session.commit()
+            valide = add_reservation(concert.id_concert, current_user.get_id())
+            if not valide:
+                billet_existe = True
+                return render_template('achat_billet.html', connecter=connecter, admin=admin, id_type_billet=id_type_billet, 
+                                       form=form, no_festival=no_festival, billet_existe=billet_existe)
         return redirect(url_for('billetterie'))
-    return render_template('achat_billet.html', connecter=connecter, admin=admin, id_type_billet=id_type_billet, form=form)
+    return render_template('achat_billet.html', connecter=connecter, admin=admin, id_type_billet=id_type_billet, 
+                           form=form, no_festival=no_festival, billet_existe=billet_existe)

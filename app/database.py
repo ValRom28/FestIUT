@@ -120,6 +120,9 @@ def initdb():
         Concert(id_concert=14, nom_concert='Soirée Musicale', tps_prepa_concert=40,
                 date_heure_concert=datetime.strptime('2024-11-25 4:00:00', '%Y-%m-%d %H:%M:%S'),
                 duree_concert=90, id_lieu=2),
+        Concert(id_concert=15, nom_concert='Concert de Noël', tps_prepa_concert=40,
+                date_heure_concert=datetime.strptime('2024-12-25 2:00:00', '%Y-%m-%d %H:%M:%S'),
+                duree_concert=90, id_lieu=2),
         
         ]
     session.add_all(concerts)
@@ -232,9 +235,8 @@ def initdb():
 
     # Insertions pour la table BILLET
     billets = [
-        Billet(id_billet=1, date_billet=datetime.strptime('2023-10-15', '%Y-%m-%d').date(), id_type=1, id_spectateur=1),
-        Billet(id_billet=2, date_billet=datetime.strptime('2023-11-02', '%Y-%m-%d').date(), id_type=2, id_spectateur=2),
-        Billet(id_billet=3, date_billet=datetime.strptime('2023-11-20', '%Y-%m-%d').date(), id_type=3, id_spectateur=3),
+        Billet(date_billet=datetime.strptime('2023-11-02', '%Y-%m-%d').date(), id_type=2, id_spectateur=2),
+        Billet(date_billet=datetime.strptime('2023-11-20', '%Y-%m-%d').date(), id_type=3, id_spectateur=3),
     ]
     session.add_all(billets)
 
@@ -266,7 +268,6 @@ def initdb():
 
     # Insertions pour la table RESERVER
     reserver = [
-        Reserver(id_concert=1, id_spectateur=1),
         Reserver(id_concert=2, id_spectateur=2),
         Reserver(id_concert=3, id_spectateur=3),
     ]
