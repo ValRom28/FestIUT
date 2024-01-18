@@ -120,6 +120,7 @@ def groupes():
     return render_template('groupes.html', liste_groupes = liste_groupe,connecter=connecter,admin=admin)
 
 @app.route("/favoris")
+@login_required
 def favoris():
     """
         Cette fonction nous permet de nous diriger vers la page qui
@@ -180,23 +181,32 @@ def groupe_detail(id_groupe):
                            images_prop=images_propositions)
 
 @app.route('/ajouter_aux_favoris/<int:id_groupe>', methods=['POST'])
+@login_required
 def ajouter_aux_favoris(id_groupe):
     ajouter_favoris(id_groupe, current_user.get_id())
     return redirect(url_for('groupe_detail', id_groupe=id_groupe))
 
 @app.route('/supprimer_des_favoris/<int:id_groupe>', methods=['POST'])
+@login_required
 def supprimer_des_favoris(id_groupe):
     supprimer_favoris(id_groupe, current_user.get_id())
     return redirect(url_for('groupe_detail', id_groupe=id_groupe))
 
 @app.route("/ajout_groupe")
+@login_required
 def ajout_groupe():
     liste_artiste = get_artistes()
     liste_hebergement = get_hebergement()
     styles = get_styles()
-    return render_template('ajout_groupe.html', liste = liste_artiste, hebergements = liste_hebergement, styles = styles)
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    return render_template('ajout_groupe.html', liste = liste_artiste, hebergements = liste_hebergement, styles = styles,connecter=connecter,admin=admin)
 
 @app.route("/ajout_groupe", methods=['POST'])
+@login_required
 def inserer_groupe():
     id_groupe = get_prochain_id_groupe()
     # Récupérer les données du formulaire
@@ -222,6 +232,7 @@ def inserer_groupe():
     return redirect(url_for("ajout_groupe")) # ca faudra le changer quand t'aura fait la page admin
   
 @app.route("/groupe/<int:id_groupe>/modification", methods=['GET', 'POST'])
+@login_required
 def groupe_modification(id_groupe):
     form = GroupeForm()
     formConcert = ConcertForm()
@@ -309,6 +320,7 @@ def groupe_modification(id_groupe):
     return render_template('modif_groupe.html', groupe=groupe, style=style, artistes=artistes,instrument=instrument,connecter=connecter,admin=admin,form=form,formConcert=formConcert,formEvent=formEvent,concerts_et_lieux=concerts_et_lieux,events_et_lieux=events_et_lieux,formLieu=formLieu)
     
 @app.route("/groupe/<int:id_groupe>/delete", methods=['GET'])
+@login_required
 def groupe_delete(id_groupe):
     groupe = get_groupe_by_id(id_groupe)
     delete_groupe(groupe)
@@ -328,16 +340,24 @@ def concert():
     return render_template('concert_info.html', concert = concert,groupe=groupe,lieu=lieu,style = style,connecter=connecter,admin=admin)
 
 @app.route("/concert_delete")
+@login_required
 def concert_delete(id_concert):
     concert = get_concert_by_id(id_concert)
     delete_concert(concert)
     return redirect(url_for('programmation'))
 
 @app.route("/ajout_instrument")
+@login_required
 def ajout_instrument():
-    return render_template('ajout_instrument.html')
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    return render_template('ajout_instrument.html',connecter=connecter,admin=admin)
 
 @app.route("/ajout_instrument", methods=['POST'])
+@login_required
 def inserer_instrument():
     id_instrument = get_prochain_id_instrument()
     # Récupérer les données du formulaire
@@ -347,11 +367,18 @@ def inserer_instrument():
     return redirect(url_for("ajout_instrument")) # ca faudra le changer quand t'aura fait la page admin
 
 @app.route("/ajout_artiste")
+@login_required
 def ajout_artiste():
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
     instruments = get_instrument()
-    return render_template('ajout_artiste.html', instruments = instruments)
+    return render_template('ajout_artiste.html', instruments = instruments,connecter=connecter,admin=admin)
 
 @app.route("/ajout_artiste", methods=['POST'])
+@login_required
 def inserer_artiste():
     id_artiste = get_prochain_id_artiste()
     # Récupérer les données du formulaire
@@ -366,10 +393,17 @@ def inserer_artiste():
     return redirect(url_for("ajout_artiste")) # ca faudra le changer quand t'aura fait la page admin
  
 @app.route("/ajout_hebergement")
+@login_required
 def ajout_hebergement():
-    return render_template('ajout_hebergement.html')
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    return render_template('ajout_hebergement.html',connecter=connecter,admin=admin)
 
 @app.route("/ajout_hebergement", methods=['POST'])
+@login_required
 def inserer_hebergement():
     id_hebergement = get_prochain_id_hebergement()
     # Récupérer les données du formulaire
@@ -379,3 +413,13 @@ def inserer_hebergement():
     insere_hebergement(id_hebergement, nom_hebergement, adresse_hebergement)
 
     return redirect(url_for("ajout_hebergement")) # ca faudra le changer quand t'aura fait la page admin
+
+@app.route("/administration")
+@login_required
+def administration():
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    return render_template('administration.html',connecter=connecter,admin=admin)

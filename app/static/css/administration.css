@@ -1,0 +1,99 @@
+body {
+	margin: 0;
+    background-color: #6439da;
+
+}
+main{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.gestionGroupe,.gestionConcert,.gestionArtiste,.gestionLieu,.gestionEvenement,.gestionInstruments,.gestionHerbergement{
+    flex-basis: 40%;
+    text-decoration: none;
+}
+.gestionGroupe>div,.gestionConcert>div,.gestionArtiste>div,.gestionLieu>div,.gestionEvenement>div,.gestionInstruments>div,.gestionHerbergement>div{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 2rem;
+    flex-basis: 23%;
+    border: 1px solid aliceblue;;
+     
+    border-radius: 2rem 2rem 2rem 0;
+    background-color: #281460;
+
+}
+
+.gestionGroupe>div>img,.gestionConcert>div>img,.gestionArtiste>div>img,.gestionLieu>div>img,.gestionEvenement>div>img,.gestionInstruments>div>img,.gestionHerbergement>div>img{
+    height: 5%;
+    width: 5%;
+    margin: auto;
+    margin-top: 3rem;
+    flex-basis: 30%;
+
+
+}
+.nomGestion {
+    font-size: 200%;
+    margin: 3em;
+    margin-top: 0rem;
+    text-align: center;
+    color: aliceblue;
+    flex-basis: 100%;
+    margin-bottom: 3rem;
+    flex-basis: 100%;
+}
+
+.gestion{
+    text-decoration: none;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    width: 30%;
+    height: 30%;
+    content: center;
+    background-color: #fefefe;
+    border-radius: 1rem;
+    z-index: 2rem;
+    margin-top: 10%;
+    border: 1px solid aliceblue;;
+     
+    border-radius: 2rem 2rem 2rem 0;
+    background-color: #281460;
+
+  }
+
+#ajouterGroupe, #supGroupe, #ajouterConcert, #supConcert, #ajouterEvent, #supEvent {
+    margin: auto;
+    padding: 0.5rem;
+    border: solid 0.2rem aliceblue;
+    border-radius: 1rem;
+    text-align: center;
+    text-decoration: none;
+    color: aliceblue;
+    margin-left: 3;
+}
+#ajouterGroupe:hover, #supGroupe:hover,#ajouterConcert:hover,#supConcert:hover,#ajouterEvent:hover,#supEvent:hover {
+    background-color: aliceblue;
+    color: #281460;
+}
+  .popup>p{
+    font-size: 200%;
+    text-align: center;
+    color: aliceblue;
+  }
+  .close-btn{
+    position: absolute;
+    right: 0;
+    background-color: #EA4E4E;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: right;
+    cursor: pointer;
+    content: right;
+
+  }
