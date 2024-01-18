@@ -229,7 +229,7 @@ def inserer_groupe():
 
     insere_etrestyle(style, id_groupe)
     insere_groupe(id_groupe, nom_groupe, None, description, nom_insta, nom_spotify, hebergement)
-    return redirect(url_for("ajout_groupe")) # ca faudra le changer quand t'aura fait la page admin
+    return redirect(url_for("groupes")) 
   
 @app.route("/groupe/<int:id_groupe>/modification", methods=['GET', 'POST'])
 @login_required
@@ -364,7 +364,7 @@ def inserer_instrument():
     nom_instrument = request.form.get('nom_instrument')
 
     insere_instrument(id_instrument, nom_instrument)
-    return redirect(url_for("ajout_instrument")) # ca faudra le changer quand t'aura fait la page admin
+    return redirect(url_for("administration")) 
 
 @app.route("/ajout_artiste")
 @login_required
@@ -390,7 +390,7 @@ def inserer_artiste():
 
     insere_artiste(id_artiste, nom_artiste)
     insere_jouer(id_artiste, id_instrument)
-    return redirect(url_for("ajout_artiste")) # ca faudra le changer quand t'aura fait la page admin
+    return redirect(url_for("administration")) 
  
 @app.route("/ajout_hebergement")
 @login_required
@@ -412,7 +412,7 @@ def inserer_hebergement():
 
     insere_hebergement(id_hebergement, nom_hebergement, adresse_hebergement)
 
-    return redirect(url_for("ajout_hebergement")) # ca faudra le changer quand t'aura fait la page admin
+    return redirect(url_for("administration")) 
 
 @app.route("/administration")
 @login_required
