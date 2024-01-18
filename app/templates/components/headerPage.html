@@ -11,7 +11,7 @@
         {% if connecter %}
         <a href="{{url_for('favoris')}}" class='choix'>Favoris</a>
         {% if admin %}
-        <a href="#"  class='choix'>Administration</a>
+        <a href="{{url_for('administration')}}"  class='choix'>Administration</a>
         {% endif %}
         <a href="{{url_for('logout')}}" class='choix'>Déconnexion</a>
         

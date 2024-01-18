@@ -8,11 +8,17 @@
 .liste-groupes {
     display: flex;
     flex-direction: column;
-    border: 3px solid #281460;
+    border: 3px solid aliceblue;
+    background-color: #281460;
     font-size: 30px;
     padding: 1em;
     max-width: 365px;
     border-radius: 2rem 2rem 2rem 0;
+}
+
+.liste-groupes:hover {
+    background-color: #6439da;
+    transition: 0.2s;
 }
 
 h2 {
@@ -20,9 +26,14 @@ h2 {
     color: aliceblue;
 }
 
-a {
+a ,p{
     text-decoration: none;
     color: aliceblue;
+}
+
+a:hover {
+    color: #281460;
+    transition: 0.2s;
 }
 
 .groupe-description {
@@ -41,6 +52,7 @@ h3 {
     border-radius: 2rem 2rem 2rem 0;
     background-color: #281460;
     margin-bottom: 1rem;
+    cursor: pointer;
 }
 
 .box-groupe:hover {
@@ -53,5 +65,9 @@ h3 {
 }
 
 .left-part {
+    margin-top: 5em;
+}
+
+.right-part {
     margin-top: 5em;
 }

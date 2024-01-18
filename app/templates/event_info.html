@@ -11,7 +11,7 @@
             {% include "components/headerPage.html" %}
         </header>
         <main>
-           <h2> {{concert.nom_concert}} </h2>
+           <h2> {{event.nom_event}}</h2>
             <div class="description">
                 <div onclick='document.location = "{{ url_for("groupe_detail", id_groupe=groupe.id_groupe) }}"' style="cursor: pointer;">
                     <h3>Groupe</h3>
@@ -27,15 +27,7 @@
                 </div>
                 <div>
                     <h3>Date</h3>
-                    <p>{{concert.date_heure_concert.strftime("%d/%m")}}</p>
-                </div>
-                <div>
-                    <h3>Heure</h3>
-                    <p>{{concert.date_heure_concert.strftime("%Hh%m")}}</p>
-                </div>
-                <div>
-                    <h3>Durée</h3>
-                    <p>{{ concert.duree_concert//60 }}h{{concert.duree_concert-concert.duree_concert//60*60}} </p>
+                    <p>{{event.date_event}}</p>
                 </div>
             </div>
             {% if admin %}
@@ -49,8 +41,8 @@
             {% endif %}
 
             <div id="popup" class="popup">
-                <p>Souhaitez vous vraiment supprimer le concert : {{concert.nom_concert}}   ?</p>
-                <a href="{{ url_for('concert_delete', id_concert=concert.id_concert) }}">
+                <p>Souhaitez vous vraiment supprimer le concert : {{event.nom_event}}   ?</p>
+                <a href="{{ url_for('evenement_delete', id_event=event.id_event) }}">
                     <button> Oui </button>
                 </a>
                 <button id="non"> Non </button>

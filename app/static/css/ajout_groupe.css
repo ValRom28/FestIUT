@@ -1,0 +1,104 @@
+body{
+    margin: 0%;
+    background-color: #6439da;
+}
+
+h3{
+    color: aliceblue;
+}
+
+form{
+    display: flex;
+    border:1px solid aliceblue;
+    border-radius: 2rem 2rem 2rem 0;
+    background-color: #281460;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+form:hover{
+    background-color: #6439da;
+    transition: 0.2s;
+}
+
+section{
+    flex-basis: 50%;
+    color: aliceblue;
+    border:1px solid aliceblue;
+    border-radius: 2rem 2rem 2rem 0;
+    background-color: #281460;
+    padding: 1rem;
+    margin: 1rem;
+}
+
+section:hover{
+    background-color: #6439da;
+    transition: 0.2s;
+}
+
+.titre-creer{
+    font-size: 1.3rem;
+    font-weight: bolder;
+    padding-top: 2rem;
+    padding-right: 2rem;
+    padding-left: 4rem;
+}
+
+.form-label-admin {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+}
+
+.form-label-admin-desc {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 2.5rem;
+}
+
+.form-label-admin-desc textarea{
+    border-radius: 5px;
+    width: 50%;
+    height: 100%;
+    resize: none;
+}
+
+.form-label-admin input[type="text"]  {
+    border-radius: 5px;
+    padding: 0.5rem;
+}
+
+textarea{
+    border-radius: 5px;
+    padding: 1.2rem;
+}
+
+.label{
+    margin-right: 1.8rem;
+    font-size: 1.2rem;
+    font-family: 'Lato' sans-serif;
+    color: aliceblue;
+}
+
+
+input[type="submit"]{
+  width: 180px;
+  padding: 10px 25px 10px 25px;
+  border-radius: 40px;
+  border: 1px solid aliceblue;
+  font-size: 1rem;
+  color: #281460;
+  background-color: aliceblue;
+}
+
+input[type="submit"]:hover{
+  background-color: #6439da;
+  border-color: #281460;
+  color: aliceblue;
+  transition: 0.2s;
+}
