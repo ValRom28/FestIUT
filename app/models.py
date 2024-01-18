@@ -24,7 +24,7 @@ class Artiste(Base):
 
 class Billet(Base):
     __tablename__ = 'BILLET'
-    id_billet = Column(Integer, primary_key=True)
+    id_billet = Column(Integer, primary_key=True, autoincrement=True)
     date_billet = Column(Date)
     id_type = Column(Integer)
     id_spectateur = Column(Integer, ForeignKey('SPECTATEUR.id_spectateur'))
