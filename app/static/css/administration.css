@@ -8,11 +8,11 @@ main{
     flex-wrap: wrap;
     justify-content: center;
 }
-.gestionGroupe,.gestionConcert,.gestionArtiste,.gestionLieu,.gestionEvenement,.gestionInstruments{
+.gestionGroupe,.gestionConcert,.gestionArtiste,.gestionLieu,.gestionEvenement,.gestionInstruments,.gestionHerbergement{
     flex-basis: 40%;
     text-decoration: none;
 }
-.gestionGroupe>div,.gestionConcert>div,.gestionArtiste>div,.gestionLieu>div,.gestionEvenement>div,.gestionInstruments>div{
+.gestionGroupe>div,.gestionConcert>div,.gestionArtiste>div,.gestionLieu>div,.gestionEvenement>div,.gestionInstruments>div,.gestionHerbergement>div{
     display: flex;
     flex-wrap: wrap;
     margin: 2rem;
@@ -24,7 +24,7 @@ main{
 
 }
 
-.gestionGroupe>div>img,.gestionConcert>div>img,.gestionArtiste>div>img,.gestionLieu>div>img,.gestionEvenement>div>img,.gestionInstruments>div>img{
+.gestionGroupe>div>img,.gestionConcert>div>img,.gestionArtiste>div>img,.gestionLieu>div>img,.gestionEvenement>div>img,.gestionInstruments>div>img,.gestionHerbergement>div>img{
     height: 5%;
     width: 5%;
     margin: auto;
@@ -66,14 +66,14 @@ main{
   }
 
 #ajouterGroupe, #supGroupe, #ajouterConcert, #supConcert, #ajouterEvent, #supEvent {
-    margin:  auto;
+    margin: auto;
     padding: 0.5rem;
     border: solid 0.2rem aliceblue;
     border-radius: 1rem;
-    align-items: center;
     text-align: center;
     text-decoration: none;
     color: aliceblue;
+    margin-left: 3;
 }
 #ajouterGroupe:hover, #supGroupe:hover,#ajouterConcert:hover,#supConcert:hover,#ajouterEvent:hover,#supEvent:hover {
     background-color: aliceblue;
