@@ -33,6 +33,24 @@
                     </tr>
                 {% endfor %}
             </table>
+            <table>
+                <tr>
+                    <th>Event</th>
+                    <th>Date</th>
+                    <th>Lieu</th>
+                </tr>
+                {% for event in events %}
+                    <tr onclick='document.location = "{{ url_for("evenement", event=event.id_event) }}"'>
+                        <td>{{ event.nom_event }}</a></td>
+                        <td>{{ event.date_event.strftime("%d/%m/%Y") }}</td>
+                        {% for lieu in lieux %}
+                            {% if lieu.id_lieu == event.id_lieu %}
+                                <td>{{ lieu.nom_lieu }}</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
         </main>
     </body>
 </html>

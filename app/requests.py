@@ -67,6 +67,16 @@ def filter_concerts_date(date):
             res.append(concert)
     return res
 
+def filter_events_date(date):
+    event_lieu = Event.query.order_by("date_event").all()
+    res = []
+    for event in event_lieu:
+        if event.date_event >= date:
+            res.append(event)
+    return res
+
+
+
 def get_all_lieux():
     return Lieu.query.all()
     
@@ -237,4 +247,18 @@ def get_prochain_id_hebergement():
 def insere_hebergement(id_hebergement, nom_hebergement, adresse_hebergement):
     hebergement = Hebergement(id_hebergement, nom_hebergement, adresse_hebergement)
     db.session.add(hebergement)
+    db.session.commit()
+    
+def get_event_by_id(id):
+    return Event.query.filter_by(id_event=id).first()
+
+def get_groupe_by_id_event(id):
+    res = OrganiserEvent.query.filter_by(id_event=id).first()
+    return Groupe.query.get(res.id_groupe)
+
+def delete_event(event):
+    organiser= OrganiserEvent.query.filter_by(id_event=event.id_event).all()
+    for o in organiser:
+        db.session.delete(o)
+    db.session.delete(event)
     db.session.commit()
