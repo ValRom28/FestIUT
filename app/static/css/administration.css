@@ -65,8 +65,8 @@ main{
 
   }
 
-#ajouterFic, #supFic,#ajouterUser,#supUser{
-    margin: 2rem;
+#ajouterGroupe, #supGroupe, #ajouterConcert, #supConcert, #ajouterEvent, #supEvent {
+    margin:  auto;
     padding: 0.5rem;
     border: solid 0.2rem aliceblue;
     border-radius: 1rem;
@@ -75,7 +75,7 @@ main{
     text-decoration: none;
     color: aliceblue;
 }
-.popup>#ajouterFic:hover, .popup>#supFic:hover, .popup>#ajouterUser:hover, .popup>#supUser:hover {
+#ajouterGroupe:hover, #supGroupe:hover,#ajouterConcert:hover,#supConcert:hover,#ajouterEvent:hover,#supEvent:hover {
     background-color: aliceblue;
     color: #281460;
 }
@@ -95,7 +95,5 @@ main{
     align-items: right;
     cursor: pointer;
     content: right;
-  }
-  #ajouterFic,#ajouterUser{
-    margin-left: 10rem;
+
   }

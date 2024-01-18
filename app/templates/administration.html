@@ -5,6 +5,7 @@
             <meta name="admin">
             <link rel="stylesheet" href="{{url_for('static', filename='css/headerPage.css')}}">
             <link rel="stylesheet" href="{{url_for('static', filename='css/administration.css')}}">
+            <script src="{{url_for('static', filename='js/administration.js')}}"></script>
             <title>Administration</title>
         </head>
         <body> 
@@ -52,53 +53,23 @@
             </a>
 
                 <div id="popup" class="popup">
-                    <button class="close-btn" onclick="closePopup()">X</button>
+                    <button class="close-btn" id="close1" onclick="closePopup()">X</button>
                     <p>Que souhaitez-vous faire sur les Groupes?</p>
-                    <a id="ajouterFic" href="#">Ajouter</a>
-                    <a id="supFic" href="{{url_for('groupes')}}">Modifier</a>
+                    <a id="ajouterGroupe" href="#">Ajouter</a>
+                    <a id="supGroupe" href="{{url_for('groupes')}}">Modifier</a>
                 </div>
                 <div id="popup2" class="popup">
-                    <button class="close-btn" onclick="closePopup2()">X</button>
+                    <button class="close-btn" id="close2" onclick="closePopup2()">X</button>
                     <p>Que souhaitez-vous faire sur les Concerts?</p>
-                    <a id="ajouterUser" href="#}">Ajouter</a>
-                    <a id="supUser" href="{{url_for('programmation')}}">Modifier</a>
+                    <a id="ajouterConcert" href="#}">Ajouter</a>
+                    <a id="supConcert" href="{{url_for('programmation')}}">Modifier</a>
                 </div>
 
                 <div id="popup3" class="popup">
-                    <button class="close-btn" onclick="closePopup3()">X</button>
+                    <button class="close-btn" id="close3" onclick="closePopup3()">X</button>
                     <p>Que souhaitez-vous faire sur les Evenements?</p>
-                    <a id="ajouterUser" href="#}">Ajouter</a>
-                    <a id="supUser" href="{{url_for('programmation')}}">Modifier</a>
+                    <a id="ajouterEvent" href="#}">Ajouter</a>
+                    <a id="supEvent" href="{{url_for('programmation')}}">Modifier</a>
                 </div>
-
-                <script>
-                    function closePopup() {
-                        var modal = document.getElementById('popup');
-                        modal.style.display = 'none';
-                    }
-                    function closePopup2() {
-                        var modal = document.getElementById('popup2');
-                        modal.style.display = 'none';
-                    }
-                    function closePopup3() {
-                        var modal = document.getElementById('popup3');
-                        modal.style.display = 'none';
-                    }
-
-        
-                    document.querySelector('.gestionGroupe').addEventListener('click', function () {
-                        var modal = document.getElementById('popup');
-                        modal.style.display = 'block';
-                    });
-                    document.querySelector('.gestionConcert').addEventListener('click', function () {
-                        var modal = document.getElementById('popup2');
-                        modal.style.display = 'block';
-                    });
-
-                    document.querySelector('.gestionEvenement').addEventListener('click', function () {
-                        var modal = document.getElementById('popup3');
-                        modal.style.display = 'block';
-                    });
-                </script>
             </main>
         </body>
