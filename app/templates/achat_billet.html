@@ -16,6 +16,12 @@
                 <p>Lieu du festival</p>
                 <p>{{ form.lieux }}</p>
                 <p>Date : {{ form.date }}</p>
+                {% if no_festival %}
+                    <p class="error">Il n'y a pas de festival à cette date</p>
+                {% endif %}
+                {% if billet_existe %}
+                    <p class="error">Vous avez déjà un billet pour ce festival</p>
+                {% endif %}
                 <div class="submit">
                     {{ form.submit }}
                 </div>
