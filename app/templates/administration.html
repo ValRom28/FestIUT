@@ -20,10 +20,11 @@
             <a class="gestionConcert">
                 <div class="concert">
                 <img class="imgGestion" src="{{url_for('static', filename='img/concert.png')}}" alt="fichier">
-                <h2 class="nomGestiont">Gérer concert</h2>
+                <h2 class="nomGestion">Gérer concert</h2>
                 </div>
             </a>
-           <a class="gestionArtiste" href="#">
+
+           <a class="gestionArtiste" href="{{url_for('ajout_artiste')}}">
                <div class="Artiste">
                 <img class="imgGestion" src="{{url_for('static', filename='img/artiste.png')}}" alt="fichier">
                 <h2 class="nomGestion">Gérer Artiste</h2>
@@ -36,14 +37,14 @@
                 </div>
                 </a>
 
-            <a class='gestionEvenement' href="#">
+            <a class='gestionEvenement'>
                 <div class="Evenement">
                     <img class="imgGestion" src="{{url_for('static', filename='img/event.png')}}" alt="fichier">
                     <h2 class="nomGestion">Gérer Evenement</h2>
                 </div>
             </a>
 
-            <a class="gestionInstruments" href="#">
+            <a class="gestionInstruments" href="{{url_for('ajout_instrument')}}">
                 <div class="instrument">
                     <img class="imgGestion" src="{{url_for('static', filename='img/musique.png')}}" alt="fichier">
                     <h2 class="nomGestion">Gérer Instruments</h2>
@@ -52,16 +53,24 @@
 
                 <div id="popup" class="popup">
                     <button class="close-btn" onclick="closePopup()">X</button>
-                    <p>Que souhaitez-vous faire sur les fichiers?</p>
+                    <p>Que souhaitez-vous faire sur les Groupes?</p>
                     <a id="ajouterFic" href="#">Ajouter</a>
-                    <a id="supFic" href="#">Modifier</a>
+                    <a id="supFic" href="{{url_for('groupes')}}">Modifier</a>
                 </div>
                 <div id="popup2" class="popup">
                     <button class="close-btn" onclick="closePopup2()">X</button>
-                    <p>Que souhaitez-vous faire sur les utilisateurs?</p>
+                    <p>Que souhaitez-vous faire sur les Concerts?</p>
                     <a id="ajouterUser" href="#}">Ajouter</a>
-                    <a id="supUser" href="#">Modifier</a>
+                    <a id="supUser" href="{{url_for('programmation')}}">Modifier</a>
                 </div>
+
+                <div id="popup3" class="popup">
+                    <button class="close-btn" onclick="closePopup3()">X</button>
+                    <p>Que souhaitez-vous faire sur les Evenements?</p>
+                    <a id="ajouterUser" href="#}">Ajouter</a>
+                    <a id="supUser" href="{{url_for('programmation')}}">Modifier</a>
+                </div>
+
                 <script>
                     function closePopup() {
                         var modal = document.getElementById('popup');
@@ -71,13 +80,23 @@
                         var modal = document.getElementById('popup2');
                         modal.style.display = 'none';
                     }
+                    function closePopup3() {
+                        var modal = document.getElementById('popup3');
+                        modal.style.display = 'none';
+                    }
+
         
-                    document.querySelector('.gestionFic').addEventListener('click', function () {
+                    document.querySelector('.gestionGroupe').addEventListener('click', function () {
                         var modal = document.getElementById('popup');
                         modal.style.display = 'block';
                     });
-                    document.querySelector('.gestionUser').addEventListener('click', function () {
+                    document.querySelector('.gestionConcert').addEventListener('click', function () {
                         var modal = document.getElementById('popup2');
+                        modal.style.display = 'block';
+                    });
+
+                    document.querySelector('.gestionEvenement').addEventListener('click', function () {
+                        var modal = document.getElementById('popup3');
                         modal.style.display = 'block';
                     });
                 </script>
