@@ -310,7 +310,6 @@ def billetterie():
         connecter = True
         admin = current_user.is_admin()
         age = datetime.datetime.now().year - current_user.anniv_spectateur.year
-        print(age)
         mes_billets = get_billets_by_id_spectateur(current_user.get_id())
         for billet in mes_billets:
             type = Type.query.get(billet.id_type)
@@ -320,7 +319,8 @@ def billetterie():
                                         billet.date_billet, billet.date_billet + datetime.timedelta(days=type.nb_jours), lieu.id_lieu), 
                                         get_type_by_id_billet(billet.id_billet), lieu))
     types_billets = get_types_billet()
-    return render_template('billetterie.html', types_billets=types_billets, mes_billets=billets_concerts_types_lieu, connecter=connecter, admin=admin)
+    return render_template('billetterie.html', types_billets=types_billets, mes_billets=billets_concerts_types_lieu, 
+                           age=age, connecter=connecter, admin=admin)
 
 @app.route("/achat_billet/<int:id_type_billet>", methods=['POST', 'GET'])
 @login_required
