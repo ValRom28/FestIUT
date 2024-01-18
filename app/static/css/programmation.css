@@ -17,6 +17,7 @@ table{
     border-collapse: collapse;
     border: 1px solid aliceblue;
     cursor: pointer;
+    margin-bottom: 2rem;
 }
 
 th{

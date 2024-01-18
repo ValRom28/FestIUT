@@ -78,6 +78,7 @@ def rechercheGroupe():
 
 @app.route('/programmation')
 def programmation():
+    events = filter_events_date(datetime.date.today())
     concerts = filter_concerts_date(datetime.datetime.now())
     lieux = get_lieux()
     admin=False
@@ -85,7 +86,7 @@ def programmation():
     if current_user.is_authenticated:
         connecter=True
         admin=current_user.is_admin()
-    return render_template('programmation.html', concerts=concerts,lieux=lieux,connecter=connecter,admin=admin)
+    return render_template('programmation.html', concerts=concerts,lieux=lieux,connecter=connecter,admin=admin,events=events)
 
 @app.route('/logout')
 @login_required
@@ -229,7 +230,7 @@ def inserer_groupe():
 
     insere_etrestyle(style, id_groupe)
     insere_groupe(id_groupe, nom_groupe, None, description, nom_insta, nom_spotify, hebergement)
-    return redirect(url_for("ajout_groupe")) # ca faudra le changer quand t'aura fait la page admin
+    return redirect(url_for("groupes")) 
   
 @app.route("/groupe/<int:id_groupe>/modification", methods=['GET', 'POST'])
 @login_required
@@ -339,6 +340,26 @@ def concert():
     style = get_style_by_id_groupe(groupe.id_groupe)
     return render_template('concert_info.html', concert = concert,groupe=groupe,lieu=lieu,style = style,connecter=connecter,admin=admin)
 
+@app.route("/evenement")
+def evenement():
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    event = get_event_by_id(int(request.args.get("event")))
+    lieu = get_lieu_by_id(event.id_lieu)
+    groupe = get_groupe_by_id_event(event.id_event)
+    style = get_style_by_id_groupe(groupe.id_groupe)
+    return render_template('event_info.html', event = event,groupe=groupe,lieu=lieu,style = style,connecter=connecter,admin=admin)
+
+@app.route("/evenement_delete/<int:id_event>")
+@login_required
+def evenement_delete(id_event):
+    event = get_event_by_id(id_event)
+    delete_event(event)
+    return redirect(url_for('programmation'))
+
 @app.route("/concert_delete")
 @login_required
 def concert_delete(id_concert):
@@ -364,7 +385,7 @@ def inserer_instrument():
     nom_instrument = request.form.get('nom_instrument')
 
     insere_instrument(id_instrument, nom_instrument)
-    return redirect(url_for("ajout_instrument")) # ca faudra le changer quand t'aura fait la page admin
+    return redirect(url_for("administration")) 
 
 @app.route("/ajout_artiste")
 @login_required
@@ -390,7 +411,7 @@ def inserer_artiste():
 
     insere_artiste(id_artiste, nom_artiste)
     insere_jouer(id_artiste, id_instrument)
-    return redirect(url_for("ajout_artiste")) # ca faudra le changer quand t'aura fait la page admin
+    return redirect(url_for("administration")) 
  
 @app.route("/ajout_hebergement")
 @login_required
@@ -412,7 +433,7 @@ def inserer_hebergement():
 
     insere_hebergement(id_hebergement, nom_hebergement, adresse_hebergement)
 
-    return redirect(url_for("ajout_hebergement")) # ca faudra le changer quand t'aura fait la page admin
+    return redirect(url_for("administration")) 
 
 @app.route("/administration")
 @login_required
