@@ -30,7 +30,7 @@
                         <p class="no-ticket">Vous n'avez pas de billet</p>
                     {% endif %}
                     {% for billet, concert in mes_billets %}
-                        <div class="box", id="billet-{{ billet.id_billet }}">
+                        <div class="box" id="billet-{{ billet.id_billet }}">
                             <h3>{{ concert.nom_concert }}</h3>
                             <p>{{ billet.date_billet }}</p>
                         </div>
