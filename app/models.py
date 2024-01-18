@@ -24,13 +24,12 @@ class Artiste(Base):
 
 class Billet(Base):
     __tablename__ = 'BILLET'
-    id_billet = Column(Integer, primary_key=True)
+    id_billet = Column(Integer, primary_key=True, autoincrement=True)
     date_billet = Column(Date)
     id_type = Column(Integer)
     id_spectateur = Column(Integer, ForeignKey('SPECTATEUR.id_spectateur'))
 
-    def __init__(self, id_billet, date_billet, id_type, id_spectateur):
-        self.id_billet = id_billet
+    def __init__(self, date_billet, id_type, id_spectateur):
         self.date_billet = date_billet
         self.id_type = id_type
         self.id_spectateur = id_spectateur
@@ -229,13 +228,15 @@ class Type(Base):
     __tablename__ = 'TYPE'
     id_type = Column(Integer, primary_key=True)
     nb_jours = Column(Integer)
+    nom_type = Column(String(42))
     prix = Column(Float)
     age_min = Column(Integer)
     age_max = Column(Integer)
 
-    def __init__(self, id_type, nb_jours, prix, age_min, age_max):
+    def __init__(self, id_type, nb_jours, nom_type, prix, age_min, age_max):
         self.id_type = id_type
         self.nb_jours = nb_jours
+        self.nom_type = nom_type
         self.prix = prix
         self.age_min = age_min
         self.age_max = age_max
