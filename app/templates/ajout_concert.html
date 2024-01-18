@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="connexion">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/ajout_groupe.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
+
+        <title>Concert</title>
+    </head>
+
+    <body>
+        <header>
+            {% include "components/headerPage.html" %}
+        </header>
+        <main>
+            <div class="titre-creer">
+                <h3>Créer un concert:</h3>
+            </div>
+            <div class="conteneur-champs-formulaires">
+                <form action="{{ url_for('inserer_concert') }}"role="form" method="POST" class="form-champ" enctype="multipart/form-data">
+                    <section>
+                        <div class="form-label-admin">
+                            <label for="name" class="label">Nom du concert : </label>
+                            <input type="text" name="nom_concert" size="40" id="nom_concert" required placeholder="Exemple : Fiesta "/>
+                        </div>
+                        <div class="form-label-admin">
+                            <label for="name" class="label">Temps de préparation (en minute) : </label>
+                            <input type="number" name="tps_prepa_concert" size="40" id="tps_prepa_concert" required placeholder="Exemple : 123"/>
+                        </div>
+                        <div class="form-label-admin">
+                            <label for="name" class="label">Date : </label>
+                            <input type="date" name="date_concert" id="date_concert" required placeholder="Sélectionnez une date"/>
+                        </div>
+                        <div class="form-label-admin">
+                            <label for="name" class="label">Durée du concert (en minute) : </label>
+                            <input type="number" name="duree_concert" size="40" id="duree_concert" required placeholder="Exemple : 123 "/>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="form-label-admin">
+                            <label for="lieu" class="label">Choisir le lieu :</label>
+                            <div class="radio-list" id="radioList">
+                                {% for lieu in lieux %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="lieu" value="{{ lieu.id_lieu }}">
+                                        <label class="label" for="{{ lieu.id_lieu }}">{{ lieu.nom_lieu }}</label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <input type="submit" value="Ajouter" />
+                    </section>
+                </form>
+            </div>
+        </main>
+    </body>
+</html>

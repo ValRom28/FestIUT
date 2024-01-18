@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, HiddenField, FileField, ValidationError,TextAreaField
+from wtforms import StringField, PasswordField, SubmitField, HiddenField, FileField, ValidationError,TextAreaField, DateField
 from wtforms.validators import DataRequired
 
 
@@ -35,7 +35,7 @@ class ConcertForm(FlaskForm):
     date_heure_concert = StringField(validators=[DataRequired()], render_kw={"placeholder": "Date du concert"})
     duree_concert = StringField(validators=[DataRequired()], render_kw={"placeholder": "Durée du concert"})
     modif = SubmitField('modifier')
-    
+        
 class EventForm(FlaskForm):
     id_event= HiddenField()
     date_event = StringField(validators=[DataRequired()], render_kw={"placeholder": "Date de l'event"})

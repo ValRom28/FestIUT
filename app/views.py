@@ -379,3 +379,31 @@ def inserer_hebergement():
     insere_hebergement(id_hebergement, nom_hebergement, adresse_hebergement)
 
     return redirect(url_for("ajout_hebergement")) # ca faudra le changer quand t'aura fait la page admin
+
+
+@app.route("/ajout_concert")
+def ajout_concert():
+    form = ConcertForm()
+    lieux = get_all_lieux()
+    return render_template('ajout_concert.html', form = form, lieux = lieux)
+
+@app.route("/ajout_concert", methods=['POST'])
+def inserer_concert():
+    id_concert = get_prochain_id_concert()
+    # Récupérer les données du formulaire
+    nom_concert = request.form.get('nom_concert')
+    tps_prepa_concert = request.form.get('tps_prepa_concert')
+    duree_concert = request.form.get('duree_concert')
+    date_concert = request.form.get('date_concert')
+    id_lieu = request.form.get('lieu')
+
+    print("id concert : " + str(id_concert))
+    print("nom_concert : " + nom_concert)
+    print("tps_prepa_concert : " + str(tps_prepa_concert))
+    print("id duree_concert : " + str(duree_concert))
+    print("date_concert : " + date_concert)
+    print("id_lieu : " + id_lieu)
+
+    insere_concert(id_concert, nom_concert, tps_prepa_concert, date_concert, duree_concert, id_lieu)
+
+    return redirect(url_for("ajout_concert")) # ca faudra le changer quand t'aura fait la page admin
