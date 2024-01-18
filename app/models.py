@@ -29,8 +29,7 @@ class Billet(Base):
     id_type = Column(Integer)
     id_spectateur = Column(Integer, ForeignKey('SPECTATEUR.id_spectateur'))
 
-    def __init__(self, id_billet, date_billet, id_type, id_spectateur):
-        self.id_billet = id_billet
+    def __init__(self, date_billet, id_type, id_spectateur):
         self.date_billet = date_billet
         self.id_type = id_type
         self.id_spectateur = id_spectateur

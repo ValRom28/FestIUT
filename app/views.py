@@ -326,11 +326,11 @@ def achat_billet(id_type_billet):
         admin = current_user.is_admin()
     if form.validate_on_submit():
         print("passe")
-        billet = Billet(date=form.date.data, id_type=id_type_billet, id_spectateur=current_user.get_id())
+        billet = Billet(date_billet=form.date.data, id_type=id_type_billet, id_spectateur=current_user.get_id())
         type = Type.query.get(id_type_billet)
         concerts = get_concerts_between_dates(form.date.data, form.date.data + datetime.timedelta(days=type.nb_jours))
         for concert in concerts:
-            reserver = Reserver(id_concert=concert.id_concert, id_billet=billet.id_billet)
+            reserver = Reserver(id_concert=concert.id_concert, id_spectateur=current_user.get_id())
             db.session.add(reserver)
         db.session.add(billet)
         db.session.commit()
