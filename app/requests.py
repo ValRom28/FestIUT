@@ -4,6 +4,7 @@ from app.models import (Appartenir, Artiste, Billet, Concert, EtreStyle,
                      EtreType, Favoris, Groupe, Hebergement, Instrument,
                      Jouer, Lieu, OrganiserConcert, Possede, Reserver,
                      Style, SousStyle, Spectateur, Type, OrganiserEvent, Event)
+from sqlalchemy.orm import sessionmaker
 import datetime
 from sqlalchemy import desc
 
@@ -126,13 +127,11 @@ def get_concert_by_id_groupe(id_groupe):
 
 def get_instrument_by_id_artiste(id_artiste):
     res= Jouer.query.filter_by(id_artiste=id_artiste).all()
-    print(res, id_artiste)
     instrument= Instrument.query.get(res[0].id_instrument)
     return instrument
 
 def get_event_by_id_groupe(id_groupe):
     res= OrganiserEvent.query.filter_by(id_groupe=id_groupe).all()
-    print(res)
     events=[]
     for event in res:
         events.append(Event.query.get(event.id_event))
@@ -176,7 +175,6 @@ def get_groupes_by_nom(nom):
 
 def get_prochain_id_groupe():
     id_g = Groupe.query.order_by(desc(Groupe.id_groupe)).first().id_groupe
-    print(id_g)
     return id_g + 1
 
 def insere_groupe(id_groupe, nom_groupe, photo_groupe, description_groupe, insta_groupe, spotify_groupe, id_hebergement):
@@ -186,7 +184,6 @@ def insere_groupe(id_groupe, nom_groupe, photo_groupe, description_groupe, insta
 
 def get_prochain_id_artiste():
     id_g = Artiste.query.order_by(desc(Artiste.id_artiste)).first().id_artiste
-    print(id_g)
     return id_g + 1
 
 def insere_artiste(id_artiste, nom_artiste):
@@ -215,3 +212,35 @@ def get_Artistes():
 
 def get_Hebergement():
     return Hebergement.query.all()
+
+def modif_groupe(id_groupe, nom_groupe, description_groupe, insta_groupe, spotify_groupe):
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    print(id_groupe, nom_groupe, description_groupe, insta_groupe, spotify_groupe)
+    groupe = Groupe.query.get(int(id_groupe))
+    groupe.nom_groupe = nom_groupe
+    groupe.description_groupe = description_groupe
+    groupe.insta_groupe = insta_groupe
+    groupe.spotify_groupe = spotify_groupe
+    session.commit()
+    session.close()
+
+def modif_concert(id_concert, nom_concert, tps_prepa_concert, date_heure_concert, duree_concert):
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    concert = get_concert_by_id(id_concert)
+    concert.nom_concert = nom_concert
+    concert.tps_prepa_concert = int(tps_prepa_concert)
+    concert.date_heure_concert = date_heure_concert
+    concert.duree_concert = int(duree_concert)
+    session.commit()
+    session.close()
+
+def modif_event(id_event, date_event, nom_event):
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    event = Event.query.get(int(id_event))
+    event.date_event = date_event
+    event.nom_event = nom_event
+    session.commit()
+    session.close()

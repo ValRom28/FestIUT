@@ -221,7 +221,6 @@ def inserer_groupe():
   
 @app.route("/groupe/<int:id_groupe>/modification", methods=['GET', 'POST'])
 def groupe_modification(id_groupe):
-    form_groupe = GroupeForm()
     admin = True
     connecter = True
     instrument = []
@@ -233,33 +232,29 @@ def groupe_modification(id_groupe):
     instrument = [get_instrument_by_id_artiste(artiste.id_artiste) for artiste in artistes]
     events = get_event_by_id_groupe(groupe.id_groupe)
     lieux = get_all_lieux()
-    
-    form_groupe.nom_groupe = groupe.nom_groupe
+
+    form_groupe = GroupeForm()
+    form_groupe.id_groupe.data = groupe.id_groupe
+    form_groupe.nom_groupe.data = groupe.nom_groupe
     form_groupe.description_groupe.data = groupe.description_groupe
     form_groupe.spotify_groupe.data = groupe.spotify_groupe
     form_groupe.insta_groupe.data = groupe.insta_groupe
+    lieux = get_all_lieux()
     if form_groupe.validate_on_submit():
-        groupe.description_groupe = form_groupe.description_groupe.data
-        groupe.spotify_groupe = form_groupe.spotify_groupe.data
-        groupe.insta_groupe = form_groupe.insta_groupe.data
-        db.session.commit()
+        print("modif")
+        modif_groupe(groupe.id_groupe, form_groupe.nom_groupe.data, form_groupe.description_groupe.data, form_groupe.insta_groupe.data, form_groupe.spotify_groupe.data)
         return redirect(url_for('groupe_detail', id_groupe=groupe.id_groupe))
     
     liste_form_concerts = []
     for concert in concerts:
-        form_concert = ConcertForm()
+        form_concert = ConcertForm(choix=lieux)
         form_concert.nom_concert.data = concert.nom_concert
         form_concert.tps_prepa_concert.data = concert.tps_prepa_concert
         form_concert.date_heure_concert.data = concert.date_heure_concert
         form_concert.duree_concert.data = concert.duree_concert
-        form_concert.lieu_concert.data = concert.id_lieu
         liste_form_concerts.append(form_concert)
         if form_groupe.validate_on_submit():
-            concert.nom_concert = form_concert.nom_concert.data
-            concert.tps_prepa_concert = form_concert.tps_prepa_concert.data
-            concert.date_heure_concert = form_concert.date_heure_concert.data
-            concert.duree_concert = form_concert.duree_concert.data
-            db.session.commit()
+            modif_concert(form_concert.id_concert, form_concert.nom_concert.data, form_concert.tps_prepa_concert.data, form_concert.date_heure_concert.data, form_concert.duree_concert.data)
             return redirect(url_for('groupe_detail', id_groupe=id_groupe))
     
     liste_form_events = []
@@ -267,12 +262,9 @@ def groupe_modification(id_groupe):
         form_event = EventForm()
         form_event.nom_event.data = event.nom_event
         form_event.date_event.data = event.date_event
-        form_event.lieu_event.data = event.id_lieu
         liste_form_events.append(form_event)
         if form_event.validate_on_submit():
-            event.nom_event = form_event.nom_event.data
-            event.date_event = form_event.date_event.data
-            db.session.commit()
+            modif_event(form_event.id_event, form_event.date_event.data, form_event.nom_event.data)
             return redirect(url_for('groupe_detail', id_groupe=id_groupe))
 
     return render_template('modif_groupe.html', groupe=groupe, style=style, 

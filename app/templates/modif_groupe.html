@@ -13,12 +13,11 @@
             <div class='concerts'>
             <h2> {{groupe.nom_groupe}} </h2>
             <form action="" method="post" class=modif>
-                {{ form_groupe.hidden_tag() }}
-                <p>Nom : {{form_groupe.nom_groupe }} </p>
+                <p>{{ form_groupe.hidden_tag() }}</p>
+                <p>Nom : {{ form_groupe.nom_groupe }}</p>
                 <p class="descriptionModif">Description : {{ form_groupe.description_groupe }}</p>
                 <p>Lien Spotify : {{ form_groupe.spotify_groupe }}</p>
                 <p>Lien instagram : {{ form_groupe.insta_groupe }}</p>
-                <p><object data="" type="image/jpeg"></object>{{ form_groupe.photo_groupe }}</p>
                 <p>{{ form_groupe.submit }}</p>
             </form>
             </div>
@@ -27,11 +26,10 @@
                     {% for concert in liste_form_concerts %}
                     <form action="" method="post" class=modif>
                         {{ concert.hidden_tag() }}
-                        <p>Nom:  {{concert.nom_concert}}</p>
+                        <p>Nom: {{concert.nom_concert}}</p>
                         <p>Date: {{concert.date_heure_concert}}</p>
                         <p>Temps de préparation: {{concert.tps_prepa_concert}}m</p>
                         <p>Duree: {{concert.duree_concert}}m </p>
-                        <p>Lieu: {{concert.nom_lieu}}</p>
                         {{ concert.submit }}
                     </form>
                     {% endfor %}
@@ -44,7 +42,6 @@
                         <p>{{ evenement.hidden_tag() }}</p>
                         <p>Nom: {{evenement.nom_event}}</p>
                         <p>Date: {{evenement.date_event}} </p>
-                        <p>Lieu:  {{evenement.lieu_evenement}} </p>
                         <p>{{ evenement.submit }}</p>
                     {% endfor %}
                 </div>
