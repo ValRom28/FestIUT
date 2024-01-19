@@ -142,8 +142,6 @@ def favoris():
             images[groupe.id_groupe] = base64.b64encode(groupe.photo_groupe).decode('utf-8')
         else:
             images[groupe.id_groupe] = None
-    print(current_user.get_id())
-    print(liste_favoris)
     return render_template('favoris.html', liste_favoris = liste_favoris,connecter=connecter,admin=admin, images=images)
 
 
