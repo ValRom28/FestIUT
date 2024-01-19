@@ -534,3 +534,29 @@ def inserer_event():
     insere_event(id_event, nom_event, date_event, id_lieu)
     insere_organiser_event(id_groupe, id_event)
     return redirect(url_for("programmation"))
+
+@app.route("/ajout_lieu")
+@login_required
+def ajout_lieu():
+    lieux = get_all_lieux()
+    groupes = get_groupes()
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    return render_template('ajout_lieu.html', lieux = lieux, connecter=connecter,admin=admin, groupes = groupes)
+
+@app.route("/ajout_lieu", methods=['POST'])
+@login_required
+def inserer_lieu():
+    id_lieu = get_prochain_id_lieu()
+
+    nom_lieu = request.form.get('nom_lieu')
+    jauge_lieu = request.form.get('jauge_lieu')
+    coordonne_X = request.form.get('coordonne_X')
+    coordonne_Y = request.form.get('coordonne_Y')
+
+    insere_lieu(id_lieu, nom_lieu, jauge_lieu, coordonne_X, coordonne_Y)
+
+    return redirect(url_for("home"))
