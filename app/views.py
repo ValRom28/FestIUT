@@ -11,6 +11,7 @@ from app.requests import *
 from app.forms import *
 from app import login_manager
 from app.models import *
+from datetime import datetime
 import datetime
 
 @login_manager.user_loader
@@ -394,14 +395,16 @@ def inserer_concert():
     nom_concert = request.form.get('nom_concert')
     tps_prepa_concert = request.form.get('tps_prepa_concert')
     duree_concert = request.form.get('duree_concert')
-    date_concert = request.form.get('date_concert')
+    date_concert_str = request.form.get('date_concert')
     id_lieu = request.form.get('lieu')
+
+    date_concert = datetime.datetime.strptime(date_concert_str, '%Y-%m-%dT%H:%M')
 
     print("id concert : " + str(id_concert))
     print("nom_concert : " + nom_concert)
     print("tps_prepa_concert : " + str(tps_prepa_concert))
     print("id duree_concert : " + str(duree_concert))
-    print("date_concert : " + date_concert)
+    print("date_concert : " + date_concert.strftime('%Y-%m-%dT%H:%M:%S'))
     print("id_lieu : " + id_lieu)
 
     insere_concert(id_concert, nom_concert, tps_prepa_concert, date_concert, duree_concert, id_lieu)
