@@ -366,3 +366,17 @@ def delete_event(event):
         db.session.delete(o)
     db.session.delete(event)
     db.session.commit()
+
+def get_prochain_id_event():
+    id_e = Event.query.order_by(desc(Event.id_event)).first().id_event
+    return id_e + 1
+
+def insere_event(id_event, nom_event, date_event, id_lieu):
+    event = Event(id_event, nom_event, date_event, id_lieu)
+    db.session.add(event)
+    db.session.commit()
+
+def insere_organiser_event(id_groupe, id_event):
+    organiser_event = OrganiserEvent(id_groupe, id_event)
+    db.session.add(organiser_event)
+    db.session.commit()

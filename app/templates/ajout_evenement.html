@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="connexion">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/ajout_groupe.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
+
+        <title>Evenement</title>
+    </head>
+
+    <body>
+        <header>
+            {% include "components/headerPage.html" %}
+        </header>
+        <main>
+            <div class="titre-creer">
+                <h3>Créer un évenement:</h3>
+            </div>
+            <div class="conteneur-champs-formulaires">
+                <form action="{{ url_for('inserer_event') }}"role="form" method="POST" class="form-champ" enctype="multipart/form-data">
+                    <section>
+                        <div class="form-label-admin">
+                            <label for="name" class="label">Nom de l'event : </label>
+                            <input type="text" name="nom_event" size="40" id="nom_event" required placeholder="Exemple : Chambouletou "/>
+                        </div>
+                        <div class="form-label-admin">
+                            <label for="name" class="label">Quand aura t'il lieu ? : </label>
+                            <input type="datetime-local" name="date_event" id="date_event" required placeholder="Sélectionnez une date"/>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="form-label-admin">
+                            <label for="lieu" class="label">Où a t'il lieu ? :</label>
+                            <div class="radio-list" id="radioList">
+                                {% for lieu in lieux %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="lieu" value="{{ lieu.id_lieu }}">
+                                        <label class="label" for="{{ lieu.id_lieu }}">{{ lieu.nom_lieu }}</label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="form-label-admin">
+                            <label for="lieu" class="label">Qui l'organise ? :</label>
+                            <div class="radio-list" id="radioList">
+                                {% for groupe in groupes %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="groupe" value="{{ groupe.id_groupe }}">
+                                        <label class="label" for="{{ groupe.id_groupe }}">{{ groupe.nom_groupe }}</label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <input type="submit" value="Ajouter" />
+                    </section>
+                </form>
+            </div>
+        </main>
+    </body>
+</html>

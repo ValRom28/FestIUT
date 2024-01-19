@@ -506,3 +506,31 @@ def inserer_concert():
     date_concert = datetime.datetime.strptime(date_concert_str, '%Y-%m-%dT%H:%M')
     insere_concert(id_concert, nom_concert, tps_prepa_concert, date_concert, duree_concert, id_lieu)
     return redirect(url_for("programmation"))
+
+@app.route("/ajout_event")
+@login_required
+def ajout_event():
+    lieux = get_all_lieux()
+    groupes = get_groupes()
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    return render_template('ajout_evenement.html', lieux = lieux, connecter=connecter,admin=admin, groupes = groupes)
+
+@app.route("/ajout_event", methods=['POST'])
+@login_required
+def inserer_event():
+    id_event = get_prochain_id_event()
+
+    nom_event = request.form.get('nom_event')
+    date_event_str = request.form.get('date_event')
+    id_lieu = request.form.get('lieu')
+    id_groupe = request.form.get('groupe')
+    date_event = datetime.datetime.strptime(date_event_str, '%Y-%m-%dT%H:%M')
+
+    
+    insere_event(id_event, nom_event, date_event, id_lieu)
+    insere_organiser_event(id_groupe, id_event)
+    return redirect(url_for("programmation"))
