@@ -367,6 +367,9 @@ def delete_event(event):
     db.session.delete(event)
     db.session.commit()
 
+def get_hebergement_by_id(id):
+    return Hebergement.query.filter_by(id_hebergement=int(id)).first()
+
 def get_prochain_id_event():
     id_e = Event.query.order_by(desc(Event.id_event)).first().id_event
     return id_e + 1

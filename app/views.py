@@ -208,6 +208,9 @@ def ajout_groupe():
 @app.route("/ajout_groupe", methods=['POST'])
 @login_required
 def inserer_groupe():
+    hebergement_plein = False
+    connecter = False
+    admin = False
     id_groupe = get_prochain_id_groupe()
     # Récupérer les données du formulaire
     nom_groupe = request.form.get('nom_groupe')
@@ -222,13 +225,21 @@ def inserer_groupe():
     hebergement = request.form.get('hebergement')
 
     style = request.form.get('style')
-
-
-    for artiste in artistes:
-        insere_appartenir(artiste, id_groupe)
-
-    insere_etrestyle(style, id_groupe)
-    insere_groupe(id_groupe, nom_groupe, None, description, nom_insta, nom_spotify, hebergement)
+    
+    obj_hebergement = get_hebergement_by_id(hebergement)
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    if obj_hebergement.jauge_hebergement > 0:
+        for artiste in artistes:
+            insere_appartenir(artiste, id_groupe)
+        insere_etrestyle(style, id_groupe)
+        insere_groupe(id_groupe, nom_groupe, None, description, nom_insta, nom_spotify, hebergement)
+        obj_hebergement.jauge_hebergement -= 1
+        db.session.commit()
+    else:
+        hebergement_plein = True
+        return render_template('ajout_groupe.html', connecter=connecter, admin=admin, hebergement_plein=hebergement_plein, hebergements=get_hebergement(), styles=get_styles(), liste=get_artistes())
     return redirect(url_for("groupes")) 
   
 @app.route("/groupe/<int:id_groupe>/modification", methods=['GET', 'POST'])

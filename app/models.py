@@ -103,11 +103,13 @@ class Hebergement(Base):
     id_hebergement = Column(Integer, primary_key=True)
     nom_hebergement = Column(String(42))
     adresse_hebergement = Column(String(42))
+    jauge_hebergement = Column(Integer)
 
-    def __init__(self, id_hebergement, nom_hebergement, adresse_hebergement):
+    def __init__(self, id_hebergement, nom_hebergement, adresse_hebergement, jauge_hebergement):
         self.id_hebergement = id_hebergement
         self.nom_hebergement = nom_hebergement
         self.adresse_hebergement = adresse_hebergement
+        self.jauge_hebergement = jauge_hebergement
 
 class Instrument(Base):
     __tablename__ = 'INSTRUMENT'
@@ -212,8 +214,6 @@ class Spectateur(Base):
         self.anniv_spectateur = anniv_spectateur
         self.photo_compte = photo_compte
         self.admin = admin
-        
-        
         
     def is_authenticated(self):
         return True
