@@ -240,10 +240,6 @@ def groupe_modification(id_groupe):
     form_groupe.spotify_groupe.data = groupe.spotify_groupe
     form_groupe.insta_groupe.data = groupe.insta_groupe
     lieux = get_all_lieux()
-    if form_groupe.validate_on_submit():
-        print("modif")
-        modif_groupe(groupe.id_groupe, form_groupe.nom_groupe.data, form_groupe.description_groupe.data, form_groupe.insta_groupe.data, form_groupe.spotify_groupe.data)
-        return redirect(url_for('groupe_detail', id_groupe=groupe.id_groupe))
     
     liste_form_concerts = []
     for concert in concerts:
@@ -266,6 +262,15 @@ def groupe_modification(id_groupe):
         if form_event.validate_on_submit():
             modif_event(form_event.id_event, form_event.date_event.data, form_event.nom_event.data)
             return redirect(url_for('groupe_detail', id_groupe=id_groupe))
+        
+    
+    if form_groupe.validate_on_submit():
+        groupe.nom_groupe = form_groupe.nom_groupe.data
+        groupe.description_groupe = form_groupe.description_groupe.data
+        groupe.spotify_groupe = form_groupe.spotify_groupe.data
+        groupe.insta_groupe = form_groupe.insta_groupe.data
+        db.session.commit()
+        return redirect(url_for('groupe_detail', id_groupe=groupe.id_groupe))
 
     return render_template('modif_groupe.html', groupe=groupe, style=style, 
                            artistes=artistes,instrument=instrument,connecter=connecter,
