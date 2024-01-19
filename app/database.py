@@ -152,7 +152,7 @@ def initdb():
         Lieu(id_lieu=1, nom_lieu='Stade de France', jauge_lieu=50000, coordonne_X = 10, coordonne_Y = 15),
         Lieu(id_lieu=2, nom_lieu='Stade Olympique', jauge_lieu=80000, coordonne_X = 12, coordonne_Y = 13),
         Lieu(id_lieu=3, nom_lieu='Stade de Lyon', jauge_lieu=60000, coordonne_X = 20, coordonne_Y = 23),
-        Lieu(id_lieu=4, nom_lieu='Stade de Marseille', jauge_lieu=70000, coordonne_X = 25, coordonne_Y = 20),
+        Lieu(id_lieu=4, nom_lieu='Stade de Marseille', jauge_lieu=1, coordonne_X = 25, coordonne_Y = 20),
     ]
     session.add_all(lieux)
 
