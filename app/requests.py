@@ -343,6 +343,15 @@ def insere_hebergement(id_hebergement, nom_hebergement, adresse_hebergement):
     hebergement = Hebergement(id_hebergement, nom_hebergement, adresse_hebergement)
     db.session.add(hebergement)
     db.session.commit()
+
+def get_prochain_id_concert():
+    id_c = Concert.query.order_by(desc(Concert.id_concert)).first().id_concert
+    return id_c + 1
+
+def insere_concert(id_concert, nom_concert, tps_prepa_concert, date_heure_concert, duree_concert, id_lieu):
+    concert = Concert(id_concert, nom_concert, tps_prepa_concert, date_heure_concert, duree_concert, id_lieu)
+    db.session.add(concert)
+    db.session.commit()
     
 def get_event_by_id(id):
     return Event.query.filter_by(id_event=id).first()

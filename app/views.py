@@ -11,6 +11,7 @@ from app.requests import *
 from app.forms import *
 from app import login_manager
 from app.models import *
+from datetime import datetime
 import datetime
 
 @login_manager.user_loader
@@ -469,15 +470,33 @@ def inserer_hebergement():
     adresse_hebergement = request.form.get('adresse_hebergement')
 
     insere_hebergement(id_hebergement, nom_hebergement, adresse_hebergement)
-
     return redirect(url_for("administration")) 
 
-@app.route("/administration")
+@app.route("/ajout_concert")
 @login_required
-def administration():
+def ajout_concert():
+    lieux = get_all_lieux()
     admin=False
     connecter=False
     if current_user.is_authenticated:
         connecter=True
         admin=current_user.is_admin()
-    return render_template('administration.html',connecter=connecter,admin=admin)
+    return render_template('ajout_concert.html', lieux = lieux, connecter=connecter,admin=admin)
+
+@app.route("/administration")
+@login_required
+def administration():
+
+@app.route("/ajout_concert", methods=['POST'])
+@login_required
+def inserer_concert():
+    id_concert = get_prochain_id_concert()
+    # Récupérer les données du formulaire
+    nom_concert = request.form.get('nom_concert')
+    tps_prepa_concert = request.form.get('tps_prepa_concert')
+    duree_concert = request.form.get('duree_concert')
+    date_concert_str = request.form.get('date_concert')
+    id_lieu = request.form.get('lieu')
+    date_concert = datetime.datetime.strptime(date_concert_str, '%Y-%m-%dT%H:%M')
+    insere_concert(id_concert, nom_concert, tps_prepa_concert, date_concert, duree_concert, id_lieu)
+    return redirect(url_for("programmation"))
