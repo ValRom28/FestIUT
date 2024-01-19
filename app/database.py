@@ -237,7 +237,7 @@ def initdb():
                     anniv_spectateur=datetime.strptime('2001-09-11', '%Y-%m-%d').date(), photo_compte=None, admin=False),
         Spectateur(id_spectateur=3, nom_spectateur='Thibault', prenom_spectateur='Saint-Leger', 
                     mdp_spectateur='t', email_spectateur='t', 
-                    anniv_spectateur=datetime.strptime('1918-11-11', '%Y-%m-%d').date(), photo_compte=None, admin=False),
+                    anniv_spectateur=datetime.strptime('1938-11-11', '%Y-%m-%d').date(), photo_compte=None, admin=False),
         Spectateur(id_spectateur=4, nom_spectateur='Arthur', prenom_spectateur='Villet', 
                     mdp_spectateur='mdpVillet', email_spectateur='arthur@example.com',
                         anniv_spectateur=datetime.strptime('2004-03-10', '%Y-%m-%d').date(), photo_compte=None, admin=True),
