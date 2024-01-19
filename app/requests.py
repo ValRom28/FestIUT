@@ -216,7 +216,6 @@ def get_Hebergement():
 def modif_groupe(id_groupe, nom_groupe, description_groupe, insta_groupe, spotify_groupe):
     Session = sessionmaker(bind=db.engine)
     session = Session()
-    print(id_groupe, nom_groupe, description_groupe, insta_groupe, spotify_groupe)
     groupe = Groupe.query.get(int(id_groupe))
     groupe.nom_groupe = nom_groupe
     groupe.description_groupe = description_groupe
