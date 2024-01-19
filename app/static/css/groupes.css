@@ -29,6 +29,7 @@ h2 {
 a ,p{
     text-decoration: none;
     color: aliceblue;
+    font-size: 95%;
 }
 
 a:hover {

@@ -233,10 +233,6 @@ def inserer_groupe():
 @app.route("/groupe/<int:id_groupe>/modification", methods=['GET', 'POST'])
 @login_required
 def groupe_modification(id_groupe):
-    form = GroupeForm()
-    formConcert = ConcertForm()
-    formEvent = EventForm()
-    formLieu = LieuForm()
     admin = True
     connecter = True
     instrument = []
@@ -245,78 +241,53 @@ def groupe_modification(id_groupe):
     style = get_style_by_id_groupe(groupe.id_groupe)
     artistes = get_artistes_by_id_groupe(groupe.id_groupe)
     concerts = get_concert_by_id_groupe(id_groupe)
-    instrument = []
-    event = get_event_by_id_groupe(groupe.id_groupe)
-    concerts_et_lieux = [(concert, get_lieu_by_id(concert.id_lieu)) for concert in concerts]
-    events_et_lieux = [(e, get_lieu_by_id(e.id_lieu)) for e in event]
-    
-    for e, lieu in events_et_lieux:
-        formEvent = EventForm()
-        formEvent.id_event.data = e.id_event
-        if formEvent.validate_on_submit():
-            e.nom_event = formEvent.nom_event.data
-            e.date_event =  datetime.strptime(formEvent.date_event.data, '%Y-%m-%d')
-            lieu.nom_lieu = formLieu.nom_lieu.data
-            lieu.jauge_lieu = formLieu.jauge_lieu.data
-            lieu.coordonne_X = formLieu.coordonne_X.data
-            lieu.coordonne_Y = formLieu.coordonne_Y.data
-            db.session.commit()
-            return redirect(url_for('groupe_detail', id_groupe=id_groupe))
+    instrument = [get_instrument_by_id_artiste(artiste.id_artiste) for artiste in artistes]
+    events = get_event_by_id_groupe(groupe.id_groupe)
+    lieux = get_all_lieux()
 
-    for concert, lieu in concerts_et_lieux:
-        formConcert = ConcertForm()
-        formConcert.id_concert.data = concert.id_concert
-        if formConcert.validate_on_submit():
-            concert.nom_concert = formConcert.nom_concert.data
-            concert.tps_prepa_concert = formConcert.tps_prepa_concert.data
-            concert.date_heure_concert = datetime.strptime(formConcert.date_heure_concert.data, '%Y-%m-%d')
-            concert.duree_concert = formConcert.duree_concert.data
-            lieu.nom_lieu = formLieu.nom_lieu.data
-            lieu.jauge_lieu = formLieu.jauge_lieu.data
-            lieu.coordonne_X = formLieu.coordonne_X.data
-            lieu.coordonne_Y = formLieu.coordonne_Y.data
-            db.session.commit()
-            return redirect(url_for('groupe_detail', id_groupe=id_groupe))
-
+    form_groupe = GroupeForm()
+    form_groupe.id_groupe.data = groupe.id_groupe
+    form_groupe.nom_groupe.data = groupe.nom_groupe
+    form_groupe.description_groupe.data = groupe.description_groupe
+    form_groupe.spotify_groupe.data = groupe.spotify_groupe
+    form_groupe.insta_groupe.data = groupe.insta_groupe
+    lieux = get_all_lieux()
     
-            
-
+    liste_form_concerts = []
+    for concert in concerts:
+        form_concert = ConcertForm(choix=lieux)
+        form_concert.nom_concert.data = concert.nom_concert
+        form_concert.tps_prepa_concert.data = concert.tps_prepa_concert
+        form_concert.date_heure_concert.data = concert.date_heure_concert
+        form_concert.duree_concert.data = concert.duree_concert
+        liste_form_concerts.append(form_concert)
     
-    if form.validate_on_submit():
-        groupe.description_groupe = form.description_groupe.data
-        groupe.spotify_groupe = form.spotify_groupe.data
-        groupe.insta_groupe = form.insta_groupe.data
-        db.session.commit()
+    liste_form_events = []
+    for event in events:
+        form_event = EventForm()
+        form_event.nom_event.data = event.nom_event
+        form_event.date_event.data = event.date_event
+        liste_form_events.append(form_event)
+        
+        
+    if form_groupe.validate_on_submit():
+        modif_groupe(id_groupe, form_groupe.nom_groupe.data, form_groupe.description_groupe.data, form_groupe.insta_groupe.data, form_groupe.spotify_groupe.data)
         return redirect(url_for('groupe_detail', id_groupe=groupe.id_groupe))
     
-    for artiste in artistes:
-        instrument.append(get_instrument_by_id_artiste(artiste.id_artiste))
-   
+    for form_concert in liste_form_concerts:
+        if form_groupe.validate_on_submit():
+            modif_concert(concert.id_concert, form_concert.nom_concert.data, form_concert.tps_prepa_concert.data, form_concert.date_heure_concert.data, form_concert.duree_concert.data)
+            return redirect(url_for('groupe_detail', id_groupe=id_groupe))
     
-    form.description_groupe.data = groupe.description_groupe
-    form.spotify_groupe.data = groupe.spotify_groupe
-    form.insta_groupe.data = groupe.insta_groupe
-    for concert in concerts_et_lieux:
-        formConcert.nom_concert.data = concert[0].nom_concert
-        formConcert.tps_prepa_concert.data = concert[0].tps_prepa_concert
-        formConcert.date_heure_concert.data = concert[0].date_heure_concert
-        formConcert.duree_concert.data = concert[0].duree_concert
-        formLieu.nom_lieu.data = concert[1].nom_lieu
-        formLieu.jauge_lieu.data = concert[1].jauge_lieu
-        formLieu.coordonne_X.data = concert[1].coordonne_X
-        formLieu.coordonne_Y.data = concert[1].coordonne_Y
-        
-    for event in events_et_lieux: 
-        formEvent.id_event.data = event[0].id_event
-        formEvent.nom_event.data = event[0].nom_event
-        formEvent.date_event.data = event[0].date_event
-        formLieu.nom_lieu.data = event[1].nom_lieu
-        formLieu.jauge_lieu.data = event[1].jauge_lieu
-        formLieu.coordonne_X.data = event[1].coordonne_X
-        formLieu.coordonne_Y.data = event[1].coordonne_Y
-        
-        
-    return render_template('modif_groupe.html', groupe=groupe, style=style, artistes=artistes,instrument=instrument,connecter=connecter,admin=admin,form=form,formConcert=formConcert,formEvent=formEvent,concerts_et_lieux=concerts_et_lieux,events_et_lieux=events_et_lieux,formLieu=formLieu)
+    for form_event in liste_form_events:
+        if form_event.validate_on_submit():
+            modif_event(event.id_event, form_event.date_event.data, form_event.nom_event.data)
+            return redirect(url_for('groupe_detail', id_groupe=id_groupe))
+    
+    return render_template('modif_groupe.html', groupe=groupe, style=style, 
+                           artistes=artistes,instrument=instrument,connecter=connecter,
+                           admin=admin,form_groupe=form_groupe,liste_form_concerts=liste_form_concerts,
+                           liste_form_events=liste_form_events, lieux=lieux)
     
 @app.route("/groupe/<int:id_groupe>/delete", methods=['GET'])
 @login_required

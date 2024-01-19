@@ -4,6 +4,7 @@ from app.models import (Appartenir, Artiste, Billet, Concert, EtreStyle,
                      EtreType, Favoris, Groupe, Hebergement, Instrument,
                      Jouer, Lieu, OrganiserConcert, Possede, Reserver,
                      Style, SousStyle, Spectateur, Type, OrganiserEvent, Event)
+from sqlalchemy.orm import sessionmaker
 import datetime
 from sqlalchemy import desc
 
@@ -286,6 +287,37 @@ def add_reservation(id_concert, id_spectateur):
 def get_artistes():
     return Artiste.query.all()
 
+def modif_groupe(id_groupe, nom_groupe, description_groupe, insta_groupe, spotify_groupe):
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    groupe = Groupe.query.get(int(id_groupe))
+    groupe.nom_groupe = nom_groupe
+    groupe.description_groupe = description_groupe
+    groupe.insta_groupe = insta_groupe
+    groupe.spotify_groupe = spotify_groupe
+    session.commit()
+    session.close()
+
+def modif_concert(id_concert, nom_concert, tps_prepa_concert, date_heure_concert, duree_concert):
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    concert = get_concert_by_id(id_concert)
+    concert.nom_concert = nom_concert
+    concert.tps_prepa_concert = int(tps_prepa_concert)
+    concert.date_heure_concert = date_heure_concert
+    concert.duree_concert = int(duree_concert)
+    session.commit()
+    session.close()
+
+def modif_event(id_event, date_event, nom_event):
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    event = Event.query.get(int(id_event))
+    event.date_event = date_event
+    event.nom_event = nom_event
+    session.commit()
+    session.close()
+    
 def get_hebergement():
     return Hebergement.query.all()
 
