@@ -383,12 +383,18 @@ def inserer_hebergement():
 
 
 @app.route("/ajout_concert")
+@login_required
 def ajout_concert():
-    form = ConcertForm()
     lieux = get_all_lieux()
-    return render_template('ajout_concert.html', form = form, lieux = lieux)
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    return render_template('ajout_concert.html', lieux = lieux, connecter=connecter,admin=admin)
 
 @app.route("/ajout_concert", methods=['POST'])
+@login_required
 def inserer_concert():
     id_concert = get_prochain_id_concert()
     # Récupérer les données du formulaire
@@ -400,13 +406,6 @@ def inserer_concert():
 
     date_concert = datetime.datetime.strptime(date_concert_str, '%Y-%m-%dT%H:%M')
 
-    print("id concert : " + str(id_concert))
-    print("nom_concert : " + nom_concert)
-    print("tps_prepa_concert : " + str(tps_prepa_concert))
-    print("id duree_concert : " + str(duree_concert))
-    print("date_concert : " + date_concert.strftime('%Y-%m-%dT%H:%M:%S'))
-    print("id_lieu : " + id_lieu)
-
     insere_concert(id_concert, nom_concert, tps_prepa_concert, date_concert, duree_concert, id_lieu)
 
-    return redirect(url_for("ajout_concert")) # ca faudra le changer quand t'aura fait la page admin
+    return redirect(url_for("programmation"))
