@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, HiddenField, FileField, ValidationError,TextAreaField,RadioField,DateField
+from wtforms import StringField, PasswordField, SubmitField, HiddenField, FileField, ValidationError, TextAreaField, RadioField, DateField
 from wtforms.validators import DataRequired
 from app.requests import get_all_lieux
 
@@ -43,3 +43,21 @@ class EventForm(FlaskForm):
     date_event = DateField(validators=[DataRequired()], render_kw={"placeholder": "Date de l'event"})
     nom_event = StringField(validators=[DataRequired()], render_kw={"placeholder": "Nom de l'event"})
     submit = SubmitField('Modifier')
+    
+    modif = SubmitField('modifier')
+    
+class LieuForm(FlaskForm):
+    nom_lieu= StringField(validators=[DataRequired()], render_kw={"placeholder": "Nom du lieu"})
+    jauge_lieu = StringField(validators=[DataRequired()], render_kw={"placeholder": "Jauge du lieu"})
+    coordonne_X = StringField(validators=[DataRequired()], render_kw={"placeholder": "Coordonnée X du lieu"})
+    coordonne_Y = StringField(validators=[DataRequired()], render_kw={"placeholder": "Coordonnée Y du lieu"})
+
+class AchatBillet(FlaskForm):
+    id_billet = HiddenField()
+    id_type = HiddenField()
+    id_spectateur = HiddenField()
+    id_concert = HiddenField()
+    id_event = HiddenField()
+    lieux = RadioField('Lieux', choices=[], validators=[DataRequired()])
+    date = DateField('Date', format='%Y-%m-%d', validators=[DataRequired()])
+    submit = SubmitField('Acheter')

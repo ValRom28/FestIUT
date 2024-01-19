@@ -78,6 +78,7 @@ def rechercheGroupe():
 
 @app.route('/programmation')
 def programmation():
+    events = filter_events_date(datetime.date.today())
     concerts = filter_concerts_date(datetime.datetime.now())
     lieux = get_lieux()
     admin=False
@@ -85,7 +86,7 @@ def programmation():
     if current_user.is_authenticated:
         connecter=True
         admin=current_user.is_admin()
-    return render_template('programmation.html', concerts=concerts,lieux=lieux,connecter=connecter,admin=admin)
+    return render_template('programmation.html', concerts=concerts,lieux=lieux,connecter=connecter,admin=admin,events=events)
 
 @app.route('/logout')
 @login_required
@@ -120,6 +121,7 @@ def groupes():
     return render_template('groupes.html', liste_groupes = liste_groupe,connecter=connecter,admin=admin)
 
 @app.route("/favoris")
+@login_required
 def favoris():
     """
         Cette fonction nous permet de nous diriger vers la page qui
@@ -178,23 +180,32 @@ def groupe_detail(id_groupe):
                            images_prop=images_propositions)
 
 @app.route('/ajouter_aux_favoris/<int:id_groupe>', methods=['POST'])
+@login_required
 def ajouter_aux_favoris(id_groupe):
     ajouter_favoris(id_groupe, current_user.get_id())
     return redirect(url_for('groupe_detail', id_groupe=id_groupe))
 
 @app.route('/supprimer_des_favoris/<int:id_groupe>', methods=['POST'])
+@login_required
 def supprimer_des_favoris(id_groupe):
     supprimer_favoris(id_groupe, current_user.get_id())
     return redirect(url_for('groupe_detail', id_groupe=id_groupe))
 
 @app.route("/ajout_groupe")
+@login_required
 def ajout_groupe():
-    liste_artiste = get_Artistes()
-    liste_hebergement = get_Hebergement()
+    liste_artiste = get_artistes()
+    liste_hebergement = get_hebergement()
     styles = get_styles()
-    return render_template('ajout_groupe.html', liste = liste_artiste, hebergements = liste_hebergement, styles = styles)
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    return render_template('ajout_groupe.html', liste = liste_artiste, hebergements = liste_hebergement, styles = styles,connecter=connecter,admin=admin)
 
 @app.route("/ajout_groupe", methods=['POST'])
+@login_required
 def inserer_groupe():
     id_groupe = get_prochain_id_groupe()
     # Récupérer les données du formulaire
@@ -217,9 +228,10 @@ def inserer_groupe():
 
     insere_etrestyle(style, id_groupe)
     insere_groupe(id_groupe, nom_groupe, None, description, nom_insta, nom_spotify, hebergement)
-    return redirect(url_for("ajout_groupe")) # ca faudra le changer quand t'aura fait la page admin
+    return redirect(url_for("groupes")) 
   
 @app.route("/groupe/<int:id_groupe>/modification", methods=['GET', 'POST'])
+@login_required
 def groupe_modification(id_groupe):
     admin = True
     connecter = True
@@ -278,6 +290,7 @@ def groupe_modification(id_groupe):
                            liste_form_events=liste_form_events, lieux=lieux)
     
 @app.route("/groupe/<int:id_groupe>/delete", methods=['GET'])
+@login_required
 def groupe_delete(id_groupe):
     groupe = get_groupe_by_id(id_groupe)
     delete_groupe(groupe)
@@ -296,8 +309,175 @@ def concert():
     style = get_style_by_id_groupe(groupe.id_groupe)
     return render_template('concert_info.html', concert = concert,groupe=groupe,lieu=lieu,style = style,connecter=connecter,admin=admin)
 
+@app.route("/evenement")
+def evenement():
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    event = get_event_by_id(int(request.args.get("event")))
+    lieu = get_lieu_by_id(event.id_lieu)
+    groupe = get_groupe_by_id_event(event.id_event)
+    style = get_style_by_id_groupe(groupe.id_groupe)
+    return render_template('event_info.html', event = event,groupe=groupe,lieu=lieu,style = style,connecter=connecter,admin=admin)
+
+@app.route("/evenement_delete/<int:id_event>")
+@login_required
+def evenement_delete(id_event):
+    event = get_event_by_id(id_event)
+    delete_event(event)
+    return redirect(url_for('programmation'))
+
 @app.route("/concert_delete")
+@login_required
 def concert_delete(id_concert):
     concert = get_concert_by_id(id_concert)
     delete_concert(concert)
     return redirect(url_for('programmation'))
+
+@app.route("/billetterie")
+@login_required
+def billetterie():
+    admin = False
+    connecter = False
+    age = None
+    mes_billets = []
+    billets_concerts_types_lieu = []
+    lieu = None
+    if current_user.is_authenticated:
+        connecter = True
+        admin = current_user.is_admin()
+        age = datetime.datetime.now().year - current_user.anniv_spectateur.year
+        mes_billets = get_billets_by_id_spectateur(current_user.get_id())
+        for billet in mes_billets:
+            type = Type.query.get(billet.id_type)
+            lieu = get_lieu_by_id_billet_and_dates(billet.id_billet, billet.date_billet,
+                                                    billet.date_billet + datetime.timedelta(days=type.nb_jours))
+            billets_concerts_types_lieu.append((billet, get_concerts_by_id_billet_dates_lieu(billet.id_billet,
+                                        billet.date_billet, billet.date_billet + datetime.timedelta(days=type.nb_jours), lieu.id_lieu), 
+                                        get_type_by_id_billet(billet.id_billet), lieu))
+    types_billets = get_types_billet()
+    return render_template('billetterie.html', types_billets=types_billets, mes_billets=billets_concerts_types_lieu, 
+                           age=age, connecter=connecter, admin=admin, datetime=datetime)
+
+@app.route("/achat_billet/<int:id_type_billet>", methods=['POST', 'GET'])
+@login_required
+def achat_billet(id_type_billet):
+    admin = False
+    connecter = False
+    no_festival = False
+    billet_existe = False
+    valide = False
+    jauge = None
+    plus_place = False
+    form = AchatBillet()
+    lieux = Lieu.query.all()
+    form.lieux.choices = [(lieu.id_lieu, lieu.nom_lieu) for lieu in lieux]
+    if current_user.is_authenticated:
+        connecter = True
+        admin = current_user.is_admin()
+    if form.validate_on_submit():
+        selected_lieu = Lieu.query.get(int(form.lieux.data))
+        jauge = selected_lieu.jauge_lieu
+        type = Type.query.get(id_type_billet)
+        concerts = concerts = get_concerts_by_id_lieu_between_dates(int(form.lieux.data), form.date.data, form.date.data + datetime.timedelta(days=type.nb_jours))
+        if jauge == 0:
+            plus_place = True
+            return render_template('achat_billet.html', connecter=connecter, admin=admin, id_type_billet=id_type_billet,
+                                      form=form, no_festival=no_festival, billet_existe=billet_existe, plus_place=plus_place)
+        if concerts == []:
+            no_festival = True
+            return render_template('achat_billet.html', connecter=connecter, admin=admin, id_type_billet=id_type_billet, 
+                                   form=form, no_festival=no_festival, billet_existe=billet_existe, plus_place=plus_place)
+        for concert in concerts:
+            valide = add_reservation(concert.id_concert, current_user.get_id())
+            if not valide:
+                billet_existe = True
+                return render_template('achat_billet.html', connecter=connecter, admin=admin, id_type_billet=id_type_billet, 
+                                       form=form, no_festival=no_festival, billet_existe=billet_existe, plus_place=plus_place)
+        if valide:
+            selected_lieu.jauge_lieu -= 1
+            db.session.commit()
+            add_billet(form.date.data, id_type_billet, current_user.get_id())
+        return redirect(url_for('billetterie'))
+    return render_template('achat_billet.html', connecter=connecter, admin=admin, id_type_billet=id_type_billet, 
+                           form=form, no_festival=no_festival, billet_existe=billet_existe, plus_place=plus_place)
+
+@app.route("/ajout_instrument")
+@login_required
+def ajout_instrument():
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    return render_template('ajout_instrument.html',connecter=connecter,admin=admin)
+
+@app.route("/ajout_instrument", methods=['POST'])
+@login_required
+def inserer_instrument():
+    id_instrument = get_prochain_id_instrument()
+    # Récupérer les données du formulaire
+    nom_instrument = request.form.get('nom_instrument')
+
+    insere_instrument(id_instrument, nom_instrument)
+    return redirect(url_for("administration")) 
+
+@app.route("/ajout_artiste")
+@login_required
+def ajout_artiste():
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    instruments = get_instrument()
+    return render_template('ajout_artiste.html', instruments = instruments,connecter=connecter,admin=admin)
+
+@app.route("/ajout_artiste", methods=['POST'])
+@login_required
+def inserer_artiste():
+    id_artiste = get_prochain_id_artiste()
+    # Récupérer les données du formulaire
+    nom_artiste = request.form.get('nom_artiste')
+
+
+    # Récupérer les hébergements sélectionnés
+    id_instrument = request.form.get('instrument')
+
+    insere_artiste(id_artiste, nom_artiste)
+    insere_jouer(id_artiste, id_instrument)
+    return redirect(url_for("administration")) 
+ 
+@app.route("/ajout_hebergement")
+@login_required
+def ajout_hebergement():
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    return render_template('ajout_hebergement.html',connecter=connecter,admin=admin)
+
+@app.route("/ajout_hebergement", methods=['POST'])
+@login_required
+def inserer_hebergement():
+    id_hebergement = get_prochain_id_hebergement()
+    # Récupérer les données du formulaire
+    nom_hebergement = request.form.get('nom_hebergement')
+    adresse_hebergement = request.form.get('adresse_hebergement')
+
+    insere_hebergement(id_hebergement, nom_hebergement, adresse_hebergement)
+
+    return redirect(url_for("administration")) 
+
+@app.route("/administration")
+@login_required
+def administration():
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    return render_template('administration.html',connecter=connecter,admin=admin)
