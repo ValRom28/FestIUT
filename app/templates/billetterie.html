@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="connexion">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/billetterie.css')}}">
+        <title>Billetterie</title>
+    </head>
+    <body>
+        <header>
+            {% include "components/headerPage.html" %}
+        </header>
+        <main>
+            <div class="main-part">
+                <section class="left-part">
+                    <h2 class="title-h2">Billets en vente</h2>
+                    {% for type in types_billets %}
+                        {% if type.age_min < age < type.age_max %}
+                        <div class="box">
+                                <a href="{{ url_for('achat_billet', id_type_billet=type.id_type) }}"><h3>{{ type.nom_type }}</h3></a>
+                                <p>Prix : {{ type.prix }}€</p>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </section>
+                <section class="right-part">
+                    <h2 class="title-h2">Mes billets</h2>
+                    {% if not connecter %}
+                        <p class="no-ticket">Vous n'êtes pas connecté</p>
+                    {% elif mes_billets | length == 0 %}
+                        <p class="no-ticket">Vous n'avez pas de billet</p>
+                    {% endif %}
+                    {% for billet, concerts, type, lieu in mes_billets %}
+                        <div class="box" id="billet-{{ billet.id_billet }}">
+                            <h3>🎟️ {{ type.nom_type }}</h3>
+                            <p>Début : {{ billet.date_billet.strftime('%d %B %Y') }}</p>
+                            <p>Fin : {{ (billet.date_billet + datetime.timedelta(days=type.nb_jours)).strftime('%d %B %Y') }}</p>
+                            <p>Lieu : {{ lieu.nom_lieu }}</p>
+                            <p>Concerts :</p>
+                            <ul>
+                                {% for concert in concerts %}
+                                    <li>{{ concert.nom_concert }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endfor %}
+                </section>
+            </div>
+        </main>
+    </body>
