@@ -486,6 +486,12 @@ def ajout_concert():
 @app.route("/administration")
 @login_required
 def administration():
+    admin=False
+    connecter=False
+    if current_user.is_authenticated:
+        connecter=True
+        admin=current_user.is_admin()
+    return render_template('administration.html',connecter=connecter,admin=admin)
 
 @app.route("/ajout_concert", methods=['POST'])
 @login_required
