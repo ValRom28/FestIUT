@@ -117,11 +117,14 @@ td{
     height: 5rem;
     font-size: 2rem;
     border-radius: 2rem;
+    text-align: center;
     margin: 0;
     background-color: #281460;
     color: aliceblue;
     border: 1px solid aliceblue;
     text-align: center;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
 }
 
 #date:hover{

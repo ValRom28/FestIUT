@@ -16,7 +16,7 @@
         </header>
         <main>
             <div class="titre-creer">
-                <h3>Créer un groupe:</h3>
+                <h3>Ajouter un artistes : </h3>
             </div>
             <div class="conteneur-champs-formulaires">
                 <form action="{{ url_for('inserer_artiste') }}"role="form" method="POST" class="form-champ" enctype="multipart/form-data">
@@ -30,7 +30,7 @@
                     </section>
                     <section>
                         <div class="form-label-admin">
-                            <label for="hebergement" class="label">Votre artiste jour quel instrument ? : </label>
+                            <label for="hebergement" class="label">Quel instrument joue-t-il ? : </label>
                             <div class="radio-list" id="radioList">
                                 {% for instrument in instruments %}
                                     <div class="form-check">

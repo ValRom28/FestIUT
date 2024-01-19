@@ -4,6 +4,7 @@ from app.models import (Appartenir, Artiste, Billet, Concert, EtreStyle,
                      EtreType, Favoris, Groupe, Hebergement, Instrument,
                      Jouer, Lieu, OrganiserConcert, Possede, Reserver,
                      Style, SousStyle, Spectateur, Type, OrganiserEvent, Event)
+from sqlalchemy.orm import sessionmaker
 import datetime
 from sqlalchemy import desc
 
@@ -286,6 +287,37 @@ def add_reservation(id_concert, id_spectateur):
 def get_artistes():
     return Artiste.query.all()
 
+def modif_groupe(id_groupe, nom_groupe, description_groupe, insta_groupe, spotify_groupe):
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    groupe = Groupe.query.get(int(id_groupe))
+    groupe.nom_groupe = nom_groupe
+    groupe.description_groupe = description_groupe
+    groupe.insta_groupe = insta_groupe
+    groupe.spotify_groupe = spotify_groupe
+    session.commit()
+    session.close()
+
+def modif_concert(id_concert, nom_concert, tps_prepa_concert, date_heure_concert, duree_concert):
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    concert = get_concert_by_id(id_concert)
+    concert.nom_concert = nom_concert
+    concert.tps_prepa_concert = int(tps_prepa_concert)
+    concert.date_heure_concert = date_heure_concert
+    concert.duree_concert = int(duree_concert)
+    session.commit()
+    session.close()
+
+def modif_event(id_event, date_event, nom_event):
+    Session = sessionmaker(bind=db.engine)
+    session = Session()
+    event = Event.query.get(int(id_event))
+    event.date_event = date_event
+    event.nom_event = nom_event
+    session.commit()
+    session.close()
+    
 def get_hebergement():
     return Hebergement.query.all()
 
@@ -311,6 +343,15 @@ def insere_hebergement(id_hebergement, nom_hebergement, adresse_hebergement):
     hebergement = Hebergement(id_hebergement, nom_hebergement, adresse_hebergement)
     db.session.add(hebergement)
     db.session.commit()
+
+def get_prochain_id_concert():
+    id_c = Concert.query.order_by(desc(Concert.id_concert)).first().id_concert
+    return id_c + 1
+
+def insere_concert(id_concert, nom_concert, tps_prepa_concert, date_heure_concert, duree_concert, id_lieu):
+    concert = Concert(id_concert, nom_concert, tps_prepa_concert, date_heure_concert, duree_concert, id_lieu)
+    db.session.add(concert)
+    db.session.commit()
     
 def get_event_by_id(id):
     return Event.query.filter_by(id_event=id).first()
@@ -328,3 +369,26 @@ def delete_event(event):
 
 def get_hebergement_by_id(id):
     return Hebergement.query.filter_by(id_hebergement=int(id)).first()
+
+def get_prochain_id_event():
+    id_e = Event.query.order_by(desc(Event.id_event)).first().id_event
+    return id_e + 1
+
+def insere_event(id_event, nom_event, date_event, id_lieu):
+    event = Event(id_event, nom_event, date_event, id_lieu)
+    db.session.add(event)
+    db.session.commit()
+
+def insere_organiser_event(id_groupe, id_event):
+    organiser_event = OrganiserEvent(id_groupe, id_event)
+    db.session.add(organiser_event)
+    db.session.commit()
+
+def get_prochain_id_lieu():
+    id_l = Lieu.query.order_by(desc(Lieu.id_lieu)).first().id_lieu
+    return id_l + 1
+
+def insere_lieu(id_lieu, nom_lieu, jauge_lieu, coordonne_X, coordonne_Y):
+    lieu = Lieu(id_lieu, nom_lieu, jauge_lieu, coordonne_X, coordonne_Y)
+    db.session.add(lieu)
+    db.session.commit()

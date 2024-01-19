@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Date, ForeignKey, Float, LargeBinary, Boolean, DateTime
+from sqlalchemy import Column, Integer, String, Date, ForeignKey, Float, LargeBinary, Boolean, DateTime, Time
 from app import db
 
 Base = db.Model

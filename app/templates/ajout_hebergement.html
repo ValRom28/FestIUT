@@ -16,7 +16,7 @@
         </header>
         <main>
             <div class="titre-creer">
-                <h3>Créer un groupe:</h3>
+                <h3>Créer un hébergement : </h3>
             </div>
             <div class="conteneur-champs-formulaires">
                 <form action="{{ url_for('inserer_hebergement') }}"role="form" method="POST" class="form-champ" enctype="multipart/form-data">
@@ -28,6 +28,10 @@
                         <div class="form-label-admin">
                             <label for="name" class="label">Adresse de l'hébergement : </label>
                             <input type="text" name="adresse_hebergement" size="40" id="adresse_hebergement" required placeholder="Exemple : 123 rue du Grand Chlem "/>
+                        </div>
+                        <div class="form-label-admin">
+                            <label for="name" class="label">Nombre de places : </label>
+                            <input type="number" name="nb_places_hebergement" size="40" id="nb_places_hebergement" required placeholder="Exemple : 5 "/>
                         </div>
                         <input type="submit" value="Ajouter" />
                     </section>

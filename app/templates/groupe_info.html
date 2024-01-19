@@ -60,7 +60,7 @@
             <div class="event">
                 <h2>Evenements</h2>
                 {% for evenement,lieu in events_et_lieux %}
-                <div class="bloc_event">
+                <div class="bloc_event" onclick='document.location = "{{ url_for("evenement", event=evenement.id_event) }}"' style="cursor: pointer;">
                     <h3>{{evenement.nom_event}}</h2>
                     <p>Date: {{evenement.date_event}}</p>
                     <p>Lieu: {{lieu.nom_lieu}}</p>

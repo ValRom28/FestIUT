@@ -141,7 +141,13 @@ main{
 }
 
 .concerts{
-    width: 30%;
+    width: 28%;
+}
+
+.descriptionModif>textarea{
+    width: 500px; 
+    height: 144px;
+    resize: none;
 }
 
 .bloc_concert,.bloc_event{

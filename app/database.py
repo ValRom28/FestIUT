@@ -149,10 +149,10 @@ def initdb():
 
     # Insertions pour la table LIEU
     lieux = [
-        Lieu(id_lieu=1, nom_lieu='Stade Olympique', jauge_lieu=50000, coordonne_X = 8, coordonne_Y = 8),
-        Lieu(id_lieu=2, nom_lieu='Stade de France', jauge_lieu=80000, coordonne_X = 23, coordonne_Y = 17),
-        Lieu(id_lieu=3, nom_lieu='Stade de Lyon', jauge_lieu=60000, coordonne_X = 10, coordonne_Y = 21),
-        Lieu(id_lieu=4, nom_lieu='Stade de Marseille', jauge_lieu=70000, coordonne_X = 18, coordonne_Y = 14),
+        Lieu(id_lieu=1, nom_lieu='Stade de France', jauge_lieu=50000, coordonne_X = 10, coordonne_Y = 15),
+        Lieu(id_lieu=2, nom_lieu='Stade Olympique', jauge_lieu=80000, coordonne_X = 12, coordonne_Y = 13),
+        Lieu(id_lieu=3, nom_lieu='Stade de Lyon', jauge_lieu=60000, coordonne_X = 20, coordonne_Y = 23),
+        Lieu(id_lieu=4, nom_lieu='Stade de Marseille', jauge_lieu=70000, coordonne_X = 25, coordonne_Y = 20),
     ]
     session.add_all(lieux)
 
@@ -230,14 +230,14 @@ def initdb():
     # Insertions pour la table SPECTATEUR
     spectateurs = [
         Spectateur(id_spectateur=1, nom_spectateur='Valentin', prenom_spectateur='Romanet', 
-                    mdp_spectateur='mdpRomanet', email_spectateur='valentin@example.com',
-                    anniv_spectateur=datetime.strptime('2004-05-15', '%Y-%m-%d').date(), photo_compte=None, admin=True),
+                    mdp_spectateur='v', email_spectateur='v',
+                    anniv_spectateur=datetime.strptime('1973-05-15', '%Y-%m-%d').date(), photo_compte=None, admin=True),
         Spectateur(id_spectateur=2, nom_spectateur='Hugo', prenom_spectateur='Sainson', 
-                    mdp_spectateur='mdpSainson', email_spectateur='hugo@example.com', 
-                    anniv_spectateur=datetime.strptime('2004-12-20', '%Y-%m-%d').date(), photo_compte=None, admin=False),
+                    mdp_spectateur='h', email_spectateur='h', 
+                    anniv_spectateur=datetime.strptime('2001-09-11', '%Y-%m-%d').date(), photo_compte=None, admin=False),
         Spectateur(id_spectateur=3, nom_spectateur='Thibault', prenom_spectateur='Saint-Leger', 
-                    mdp_spectateur='mdpSaint', email_spectateur='thibault@example.com', 
-                    anniv_spectateur=datetime.strptime('2004-10-06', '%Y-%m-%d').date(), photo_compte=None, admin=False),
+                    mdp_spectateur='t', email_spectateur='t', 
+                    anniv_spectateur=datetime.strptime('1918-11-11', '%Y-%m-%d').date(), photo_compte=None, admin=False),
         Spectateur(id_spectateur=4, nom_spectateur='Arthur', prenom_spectateur='Villet', 
                     mdp_spectateur='mdpVillet', email_spectateur='arthur@example.com',
                         anniv_spectateur=datetime.strptime('2004-03-10', '%Y-%m-%d').date(), photo_compte=None, admin=True),
