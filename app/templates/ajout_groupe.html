@@ -61,13 +61,16 @@
                             <label for="hebergement" class="label">Choisir l'hébergement :</label>
                             <div class="radio-list" id="radioList">
                                 {% for hebergement in hebergements %}
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="hebergement" value="{{ hebergement.id_hebergement }}" data-id="{{ hebergement.id_hebergement }}">
-                                        <label class="label" for="{{ hebergement.id_hebergement }}">{{ hebergement.nom_hebergement }}</label>
-                                    </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="hebergement" value="{{ hebergement.id_hebergement }}" data-id="{{ hebergement.id_hebergement }}">
+                                    <label class="label" for="{{ hebergement.id_hebergement }}">{{ hebergement.nom_hebergement }}</label>
+                                </div>
                                 {% endfor %}
                             </div>
                         </div>
+                        {% if hebergement_plein %}
+                            <p>Cet hébergement est plein.</p>
+                        {% endif %}
                         <div class="form-label-admin">
                             <label for="hebergement" class="label">Choisir le style :</label>
                             <div class="radio-list" id="radioList">

@@ -325,3 +325,6 @@ def delete_event(event):
         db.session.delete(o)
     db.session.delete(event)
     db.session.commit()
+
+def get_hebergement_by_id(id):
+    return Hebergement.query.filter_by(id_hebergement=int(id)).first()

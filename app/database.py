@@ -46,9 +46,10 @@ def initdb():
 
     # Insertions pour la table HEBERGEMENT
     hebergements = [
-        Hebergement(id_hebergement=1, nom_hebergement='Hôtel Luxe', adresse_hebergement='123 Rue Principale'),
-        Hebergement(id_hebergement=2, nom_hebergement='Auberge Charme', adresse_hebergement='456 Avenue Centrale'),
-        Hebergement(id_hebergement=3, nom_hebergement='Motel Repos', adresse_hebergement='789 Boulevard Tranquille'),
+        Hebergement(id_hebergement=1, nom_hebergement='Hôtel Luxe', adresse_hebergement='123 Rue Principale', jauge_hebergement=8),
+        Hebergement(id_hebergement=2, nom_hebergement='Auberge Charme', adresse_hebergement='456 Avenue Centrale', jauge_hebergement=30),
+        Hebergement(id_hebergement=3, nom_hebergement='Motel Repos', adresse_hebergement='789 Boulevard Tranquille', jauge_hebergement=15),
+        Hebergement(id_hebergement=4, nom_hebergement='Hôtel de la Marée', adresse_hebergement='457 Avenue Charles de Gaulle', jauge_hebergement=1)
     ]
     session.add_all(hebergements)
 
@@ -463,5 +464,11 @@ def initdb():
 
     # Valider les modifications dans la base de données
     session.commit()
+
+    # Décrémentation de la jauge des hébergements
+    Hebergement.query.filter_by(id_hebergement=1).first().jauge_hebergement = Hebergement.query.filter_by(id_hebergement=1).first().jauge_hebergement - 2
+    Hebergement.query.filter_by(id_hebergement=2).first().jauge_hebergement = Hebergement.query.filter_by(id_hebergement=2).first().jauge_hebergement - 18
+    Hebergement.query.filter_by(id_hebergement=3).first().jauge_hebergement = Hebergement.query.filter_by(id_hebergement=3).first().jauge_hebergement - 1
+    db.session.commit()
     print('Insertions terminées.')
 

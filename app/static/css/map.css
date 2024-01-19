@@ -120,14 +120,16 @@ td{
     margin: 0;
     background-color: #281460;
     color: aliceblue;
-    border-color: aliceblue;
+    border: 1px solid aliceblue;
+    text-align: center;
 }
 
 #date:hover{
     background-color: aliceblue;
     color: #281460;
-    border: aliceblue;
+    border-color: #281460;
     transition: 0.5s;
+    margin: 1rem;
 }
 
 h2{
