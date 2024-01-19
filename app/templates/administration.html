@@ -67,14 +67,14 @@
                 <div id="popup2" class="popup">
                     <button class="close-btn" id="close2" onclick="closePopup2()">X</button>
                     <p>Que souhaitez-vous faire sur les Concerts?</p>
-                    <a id="ajouterConcert" href="#}">Ajouter</a>
+                    <a id="ajouterConcert" href="{{url_for('ajout_concert')}}">Ajouter</a>
                     <a id="supConcert" href="{{url_for('programmation')}}">Modifier</a>
                 </div>
 
                 <div id="popup3" class="popup">
                     <button class="close-btn" id="close3" onclick="closePopup3()">X</button>
                     <p>Que souhaitez-vous faire sur les Evenements?</p>
-                    <a id="ajouterEvent" href="#}">Ajouter</a>
+                    <a id="ajouterEvent" href="{{url_for('ajout_event')}}">Ajouter</a>
                     <a id="supEvent" href="{{url_for('programmation')}}">Modifier</a>
                 </div>
             </main>
