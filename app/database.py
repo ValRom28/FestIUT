@@ -81,7 +81,7 @@ def initdb():
             description_groupe='Célèbre DJ Francais', 
             insta_groupe='https://www.instagram.com/davidguetta/', spotify_groupe='https://open.spotify.com/intl-fr/artist/1Cs0zKBU1kc0i8ypK3B9ai'),
         Groupe(id_groupe=7, nom_groupe='Mick Jagger', id_hebergement=2,
-            photo_groupe=open('app/static/img/artiste.png', 'rb').read(), 
+            photo_groupe=open('app/static/img/noice.gif', 'rb').read(), 
             description_groupe='Célèbre chanteur des Rolling Stones', 
             insta_groupe='https://www.instagram.com/mickjagger/', spotify_groupe='https://open.spotify.com/intl-fr/artist/22bE4uQ6baNwSHPVcDxLCe'),
         Groupe(id_groupe=8, nom_groupe='Keith Richards', id_hebergement=2,
