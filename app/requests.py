@@ -380,3 +380,12 @@ def insere_organiser_event(id_groupe, id_event):
     organiser_event = OrganiserEvent(id_groupe, id_event)
     db.session.add(organiser_event)
     db.session.commit()
+
+def get_prochain_id_lieu():
+    id_l = Lieu.query.order_by(desc(Lieu.id_lieu)).first().id_lieu
+    return id_l + 1
+
+def insere_lieu(id_lieu, nom_lieu, jauge_lieu, coordonne_X, coordonne_Y):
+    lieu = Lieu(id_lieu, nom_lieu, jauge_lieu, coordonne_X, coordonne_Y)
+    db.session.add(lieu)
+    db.session.commit()
