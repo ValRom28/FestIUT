@@ -17,10 +17,12 @@
                     <h2 class="title-h2">Billets en vente</h2>
                     {% for type in types_billets %}
                         {% if type.age_min < age < type.age_max %}
+                        <a href="{{ url_for('achat_billet', id_type_billet=type.id_type) }}">
                         <div class="box">
-                                <a href="{{ url_for('achat_billet', id_type_billet=type.id_type) }}"><h3>{{ type.nom_type }}</h3></a>
-                                <p>Prix : {{ type.prix }}€</p>
-                            </div>
+                            <h3>{{ type.nom_type }}</h3>
+                            <p>Prix : {{ type.prix }}€</p>
+                        </div>
+                        </a>
                         {% endif %}
                     {% endfor %}
                 </section>

@@ -257,53 +257,46 @@ def groupe_modification(id_groupe):
     events = get_event_by_id_groupe(groupe.id_groupe)
     lieux = get_all_lieux()
 
+    form_groupe = GroupeForm(obj=groupe)
 
-    if request.method == 'GET':
-        form_groupe = GroupeForm(obj=groupe)
-    else:
-        form_groupe = GroupeForm()
-    
-    liste_form_concerts = []
-    for concert in concerts:
-        if request.method == 'GET':
-            form_concert = ConcertForm(obj=concert)
-        else:
-            form_concert = ConcertForm()
-        liste_form_concerts.append(form_concert)
-    
-    liste_form_events = []
-    for event in events:
-        if request.method == 'GET':
-            form_event = EventForm(obj=event)
-        else:
-            form_event = EventForm()
-        liste_form_events.append(form_event)
-        
-    if form_groupe.validate_on_submit():
-        form_groupe.populate_obj(groupe)
-        modif_groupe(id_groupe, groupe.nom_groupe, groupe.description_groupe, groupe.insta_groupe, groupe.spotify_groupe)
-        return redirect(url_for('groupe_detail', id_groupe=id_groupe))
-    
-    for form_concert in liste_form_concerts:
-        if form_concert.validate_on_submit():
-            id_concert = form_concert.id_concert.data
-            concert = get_concert_by_id(id_concert)
-            form_concert.populate_obj(concert)
-            modif_concert(concert.id_concert, form_concert.nom_concert.data, form_concert.tps_prepa_concert.data, form_concert.date_heure_concert.data, form_concert.duree_concert.data)
-            return redirect(url_for('groupe_detail', id_groupe=id_groupe))
+    liste_form_concerts = [ConcertForm(obj=concert) for concert in concerts]
+    liste_form_events = [EventForm(obj=event) for event in events]
+            
+    if request.method == 'POST':
+        errors = []
 
-    for form_event in liste_form_events:
-        if form_event.validate_on_submit():
-            id_event = form_event.id_event.data
-            event = get_event_by_id(id_event)
-            form_event.populate_obj(event)
-            modif_event(event.id_event, form_event.nom_event.data, form_event.date_heure_event.data)
+        if form_groupe.validate_on_submit():
+            form_groupe.populate_obj(groupe)
+            modif_groupe(id_groupe, groupe.nom_groupe, groupe.description_groupe, groupe.insta_groupe, groupe.spotify_groupe)
+
+        for form_concert in liste_form_concerts:
+            if form_concert.validate_on_submit():
+                id_concert = form_concert.id_concert.data
+                concert = get_concert_by_id(id_concert)
+                form_concert.populate_obj(concert)
+                modif_concert(concert.id_concert, form_concert.nom_concert.data, form_concert.tps_prepa_concert.data, form_concert.date_heure_concert.data, form_concert.duree_concert.data)
+            else:
+                errors.append(form_concert.errors)
+
+        for form_event in liste_form_events:
+            if form_event.validate_on_submit():
+                id_event = form_event.id_event.data
+                event = get_event_by_id(id_event)
+                form_event.populate_obj(event)
+                modif_event(event.id_event, form_event.nom_event.data, form_event.date_event.data)
+            else:
+                errors.append(form_event.errors)
+
+        if not errors:
             return redirect(url_for('groupe_detail', id_groupe=id_groupe))
-    
+        else:
+            print(errors)
+
     return render_template('modif_groupe.html', groupe=groupe, style=style, 
-                           artistes=artistes,instrument=instrument,connecter=connecter,
-                           admin=admin,form_groupe=form_groupe,liste_form_concerts=liste_form_concerts,
+                           artistes=artistes, instrument=instrument, connecter=connecter,
+                           admin=admin, form_groupe=form_groupe, liste_form_concerts=liste_form_concerts,
                            liste_form_events=liste_form_events, lieux=lieux)
+
     
 @app.route("/groupe/<int:id_groupe>/delete", methods=['GET'])
 @login_required

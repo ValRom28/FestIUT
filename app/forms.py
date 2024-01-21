@@ -39,9 +39,9 @@ class ConcertForm(FlaskForm):
     submit = SubmitField('Modifier')
     
 class EventForm(FlaskForm):
-    id_event= HiddenField()
-    date_event = DateField(validators=[DataRequired()], render_kw={"placeholder": "Date de l'event"})
+    id_event = HiddenField()
     nom_event = StringField(validators=[DataRequired()], render_kw={"placeholder": "Nom de l'event"})
+    date_event = DateField(validators=[DataRequired()], render_kw={"placeholder": "Date de l'event"})
     submit = SubmitField('Modifier')
     
 class LieuForm(FlaskForm):

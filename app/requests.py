@@ -305,11 +305,12 @@ def modif_concert(id_concert, nom_concert, tps_prepa_concert, date_heure_concert
         concert.duree_concert = duree_concert
         db.session.commit()
 
-def modif_event(id_event, date_event, nom_event):
+def modif_event(id_event, nom_event, date_event):
     event = Event.query.get(int(id_event))
-    event.date_event = date_event
-    event.nom_event = nom_event
-    db.session.commit()
+    if event:
+        event.nom_event = nom_event
+        event.date_event = date_event
+        db.session.commit()
     
 def get_hebergement():
     return Hebergement.query.all()
