@@ -175,10 +175,11 @@ main{
     flex-basis: 80%;    
 }
 
-.bloc_concert>p,.bloc_event>p{
+.bloc_concert>p, .bloc_event>p{
     margin-top: 1rem;
     margin-bottom: 1rem;
     margin-left: 2rem;
+    margin-right: 2rem;
 }
 
 .admin>a>button, #sup{
@@ -258,6 +259,10 @@ footer>h3>a>img:hover{
     background: #6439da;
     border-radius: 2rem 2rem 2rem 0;
     border: 1px solid aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .bloc_groupe:hover{
@@ -265,14 +270,17 @@ footer>h3>a>img:hover{
     transition: 0.2s;
 }
 
-.bloc_groupe>p{
+.bloc_groupe > p {
     color: aliceblue;
     font-size: 200%;
-    text-align: center;
 }
 
-.bloc_groupe>img{
+.bloc_groupe > img {
     width: 20rem;
     height: 20rem;
     border-radius: 2rem;
+}
+
+.bloc_groupe > * {
+    margin: 1rem;
 }

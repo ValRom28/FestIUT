@@ -288,35 +288,29 @@ def get_artistes():
     return Artiste.query.all()
 
 def modif_groupe(id_groupe, nom_groupe, description_groupe, insta_groupe, spotify_groupe):
-    Session = sessionmaker(bind=db.engine)
-    session = Session()
     groupe = Groupe.query.get(int(id_groupe))
+    groupe.id_groupe = id_groupe
     groupe.nom_groupe = nom_groupe
     groupe.description_groupe = description_groupe
     groupe.insta_groupe = insta_groupe
     groupe.spotify_groupe = spotify_groupe
-    session.commit()
-    session.close()
+    db.session.commit()
 
 def modif_concert(id_concert, nom_concert, tps_prepa_concert, date_heure_concert, duree_concert):
-    Session = sessionmaker(bind=db.engine)
-    session = Session()
-    concert = get_concert_by_id(id_concert)
-    concert.nom_concert = nom_concert
-    concert.tps_prepa_concert = int(tps_prepa_concert)
-    concert.date_heure_concert = date_heure_concert
-    concert.duree_concert = int(duree_concert)
-    session.commit()
-    session.close()
+    concert = get_concert_by_id(int(id_concert))
+    if concert:
+        concert.nom_concert = nom_concert
+        concert.tps_prepa_concert = tps_prepa_concert
+        concert.date_heure_concert = date_heure_concert
+        concert.duree_concert = duree_concert
+        db.session.commit()
 
-def modif_event(id_event, date_event, nom_event):
-    Session = sessionmaker(bind=db.engine)
-    session = Session()
+def modif_event(id_event, nom_event, date_event):
     event = Event.query.get(int(id_event))
-    event.date_event = date_event
-    event.nom_event = nom_event
-    session.commit()
-    session.close()
+    if event:
+        event.nom_event = nom_event
+        event.date_event = date_event
+        db.session.commit()
     
 def get_hebergement():
     return Hebergement.query.all()

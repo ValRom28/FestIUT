@@ -8,6 +8,7 @@ app.config['SECRET_KEY'] = 'ab23hjlOp9'
 if not os.path.exists(os.path.normpath(os.path.join(os.path.dirname(__file__), 'database'))):
     os.makedirs(os.path.normpath(os.path.join(os.path.dirname(__file__), 'database')))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.normpath(os.path.join(os.path.dirname(__file__), 'database/app.db'))
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
