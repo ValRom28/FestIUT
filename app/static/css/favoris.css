@@ -20,6 +20,12 @@ main{
     display: flex;
     align-items: center;
     flex-direction: column;
+    border: 1px solid aliceblue;
+}
+
+.bloc_groupe:hover{
+    background: #6439da;
+    transition: 0.2s;
 }
 
 .bloc_groupe>p{
@@ -34,4 +40,8 @@ main{
 img {
     width: 13rem;
     height: 13rem;
+}
+
+a {
+    text-decoration: none;
 }
