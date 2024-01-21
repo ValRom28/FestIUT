@@ -257,42 +257,41 @@ def groupe_modification(id_groupe):
     events = get_event_by_id_groupe(groupe.id_groupe)
     lieux = get_all_lieux()
 
-    form_groupe = GroupeForm()
-    form_groupe.id_groupe.data = groupe.id_groupe
-    form_groupe.nom_groupe.data = groupe.nom_groupe
-    form_groupe.description_groupe.data = groupe.description_groupe
-    form_groupe.spotify_groupe.data = groupe.spotify_groupe
-    form_groupe.insta_groupe.data = groupe.insta_groupe
-    lieux = get_all_lieux()
+    if request.method == 'GET':
+        form_groupe = GroupeForm(obj=groupe)
+    else:
+        form_groupe = GroupeForm()
     
     liste_form_concerts = []
     for concert in concerts:
-        form_concert = ConcertForm(choix=lieux)
-        form_concert.nom_concert.data = concert.nom_concert
-        form_concert.tps_prepa_concert.data = concert.tps_prepa_concert
-        form_concert.date_heure_concert.data = concert.date_heure_concert
-        form_concert.duree_concert.data = concert.duree_concert
+        if request.method == 'GET':
+            form_concert = ConcertForm(obj=concert)
+        else:
+            form_concert = ConcertForm()
         liste_form_concerts.append(form_concert)
     
     liste_form_events = []
     for event in events:
-        form_event = EventForm()
-        form_event.nom_event.data = event.nom_event
-        form_event.date_event.data = event.date_event
+        if request.method == 'GET':
+            form_event = EventForm(obj=event)
+        else:
+            form_event = EventForm()
         liste_form_events.append(form_event)
         
-        
     if form_groupe.validate_on_submit():
-        modif_groupe(id_groupe, form_groupe.nom_groupe.data, form_groupe.description_groupe.data, form_groupe.insta_groupe.data, form_groupe.spotify_groupe.data)
-        return redirect(url_for('groupe_detail', id_groupe=groupe.id_groupe))
+        form_groupe.populate_obj(groupe)
+        modif_groupe(id_groupe, groupe.nom_groupe, groupe.description_groupe, groupe.insta_groupe, groupe.spotify_groupe)
+        return redirect(url_for('groupe_detail', id_groupe=id_groupe))
     
     for form_concert in liste_form_concerts:
-        if form_groupe.validate_on_submit():
+        if form_concert.validate_on_submit():
+            form_concert.populate_obj(concert)
             modif_concert(concert.id_concert, form_concert.nom_concert.data, form_concert.tps_prepa_concert.data, form_concert.date_heure_concert.data, form_concert.duree_concert.data)
             return redirect(url_for('groupe_detail', id_groupe=id_groupe))
-    
+
     for form_event in liste_form_events:
         if form_event.validate_on_submit():
+            form_event.populate_obj(event)
             modif_event(event.id_event, form_event.date_event.data, form_event.nom_event.data)
             return redirect(url_for('groupe_detail', id_groupe=id_groupe))
     
