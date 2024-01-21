@@ -1,0 +1,51 @@
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="connexion">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/groupe_info.css')}}">
+    </head>
+    <body>
+        <header>
+            {% include "components/headerPage.html" %}
+        </header>
+        <main>
+            <div class='concerts'>
+            <h2> {{groupe.nom_groupe}} </h2>
+            <form action="" method="post" class=modif>
+                <p>{{ form_groupe.hidden_tag() }}</p>
+                <p>Nom : {{ form_groupe.nom_groupe }}</p>
+                <p class="descriptionModif">Description : {{ form_groupe.description_groupe }}</p>
+                <p>Lien Spotify : {{ form_groupe.spotify_groupe }}</p>
+                <p>Lien instagram : {{ form_groupe.insta_groupe }}</p>
+                <p>{{ form_groupe.submit }}</p>
+            </form>
+            </div>
+                <div class="concerts">
+                    <h2>Concerts</h2>
+                    {% for concert in liste_form_concerts %}
+                        <form action="" method="post" class=modif>
+                            {{ concert.hidden_tag() }}
+                            <p>Nom : {{concert.nom_concert}}</p>
+                            <p>Date : {{concert.date_heure_concert}}</p>
+                            <p>Temps de préparation : {{concert.tps_prepa_concert}}m</p>
+                            <p>Duree : {{concert.duree_concert}}m </p>
+                            {{ concert.submit }}
+                        </form>
+                    {% endfor %}
+                </div>
+                <div class="concerts">
+                    <h2>Evenements</h2>
+                    {% for form_event in liste_form_events %}
+                        <form action="" method="post" class=modif>
+                            {{ form_event.hidden_tag() }}
+                            <p>Nom : {{form_event.nom_event()}}</p>
+                            <p>Date : {{form_event.date_event()}} </p>
+                            {{ form_event.submit() }}
+                        </form>
+                    {% endfor %}
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

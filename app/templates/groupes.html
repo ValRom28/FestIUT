@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="connexion">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/groupes.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
+
+    <title>Groupes</title>
+</head>
+
+<body>
+    <header>
+        {% include "components/headerPage.html" %}
+    </header>
+    <main>
+        <div class="main-part">
+            <section class="left-part">
+                <div class="sommaire-content">
+                    <h2 class="groupes-left">Les groupes</h2>
+                    <div class="liste-groupes">
+                        {% for groupe in liste_groupes %}
+                        <a href="#groupe-{{groupe.nom_groupe}}" class="darkmode-ignore">{{ groupe.nom_groupe }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+            <section class="right-part">
+                {% for groupe in liste_groupes %}
+                <div class="box-groupe" id="groupe-{{ groupe.nom_groupe }}" onclick='document.location = "{{ url_for("groupe_detail", id_groupe=groupe.id_groupe) }}"'>
+                    <div class="info-groupe" >
+                        <h3  class="groupe-title darkmode-ignore">{{ groupe.nom_groupe }}</h3>
+                        <p class="groupe-description">{{ groupe.description_groupe }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </section>
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="connexion">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/ajout_groupe.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
+
+        <title>Groupes</title>
+    </head>
+
+    <body>
+        <header>
+            {% include "components/headerPage.html" %}
+        </header>
+        <main>
+            <div class="titre-creer">
+                <h3>Créer un groupe:</h3>
+            </div>
+            <div class="conteneur-champs-formulaires">
+                <form action="{{ url_for('inserer_groupe') }}"role="form" method="POST" class="form-champ" enctype="multipart/form-data">
+                    <section>
+                        <div>
+                            <div class="form-label-admin">
+                                <label for="name" class="label">Nom du groupe </label>
+                                <input type="text" name="nom_groupe" size="40" id="nom_groupe" required placeholder="Exemple : Beetles"/>
+                            </div>
+                            <div class="form-label-admin-desc">
+                                <label for="description" class="label">Description du groupe </label>
+                                <textarea name="textarea" rows="7" cols="50" maxlength="200" placeholder="Ecrivez la description du Groupe ici ..."></textarea>
+                            </div>
+                            <div class="form-label-admin">
+                                <label for="insta" class="label">Lien Instagram du Groupe </label>
+                                <input type="text" name="nom_insta" size="40" id="nom_insta" required value="https://www.instagram.com/"/>
+                            </div>
+                            <div class="form-label-admin">
+                                <label for="spotify" class="label">Lien Spotify du Groupe </label>
+                                <input type="text" name="nom_spotify" size="40" id="nom_spotify" required value="https://open.spotify.com/"/>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="form-label-admin">
+                            <label for="artistes" class="label">Choisir les artistes :</label>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" onclick="toggleCheckboxList()">
+                                    Sélectionner des artistes
+                                </button>
+                                <div class="checkbox-list" id="checkboxList">
+                                    {% for artiste in liste %}
+                                        <div class="form-check">
+                                            <input class="form-check-input" onclick="addArtisteListe('{{artiste.id_artiste}}')" type="checkbox" name="artiste[]" value="{{ artiste.id_artiste }}" data-id="{{ artiste.id_artiste }}">
+                                            <label class="label" for="{{ artiste.id_artiste }}">{{ artiste.nom_artiste }}</label>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-label-admin">
+                            <label for="hebergement" class="label">Choisir l'hébergement :</label>
+                            <div class="radio-list" id="radioList">
+                                {% for hebergement in hebergements %}
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="hebergement" value="{{ hebergement.id_hebergement }}" data-id="{{ hebergement.id_hebergement }}">
+                                    <label class="label" for="{{ hebergement.id_hebergement }}">{{ hebergement.nom_hebergement }}</label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% if hebergement_plein %}
+                            <p>Cet hébergement est plein.</p>
+                        {% endif %}
+                        <div class="form-label-admin">
+                            <label for="hebergement" class="label">Choisir le style :</label>
+                            <div class="radio-list" id="radioList">
+                                {% for style in styles %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="style" value="{{ style.id_style }}" data-id="{{ style.id_style }}">
+                                        <label class="label" for="{{ style.id_style }}">{{ style.nom_style }}</label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>                
+                        <div class="creation-groupe">
+                            <input type="submit" value="Créer le groupe" />
+                        </div>
+                    </section>
+                </form>
+                <script>
+                    "use strict";
+
+                    var listeArtistes = [];
+
+                    function addArtisteListe(id_artiste) {
+                        var index = listeArtistes.indexOf(id_artiste);
+
+                        if (index === -1) {
+                            // Si l'ID n'est pas dans la liste, l'ajouter
+                            listeArtistes.push(id_artiste);
+                        } else {
+                            // Si l'ID est dans la liste, le supprimer
+                            listeArtistes.splice(index, 1);
+                        }
+                    }
+
+                    function toggleCheckboxList() {
+                        var checkboxList = document.getElementById("checkboxList");
+                        checkboxList.style.display = (checkboxList.style.display === "none") ? "block" : "none";
+
+                        var selectionArtiste = document.querySelectorAll('input[name="artiste[]"]:checked').length;
+                    }
+
+                    var listeHebergement = [];
+
+                    function addHebergementListe(id_hebergement) {
+                        var index = listeHebergement.indexOf(id_hebergement);
+
+                        if (index === -1) {
+                            // Si l'ID n'est pas dans la liste, l'ajouter
+                            listeHebergement.push(id_hebergement);
+                        } else {
+                            // Si l'ID est dans la liste, le supprimer
+                            listeHebergement.splice(index, 1);
+                        }
+                    }
+
+
+                </script>
+            </div>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,81 @@
+<!doctype html>
+    <html lang="fr">
+        <head>
+            <meta charset="utf-8">
+            <meta name="admin">
+            <link rel="stylesheet" href="{{url_for('static', filename='css/headerPage.css')}}">
+            <link rel="stylesheet" href="{{url_for('static', filename='css/administration.css')}}">
+            <script src="{{url_for('static', filename='js/administration.js')}}"></script>
+            <title>Administration</title>
+        </head>
+        <body> 
+            {% include "components/headerPage.html" %}
+            
+            <main>
+            <a class="gestionGroupe">
+                <div class="Groupe">
+                 <img class="imgGestion" src="{{url_for('static', filename='img/groupe.png')}}" alt="fichier">
+                <h2 class="nomGestion">Gérer Groupe</h2>
+                </div>
+            </a>
+            <a class="gestionConcert">
+                <div class="concert">
+                <img class="imgGestion" src="{{url_for('static', filename='img/concert.png')}}" alt="fichier">
+                <h2 class="nomGestion">Gérer concert</h2>
+                </div>
+            </a>
+
+           <a class="gestionArtiste" href="{{url_for('ajout_artiste')}}">
+               <div class="Artiste">
+                <img class="imgGestion" src="{{url_for('static', filename='img/artiste.png')}}" alt="fichier">
+                <h2 class="nomGestion">Gérer Artiste</h2>
+                </div>
+            </a>
+            <a class="gestionLieu" href="{{url_for('ajout_lieu')}}">
+                <div class="Lieu">
+                <img class="imgGestion" src="{{url_for('static', filename='img/lieu.png')}}" alt="fichier">
+                <h2 class="nomGestion">Gérer Lieu</h2>
+                </div>
+                </a>
+
+            <a class='gestionEvenement'>
+                <div class="Evenement">
+                    <img class="imgGestion" src="{{url_for('static', filename='img/event.png')}}" alt="fichier">
+                    <h2 class="nomGestion">Gérer Evenement</h2>
+                </div>
+            </a>
+
+            <a class="gestionInstruments" href="{{url_for('ajout_instrument')}}">
+                <div class="instrument">
+                    <img class="imgGestion" src="{{url_for('static', filename='img/musique.png')}}" alt="fichier">
+                    <h2 class="nomGestion">Gérer Instruments</h2>
+                </div>
+            </a>
+            <a class="gestionHerbergement" href="{{url_for('ajout_hebergement')}}">
+                <div class ="hebergement">
+                    <img class="imgGestion" src="{{url_for('static', filename='img/hebergement.png')}}" alt="fichier">
+                    <h2 class="nomGestion">Gérer Herbergement</h2>
+                </div>
+            </a>
+
+                <div id="popup" class="popup">
+                    <button class="close-btn" id="close1" onclick="closePopup()">X</button>
+                    <p>Que souhaitez-vous faire sur les Groupes?</p>
+                    <a id="ajouterGroupe" href="{{url_for('ajout_groupe')}}">Ajouter</a>
+                    <a id="supGroupe" href="{{url_for('groupes')}}">Modifier</a>
+                </div>
+                <div id="popup2" class="popup">
+                    <button class="close-btn" id="close2" onclick="closePopup2()">X</button>
+                    <p>Que souhaitez-vous faire sur les Concerts?</p>
+                    <a id="ajouterConcert" href="{{url_for('ajout_concert')}}">Ajouter</a>
+                    <a id="supConcert" href="{{url_for('programmation')}}">Modifier</a>
+                </div>
+
+                <div id="popup3" class="popup">
+                    <button class="close-btn" id="close3" onclick="closePopup3()">X</button>
+                    <p>Que souhaitez-vous faire sur les Evenements?</p>
+                    <a id="ajouterEvent" href="{{url_for('ajout_event')}}">Ajouter</a>
+                    <a id="supEvent" href="{{url_for('programmation')}}">Modifier</a>
+                </div>
+            </main>
+        </body>

@@ -1,0 +1,46 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.top{
+    background-color:  #281460;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    
+}
+.top>p{
+    color: white;
+    font-family: 'Lexend Deca', sans-serif;
+    font-size: 500%;
+    flex-basis: 50%;
+    text-align: center;
+    margin-top:2rem;
+    flex-grow: 1;
+    margin-left:4rem;
+    margin-bottom: 2rem;
+}
+.logo>img{
+    width: 50%;
+    height: 50%;
+    margin-left: 1rem;
+    flex-basis: 8%;
+}
+.choix{
+    color: white;
+    font-family: 'Lexend Deca', sans-serif;
+    font-size: 200%;
+    flex-basis: 8%;
+    text-decoration: none;
+    background: linear-gradient(to right, #351d79, pink);
+    text-align: center;
+    border-radius: 2rem;
+    margin-right:2rem;
+    height: 3rem;
+}
+
+.choix:hover{
+    transition: 0.5s;
+    background: linear-gradient(to right, pink, #351d79);
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="connexion">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/ajout_groupe.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
+
+        <title>Groupes</title>
+    </head>
+
+    <body>
+        <header>
+            {% include "components/headerPage.html" %}
+        </header>
+        <main>
+            <div class="titre-creer">
+                <h3>Ajouter un Instrument :</h3>
+            </div>
+            <div class="conteneur-champs-formulaires">
+                <form action="{{ url_for('inserer_instrument') }}"role="form" method="POST" class="form-champ" enctype="multipart/form-data">
+                    <section>
+                        <div>
+                            <div class="form-label-admin">
+                                <label for="name" class="label">Nom de l'instrument : </label>
+                                <input type="text" name="nom_instrument" size="40" id="nom_instrument" required placeholder="Exemple : Piano "/>
+                            </div>
+                        </div>
+                        <div class="creation-groupe">
+                            <input type="submit" value="Ajouter l'instrument" />
+                        </div>
+                    </section>
+                </form>
+            </div>
+        </main>
+    </body>
+</html>

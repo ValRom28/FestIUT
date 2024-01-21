@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="connexion">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/ajout_groupe.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
+
+        <title>Lieu</title>
+    </head>
+
+    <body>
+        <header>
+            {% include "components/headerPage.html" %}
+        </header>
+        <main>
+            <div class="titre-creer">
+                <h3>Ajouter un lieu:</h3>
+            </div>
+            <div class="conteneur-champs-formulaires">
+                <form action="{{ url_for('inserer_lieu') }}"role="form" method="POST" class="form-champ" enctype="multipart/form-data">
+                    <section>
+                        <div class="form-label-admin">
+                            <label for="name" class="label">Nom du lieu : </label>
+                            <input type="text" name="nom_lieu" size="40" id="nom_lieu" required placeholder="Exemple : Orléans "/>
+                        </div>
+                        <div class="form-label-admin">
+                            <label for="name" class="label">Jauge du lieu: </label>
+                            <input type="number" name="jauge_lieu" size="40" id="jauge_lieu" required placeholder="Exemple : 12300 "/>
+                        </div>
+                        <div class="form-label-admin">
+                            <label for="name" class="label">CoordonneX: </label>
+                            <input type="number" name="coordonne_X" size="40" id="coordonne_X" required placeholder="Entre 0 et 25"/>
+                        </div>
+                        <div class="form-label-admin">
+                            <label for="name" class="label">CoordonneY: </label>
+                            <input type="number" name="coordonne_Y" size="40" id="coordonne_Y" required placeholder="Entre 0 et 25"/>
+                        </div>
+                        <input type="submit" value="Ajouter" />
+                    </section>
+                </form>
+            </div>
+        </main>
+    </body>
+</html>

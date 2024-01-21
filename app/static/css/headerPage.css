@@ -1,0 +1,54 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+#imgTitre{
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.top{
+    background-color:  #281460;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    
+}
+.top h1{
+    color: aliceblue;
+    font-size: 5rem;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 0rem;
+}
+.logo>img{
+    width: 10rem;
+    height: 10rem;
+    margin-left: 1rem;
+}
+
+#choix{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.choix{
+    color: #281460;
+    font-size: 200%;
+    text-decoration: none;
+    background: aliceblue;
+    text-align: center;
+    border-radius: 2rem;
+    margin-right:2rem;
+    padding: 10px;
+}
+
+.choix:hover{
+    transition: 0.2s;
+    background: #6439da;
+    color: aliceblue;
+}

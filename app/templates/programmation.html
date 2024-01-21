@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="connexion">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/programmation.css')}}">
+    </head>
+    <body>
+        <header>
+            {% include "components/headerPage.html" %}
+        </header>
+        <main>
+            <table>
+                <tr>
+                    <th>Concert</th>
+                    <th>Date</th>
+                    <th>Début</th>
+                    <th>Durée</th>
+                    <th>Lieu</th>
+                </tr>
+                {% for concert in concerts %}
+                    <tr onclick='document.location = "{{ url_for("concert", concert=concert.id_concert) }}"'>
+                        <td>{{ concert.nom_concert }}</a></td>
+                        <td>{{ concert.date_heure_concert.strftime("%d/%m/%Y") }}</td>
+                        <td>{{ concert.date_heure_concert.strftime("%Hh%M") }}</td>
+                        <td>{{ concert.duree_concert//60 }}h{{concert.duree_concert-concert.duree_concert//60*60}}</td>
+                        {% for lieu in lieux %}
+                            {% if lieu.id_lieu == concert.id_lieu %}
+                                <td>{{ lieu.nom_lieu }}</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+            <table>
+                <tr>
+                    <th>Event</th>
+                    <th>Date</th>
+                    <th>Lieu</th>
+                </tr>
+                {% for event in events %}
+                    <tr onclick='document.location = "{{ url_for("evenement", event=event.id_event) }}"'>
+                        <td>{{ event.nom_event }}</a></td>
+                        <td>{{ event.date_event.strftime("%d/%m/%Y") }}</td>
+                        {% for lieu in lieux %}
+                            {% if lieu.id_lieu == event.id_lieu %}
+                                <td>{{ lieu.nom_lieu }}</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </main>
+    </body>
+</html>

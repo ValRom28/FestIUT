@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/headerPage.css')}}">
+        <link rel="stylesheet" href="{{ url_for('static',filename='css/achat.css')}}">
+        <title>Achat Billet</title>
+    </head>
+    <body>
+        <header>
+            {% include "components/headerPage.html" %}
+        </header>
+        <main>
+            <form action="{{ url_for('achat_billet', id_type_billet=id_type_billet) }}" method="post" class="achat-billet">
+                {{ form.csrf_token}}
+                <h2>Achat de votre billet</h2>
+                <p class="lieu">Lieu du festival</p>
+                <p class="lieu">{{ form.lieux }}</p>
+                <p>Date : {{ form.date }}</p>
+                {% if no_festival %}
+                    <p class="error">Il n'y a pas de festival à cette date</p>
+                {% endif %}
+                {% if billet_existe %}
+                    <p class="error">Vous avez déjà un billet pour ce festival</p>
+                {% endif %}
+                {% if plus_place %}
+                    <p class="error">Il n'y a plus de place pour ce festival</p>
+                {% endif %}
+                <div class="submit">
+                    {{ form.submit }}
+                </div>
+            </form>
+        </main>
+    </body>
+</html>

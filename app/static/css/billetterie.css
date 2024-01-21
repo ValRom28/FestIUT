@@ -1,0 +1,74 @@
+body {
+    background-color: #6439da;
+}
+
+.main-part {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    border: 3px solid #281460;
+    font-size: 30px;
+    padding: 1em;
+    max-width: 365px;
+    border-radius: 2rem 2rem 2rem 0;
+}
+
+h2 {
+    font-size: 2.8rem;
+    color: aliceblue;
+}
+
+h3 {
+    font-size: 2.2rem;
+    color: aliceblue;
+    margin-top: 0.2rem;
+}
+
+p {
+    text-decoration: none;
+    color: aliceblue;
+}
+
+li {
+    list-style-type: none;
+    color: aliceblue;
+    font-size: 25px;
+}
+
+ul {
+    margin-top: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.infos-billet {
+    font-size: 1.5rem;
+}
+
+.box {
+    padding:1rem;
+    border: 1px solid aliceblue;
+    border-radius: 2rem 2rem 2rem 0;
+    background-color: #281460;
+    margin-bottom: 1rem;
+}
+
+.box:hover {
+    background-color: #6439da;
+    transition: 0.2s;
+}
+
+.right-part {
+    margin-left: 20em;
+}
+
+.left-part {
+    margin-right: 20em;
+}

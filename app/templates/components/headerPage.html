@@ -1,0 +1,23 @@
+<div class="top">
+
+    <div id="imgTitre">
+        <a href="{{url_for('home')}}" class=logo> <img src="{{ url_for('static',filename='img/logo.png')}}" alt="logo"> </a>
+        <h1>FestIUT'O</h1>
+    </div>
+    <div id="choix">
+        <a href="{{url_for('billetterie')}}" class='choix'>Billetterie</a>
+        <a href="{{url_for('programmation')}}" class='choix'>Programmation</a>
+        <a href="{{url_for('groupes')}}"  class='choix'>Groupes</a>
+        {% if connecter %}
+        <a href="{{url_for('favoris')}}" class='choix'>Favoris</a>
+        {% if admin %}
+        <a href="{{url_for('administration')}}"  class='choix'>Administration</a>
+        {% endif %}
+        <a href="{{url_for('logout')}}" class='choix'>Déconnexion</a>
+        
+        {% else %}
+        <a href="{{url_for('login')}}" class='choix'>Connexion</a>
+    
+        {%endif %}
+    </div>
+</div>
