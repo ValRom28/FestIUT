@@ -51,7 +51,7 @@
                 {% for concert,lieu in concerts_et_lieux %}
                 <div class="bloc_concert" onclick='document.location = "{{ url_for("concert", concert=concert.id_concert) }}"' style="cursor: pointer;">
                     <h3>{{concert.nom_concert}}</h2>
-                    <p>Date: {{concert.date_heure_concert.strftime("%d/%m %Hh%m")}}</p>
+                    <p>Date: {{concert.date_heure_concert.strftime("%d-%m-%Y %H:%M")}}</p>
                     <p>Lieu: {{lieu.nom_lieu}}</p>
                     <p>Durée: {{ concert.duree_concert//60 }}h{{concert.duree_concert-concert.duree_concert//60*60}} </p>
                 </div>

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, HiddenField, FileField, ValidationError, TextAreaField, RadioField, DateField
+from wtforms import StringField, PasswordField, SubmitField, HiddenField, FileField, ValidationError, TextAreaField, RadioField, DateField, DateTimeLocalField
 from wtforms.validators import DataRequired
 from app.requests import get_all_lieux
 
@@ -34,7 +34,7 @@ class ConcertForm(FlaskForm):
     id_concert = HiddenField()
     nom_concert= StringField(validators=[DataRequired()], render_kw={"placeholder": "Nom du concert"})
     tps_prepa_concert = StringField(validators=[DataRequired()], render_kw={"placeholder": "Temps de préparation du concert"})
-    date_heure_concert = DateField(validators=[DataRequired()], render_kw={"placeholder": "Date du concert"})
+    date_heure_concert = DateTimeLocalField(validators=[DataRequired()], render_kw={"placeholder": "Date et heure du concert"})
     duree_concert = StringField(validators=[DataRequired()], render_kw={"placeholder": "Durée du concert"})
     submit = SubmitField('Modifier')
     
@@ -43,8 +43,6 @@ class EventForm(FlaskForm):
     date_event = DateField(validators=[DataRequired()], render_kw={"placeholder": "Date de l'event"})
     nom_event = StringField(validators=[DataRequired()], render_kw={"placeholder": "Nom de l'event"})
     submit = SubmitField('Modifier')
-    
-    modif = SubmitField('modifier')
     
 class LieuForm(FlaskForm):
     nom_lieu= StringField(validators=[DataRequired()], render_kw={"placeholder": "Nom du lieu"})

@@ -297,12 +297,13 @@ def modif_groupe(id_groupe, nom_groupe, description_groupe, insta_groupe, spotif
     db.session.commit()
 
 def modif_concert(id_concert, nom_concert, tps_prepa_concert, date_heure_concert, duree_concert):
-    concert = get_concert_by_id(id_concert)
-    concert.nom_concert = nom_concert
-    concert.tps_prepa_concert = int(tps_prepa_concert)
-    concert.date_heure_concert = date_heure_concert
-    concert.duree_concert = int(duree_concert)
-    db.session.commit()
+    concert = get_concert_by_id(int(id_concert))
+    if concert:
+        concert.nom_concert = nom_concert
+        concert.tps_prepa_concert = tps_prepa_concert
+        concert.date_heure_concert = date_heure_concert
+        concert.duree_concert = duree_concert
+        db.session.commit()
 
 def modif_event(id_event, date_event, nom_event):
     event = Event.query.get(int(id_event))

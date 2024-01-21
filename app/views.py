@@ -257,6 +257,7 @@ def groupe_modification(id_groupe):
     events = get_event_by_id_groupe(groupe.id_groupe)
     lieux = get_all_lieux()
 
+
     if request.method == 'GET':
         form_groupe = GroupeForm(obj=groupe)
     else:
@@ -285,14 +286,18 @@ def groupe_modification(id_groupe):
     
     for form_concert in liste_form_concerts:
         if form_concert.validate_on_submit():
+            id_concert = form_concert.id_concert.data
+            concert = get_concert_by_id(id_concert)
             form_concert.populate_obj(concert)
             modif_concert(concert.id_concert, form_concert.nom_concert.data, form_concert.tps_prepa_concert.data, form_concert.date_heure_concert.data, form_concert.duree_concert.data)
             return redirect(url_for('groupe_detail', id_groupe=id_groupe))
 
     for form_event in liste_form_events:
         if form_event.validate_on_submit():
+            id_event = form_event.id_event.data
+            event = get_event_by_id(id_event)
             form_event.populate_obj(event)
-            modif_event(event.id_event, form_event.date_event.data, form_event.nom_event.data)
+            modif_event(event.id_event, form_event.nom_event.data, form_event.date_heure_event.data)
             return redirect(url_for('groupe_detail', id_groupe=id_groupe))
     
     return render_template('modif_groupe.html', groupe=groupe, style=style, 
